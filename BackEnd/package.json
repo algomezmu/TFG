@@ -1,0 +1,13 @@
+{
+  "name": "TFG",
+  "version": "1.0.0",
+  "description": "Servidor Node.js con un API de servicios",
+  "author": "Alvaro Gomez",
+  "license": "",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}

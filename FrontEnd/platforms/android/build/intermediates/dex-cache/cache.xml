@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\6c9590c25d7f4939e8d74e8111043fcf2a928366\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_a13878f3586785d55eb8dd0147523cf5826c9b47.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\64754d3a0228cd11253e25ae37581506cda4b74e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_2daf16fc8c3b1f2dd0bae9e585cfcd8fc62c7fdd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\e2e048fa325f2a958eccb6adc7bfd3edd567dfa3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd431d6aa9ce9dc0d429fcd239d412a82ea0e9a7">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\TFG\FrontEnd\platforms\android\app\build\intermediates\pre-dexed\debug\classes_fda36fef09031313f576fe5e898b6a5eec1f7caf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\a1038d29ee6824bd8a2f536a899f070a727d28f3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_c2525f54ab14afa2ddba8c426485d2575b380e69.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\22a3f1d5b6d2677da644d6cd592a9185fbf6943b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_e286fc1a448559e9047eeeff12a87b5ae57416c0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\96c137bb7e11c9444dbddbcf24ab846d20ba1329\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_3e2c622e86da3a0420cd86584c91726da16ffe25.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\9d13a6894ad7c4dc89f93a350db77a47d019c5b4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="746274223beb11b1cda7854d7eec3038695c2c93">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\TFG\FrontEnd\platforms\android\app\build\intermediates\pre-dexed\debug\classes_f1bbf09c3d74fe7370091707061a557a083092a5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\00f6935c1919a80154524ef320e3fb95d9b29e02\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_745a416b7036c5662ad88c776b509312cd6ac1e3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\9df43132b31f2e5d290a19a2b612bcd8d5ab4fa6\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_95e00a06a16abf0be1fab75d6ec991becf1ff868.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\2564a11835f7175450dc2c1b835002904efd2d4a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_e6bf1073ad8ff697d5bad11dc13029dff24459c6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\03ba83c1f7c6174b1d3b6591e60d2fcd398c279a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd431d6aa9ce9dc0d429fcd239d412a82ea0e9a7">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_a553e4b0c475f8f14f08941ae4769c34ca0e8b3e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\bf5fc6be17f10ac2b21b5c808977c26095f306c3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_33ef63a934e198c79ece731a138578585cc5f799.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\222159d0689045a3baa051390236a171a2612128\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_53f87272bb53c59d7ca23e444dcbf98391d5aa04.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\c2b4b161c72a82d239c0a53afd22be9870d544b3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="746274223beb11b1cda7854d7eec3038695c2c93">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_188cab3ae6082619541e45a903ae9d6c302142e0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\25b0d18cb2e2f85d81edd72fb1f40263c3c3dd74\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_cbca4ac211605e2f57ca4eb6d19e5214d478034c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\android-sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_07cc1bdab6386cc71ca9e51c0b2d242e9420314e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\gomin\.android\build-cache\c4e0e4fb72a1ec2696d0851f9925622e11ec240e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="D:\Users\gomin\Desktop\Acceso\ProyectosAndroid\HelloWorld\platforms\android\app\build\intermediates\pre-dexed\debug\classes_309ee2365c0fbccd0e463130b311fc8602c02271.jar" />
+    </item>
+
+</items>

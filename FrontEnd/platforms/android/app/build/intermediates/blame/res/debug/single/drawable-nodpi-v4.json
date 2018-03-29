@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\Users\\gomin\\Desktop\\Acceso\\TFG\\FrontEnd\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi-v4\\splash_screen.xml",
+        "source": "D:\\Users\\gomin\\Desktop\\Acceso\\TFG\\FrontEnd\\platforms\\android\\app\\src\\main\\res\\drawable-nodpi\\splash_screen.xml"
+    },
+    {
+        "merged": "D:\\Users\\gomin\\Desktop\\Acceso\\ProyectosAndroid\\HelloWorld\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi-v4\\splash_screen.xml",
+        "source": "D:\\Users\\gomin\\Desktop\\Acceso\\ProyectosAndroid\\HelloWorld\\platforms\\android\\app\\src\\main\\res\\drawable-nodpi\\splash_screen.xml"
+    }
+]
