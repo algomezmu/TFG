@@ -7,7 +7,7 @@ var appRouter = function (app) {
         response.end('<html><body><h1>Hello, World!</h1></body></html>');
     });
 
-    app.post('/login', function (request, response, next) {
+    app.post('/login', function (request, response) {
         console.log("POST /login");
         response.end('<html><body><h1>Hello, World!</h1></body></html>');
     });
@@ -21,5 +21,10 @@ var appRouter = function (app) {
         console.log("DELETE /login");
         response.end('<html><body><h1>Hello, World!</h1></body></html>');
     });
-}
+
+    app.put("/api/user", function (request, response) {
+        console.log("PUT /user");
+        usersServices.createUser(request, response);
+    });
+};
 module.exports = appRouter;
