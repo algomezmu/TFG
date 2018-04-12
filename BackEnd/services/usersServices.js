@@ -1,3 +1,10 @@
+// Configurations
+var config = require('../config/config.js');
+
+// Components
+var crypto = require('crypto');
+
+// Database
 var userMessages = require('./../messages/userMessages.js');
 var userModel = require('./../models/User.js');
 
@@ -6,14 +13,23 @@ function getUsers(request, response) {
 };
 
 function createUser(request, response) {
-    if (request.body.username &&
-        request.body.password &&
-        request.body.description) {
+
+    var username = request.body.username;
+    var password = request.body.password;
+    var description = request.body.description;
+
+    if (username &&
+        password &&
+        description) {
+
+        var hash = crypto.createHmac('sha512', config.crypt_secret)
+        hash.update(password)
+        password = hash.digest('hex');
 
         var newUser = userModel({
-            username: request.body.username,
-            password: request.body.password,
-            description: request.body.description,
+            username: username,
+            password: password,
+            description: description,
         });
 
         newUser.save(function (err) {

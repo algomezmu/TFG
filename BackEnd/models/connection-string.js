@@ -2,7 +2,7 @@ var url = require('url')
 
 var domain = require('./../config/config.js');
 
-var uri = domain.domainDB();
+var uri = domain.domainDB;
 if (!uri) {
     throw new Error(
         '\033[31mYou need to provide the connection string. ' +
