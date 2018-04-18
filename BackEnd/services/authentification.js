@@ -1,5 +1,6 @@
 
 var authSecret = require('./../config/config');
+var jwt    = require('jsonwebtoken');
 
 //Auth verify
 function verifytoken(req, res, next){

@@ -8,8 +8,16 @@ var crypto = require('crypto');
 var userMessages = require('./../messages/userMessages.js');
 var userModel = require('./../models/User.js');
 
-function getUsers(request, response) {
-	
+function getUsers(response) {
+    userModel.find({}, function(err,obj) {
+        if(err){
+            userMessages.errorMessage(response, 0)
+        }else if (obj){
+            userMessages.userCorrectResponseInfo(response, obj);
+        }else{
+            userMessages.errorMessage(response, 2);
+        }
+    }).select("-password");
 };
 
 function createUser(request, response) {
@@ -29,18 +37,36 @@ function createUser(request, response) {
         var newUser = userModel({
             username: username,
             password: password,
-            description: description,
+            description: description
         });
-
         newUser.save(function (err) {
             if (err) {
-                userMessages.errorMessage(response, 1);
+                userMessages.errorMessage(response, 4);
             } else {
-                userMessages.userCreated(response);
+                userMessages.userCorrectResponse(response,0);
             }
         });
+    } else{
+        userMessages.errorMessage(response,5);
     }
 };
 
+function deleteUsers(request, response) {
+    var id = request.body.id;
+    if(id) {
+        userModel.remove({_id: id}, function (err) {
+            if (err) {
+                userMessages.errorMessage(response, 3);
+            }
+            else {
+                userMessages.userCorrectResponse(response, 1);
+            }
+        });
+    }else{
+        userMessages.errorMessage(response,5);
+    }
+};
+
+exports.deleteUsers = deleteUsers;
 exports.createUser = createUser;
 exports.getUsers = getUsers;

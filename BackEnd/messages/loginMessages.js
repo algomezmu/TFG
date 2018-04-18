@@ -14,7 +14,6 @@ var loginIncorrect = function (response) {
     return response.send({"status": "error", "message": "Incorrect Login"});
 };
 
-
 var databaseError = function (response) {
     response.statusCode = 200;
     response.set({
@@ -22,7 +21,6 @@ var databaseError = function (response) {
     });
     return response.send({"status": "error", "message": "Error Database"});
 };
-
 
 exports.databaseError = databaseError;
 exports.loginIncorrect = loginIncorrect;

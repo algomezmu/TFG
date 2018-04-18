@@ -5,6 +5,9 @@ var jwt_secret = "5A3xvd5_8asd";
 
 var crypt_secret = "farZxa_12P54r";
 
+var time_boot_look = 300000;
+
+exports.time_boot_look = time_boot_look;
 exports.crypt_secret = crypt_secret;
 exports.jwt_secret = jwt_secret;
 exports.domainDB = domainDB;
