@@ -25,9 +25,19 @@ var appRouter = function (app) {
         usersServices.deleteUsers(request, response);
     });
 
-    app.get("/api/look/cpu", authService.verifytoken,  function (request, response) {
-        console.log("GET /look/cpu");
-        lookServices.getCPUHistory(response);
+    app.post("/api/look/cpu", authService.verifytoken,  function (request, response) {
+        console.log("POST /look/cpu");
+        lookServices.getCPUHistory(request, response);
+    });
+
+    app.post("/api/look/mem", authService.verifytoken,  function (request, response) {
+        console.log("POST /look/mem");
+        lookServices.getMemHistory(request, response);
+    });
+
+    app.post("/api/look/network", authService.verifytoken,  function (request, response) {
+        console.log("POST /look/network");
+        lookServices.getNetworkHistory(request, response);
     });
 
 };
