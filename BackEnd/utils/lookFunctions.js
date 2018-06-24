@@ -107,6 +107,39 @@ function networkFunction(saveData, returnData, response){
     });
 }
 
+function processFunction(response){
+    si.processes(function(processInfo){
+        lookMessages.dataResponse(response, processInfo);
+    });
+}
+
+function usersFunction(response){
+    si.users(function(usersInfo){
+        lookMessages.dataResponse(response, usersInfo);
+    });
+}
+
+function diskFunction(response){
+    si.fsSize(function(diskInfo){
+        lookMessages.dataResponse(response, diskInfo);
+    });
+}
+
+function uptimeFunction(response){
+    lookMessages.dataResponse(response, si.time());
+}
+
+function networkConsFunction(response){
+    si.networkConnections(function(netInfo){
+        lookMessages.dataResponse(response, netInfo);
+    });
+}
+
+exports.networkConsFunction = networkConsFunction;
+exports.uptimeFunction = uptimeFunction;
+exports.diskFunction = diskFunction;
+exports.usersFunction = usersFunction;
+exports.processFunction = processFunction;
 exports.networkFunction = networkFunction;
 exports.cpuFunction = cpuFunction;
 exports.memFunction = memFunction;

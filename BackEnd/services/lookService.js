@@ -3,7 +3,7 @@ var lookFunctions = require('./../utils/lookFunctions.js');
 var cpuModel = require('./../models/Cpu.js');
 var memModel = require('./../models/Mem.js');
 var networkModel = require('./../models/Network.js');
-
+//const EventEmitter = require('events');
 
 
 function getCPUHistory(request, response) {
@@ -90,7 +90,45 @@ function getNetworkHistory(request, response) {
     }
 }
 
+function processList(request, response){
+    lookFunctions.processFunction(response);
+}
 
+
+function processKiller(request, response){
+    //process.kill(process.pid, 'SIGINT');
+    if(request.body.pid && Number(request.body.pid) > 0){
+        process.kill(request.body.pid);
+        lookMessages.dataResponse(response, "Done");
+    }else{
+        lookMessages.errorMessage(response, 2);
+    }
+}
+
+function usersLogin(request, response){
+    lookFunctions.usersFunction(response);
+}
+
+
+function disk(request, response){
+    lookFunctions.diskFunction(response);
+}
+
+function uptime(request, response){
+    lookFunctions.uptimeFunction(response);
+}
+
+
+function networkCons(request, response){
+    lookFunctions.networkConsFunction(response);
+}
+
+exports.networkCons = networkCons;
+exports.uptime = uptime;
+exports.disk = disk;
+exports.usersLogin = usersLogin;
+exports.processKiller = processKiller;
+exports.processList = processList;
 exports.getNetworkHistory = getNetworkHistory;
 exports.getMemHistory = getMemHistory;
 exports.getCPUHistory = getCPUHistory;

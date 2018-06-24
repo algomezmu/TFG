@@ -12,6 +12,18 @@ var lookCPU = true;
 var lookMemory = true;
 var lookNetwork = true;
 
+//s (seconds no more than 60)
+//m (minutes no more than 60)
+//h (hours no more than 60)
+//"5 m" “At every 5th minute.”
+// The same as crontab
+var lookCPUTimer = "5 m";
+var lookMemoryTimer = "5 m"; //s/m/h
+var lookNetworkTimer = "5 m"; //s/m/h
+
+exports.lookCPUTimer = lookCPUTimer;
+exports.lookMemoryTimer = lookMemoryTimer;
+exports.lookNetworkTimer = lookNetworkTimer;
 exports.lookCPU = lookCPU;
 exports.lookMemory = lookMemory;
 exports.lookNetwork = lookNetwork;
