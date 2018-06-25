@@ -1,6 +1,8 @@
 // Database
 var adminMessages = require('./../messages/adminMessages.js');
 var eventsModel = require('./../models/Events.js');
+var eventsUtils = require('./../utils/events.js');
+
 function getEvents(response) {
     eventsModel.find({}, function(err,obj) {
         if(err){
@@ -30,10 +32,11 @@ function createEvent(request, response) {
             launchTime: launchTime,
             description: description
         });
-        newEvent.save(function (err) {
+        newEvent.save(function (err, event) {
             if (err) {
                 adminMessages.errorMessage(response, 0);
             } else {
+                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime);
                 adminMessages.adminEventCorrectResponse(response,0);
             }
         });

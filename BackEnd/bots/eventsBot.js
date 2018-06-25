@@ -1,10 +1,21 @@
 var schedule = require('node-schedule');
+var eventsModel = require('./../models/Events.js');
+var eventsUtils = require('./../utils/events.js');
 
-/*
-function lookBot() {
-    var futureDate = new Date(new Date().getTime() + 60 * 60 * 24 * 1000); // This is 24 hours from *now*
+function loadEvents() {
+    eventsModel.find({}, function(err,obj) {
+        if(err){
+            console.log("Data Base Error On Load Event");
+        }else if (obj && obj.length != 0){
+            //console.log(obj);
+            obj.forEach(function(element) {
+                console.log(element);
+                eventsUtils.createEvent(element.id, element.command, element.launchType, element.launchTime);
+            });
+        }else{
+            console.log("No events");
+        }
+    })
+}
 
-    var j = schedule.scheduleJob(futureDate, function () {
-        console.log('Do your work here.');
-    });
-}*/
+exports.loadEvents = loadEvents;

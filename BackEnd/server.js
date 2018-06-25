@@ -4,8 +4,10 @@ var bodyParser = require("body-parser");
 var app = express();
 
 var lookBot = require('./bots/lookBot.js');
+var eventsBot = require('./bots/eventsBot.js');
 
 lookBot.lookBot();
+eventsBot.loadEvents();
 
 //Libreria de threads
 

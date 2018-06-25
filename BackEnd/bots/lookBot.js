@@ -40,8 +40,6 @@ function scheduleTime(time){
 
     var time = time.split(" ");
 
-    console.log(time)
-
     if(time[1] === "h"){
         return Number(time[0]) <= 60 ? ("0 */" + time[0] + "* * *") : (" 0 */24 * * *");
     }else if(time[1] === "m"){
