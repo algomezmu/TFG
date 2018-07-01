@@ -17,6 +17,24 @@ var adminEventCorrectResponse = function (response, type) {
 };
 
 /**
+ * User Correct Response function
+ * @param {response} response - The title of the book.
+ * @param {number} type - type = 0 - User Created, type = 1 - User Deleted.
+ */
+var adminScriptCorrectResponse = function (response, type) {
+    response.statusCode = 200;
+    response.set({
+        'Content-Type': 'application/json'
+    });
+
+    if(type == 0) {
+        return response.send({"status": "ok", "message": "Script Created."});
+    }else if(type == 1){
+        return response.send({"status": "ok", "message": "Script Deleted."});
+    }
+};
+
+/**
  * Admin Correct Response function
  * @param {response} response - The title of the book.
  * @param {number} message - JSON to send
@@ -55,6 +73,7 @@ var errorMessage = function (response, type) {
     }
 };
 
+exports.adminScriptCorrectResponse = adminScriptCorrectResponse;
 exports.adminEventCorrectResponse = adminEventCorrectResponse;
 exports.errorMessage = errorMessage;
 exports.adminCorrectResponseInfo = adminCorrectResponseInfo;

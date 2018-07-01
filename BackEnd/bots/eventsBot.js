@@ -9,7 +9,6 @@ function loadEvents() {
         }else if (obj && obj.length != 0){
             //console.log(obj);
             obj.forEach(function(element) {
-                console.log(element);
                 eventsUtils.createEvent(element.id, element.command, element.launchType, element.launchTime);
             });
         }else{

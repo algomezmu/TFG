@@ -14,21 +14,18 @@ function lookBot() {
 
     if(config.lookCPU) {
         lookCPU = schedule.scheduleJob(scheduleTime(config.lookCPUTimer), function () {
-            console.log("lookCPU");
             lookFunctions.cpuFunction(true, false, null);
         });
     }
 
     if(config.lookMemory) {
         lookMemory = schedule.scheduleJob(scheduleTime(config.lookMemoryTimer), function () {
-            console.log("lookMemory");
             lookFunctions.memFunction(true, false, null);
         });
     }
 
     if(config.lookNetwork) {
         lookNetwork = schedule.scheduleJob(scheduleTime(config.lookNetworkTimer), function () {
-            console.log("lookNetwork");
             lookFunctions.networkFunction(true, false, null);
         });
     }

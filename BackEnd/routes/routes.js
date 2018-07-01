@@ -1,3 +1,4 @@
+
 var appRouter = function (app) {
 
     var authService = require('./../services/authentification.js');
@@ -5,6 +6,9 @@ var appRouter = function (app) {
     var loginServices = require('./../services/loginService.js');
     var lookServices = require('./../services/lookService.js');
     var adminServices = require('./../services/adminsService.js');
+
+    const logConfig = require('../config/log-conf');
+    const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
 
     //region Login
     app.post('/api/login', function (request, response) {
@@ -91,8 +95,26 @@ var appRouter = function (app) {
     });
 
     app.delete("/api/run/events", authService.verifytoken,  function (request, response) {
-        console.log("POST /api/run/events");
+        console.log("DELETE /api/run/events");
         adminServices.deleteEvent(request, response);
+    });
+    //endregion
+
+
+    //region Scripts
+    app.get("/api/run/scripts", authService.verifytoken,  function (request, response) {
+        console.log("GET /api/run/scripts");
+        adminServices.getScripts(response);
+    });
+
+    app.post("/api/run/scripts", authService.verifytoken,  function (request, response) {
+        console.log("POST /api/run/scripts");
+        adminServices.createScripts(request, response);
+    });
+
+    app.delete("/api/run/scripts", authService.verifytoken,  function (request, response) {
+        console.log("DELETE /api/run/scripts");
+        adminServices.deleteScripts(request, response);
     });
     //endregion
 

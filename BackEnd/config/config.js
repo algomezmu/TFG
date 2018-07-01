@@ -1,3 +1,6 @@
+// Recomended to delete this user
+var first_user_name = "admin"
+var first_user_password = "1234"
 
 var domainDB = 'mongodb://localhost:27017/monitor';
 
@@ -21,6 +24,8 @@ var lookCPUTimer = "5 m";
 var lookMemoryTimer = "5 m"; //s/m/h
 var lookNetworkTimer = "5 m"; //s/m/h
 
+exports.first_user_name = first_user_name;
+exports.first_user_password = first_user_password;
 exports.lookCPUTimer = lookCPUTimer;
 exports.lookMemoryTimer = lookMemoryTimer;
 exports.lookNetworkTimer = lookNetworkTimer;

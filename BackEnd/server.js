@@ -3,8 +3,14 @@ var cluster = require('cluster');
 var bodyParser = require("body-parser");
 var app = express();
 
+const logConfig = require('./config/log-conf');
+const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
+
 var lookBot = require('./bots/lookBot.js');
 var eventsBot = require('./bots/eventsBot.js');
+var startServer = require('./utils/startingServer.js');
+
+startServer.firstUser();
 
 lookBot.lookBot();
 eventsBot.loadEvents();
@@ -22,6 +28,7 @@ var routes = require("./routes/routes.js")(app);
 
 server.listen(3000, function() {
     console.log("Servidor escuchando peticiones en el puerto %s...", server.address().port);
+    logger.info("Servidor escuchando peticiones en el puerto %s...", server.address().port);
 });
 
 

@@ -24,12 +24,12 @@ function login(request, response) {
     if(username && password){
 
         // create hahs
-        var hash = crypto.createHmac('sha512', config.crypt_secret)
-        hash.update(password)
+        var hash = crypto.createHmac('sha512', config.crypt_secret);
+        hash.update(password);
         password = hash.digest('hex');
         userModel.findOne({username: username, password: password}, function(err,obj) {
             if(err){
-                loginMessages.databaseError(response)
+                loginMessages.databaseError(response);
             }else if (obj){
                 var tokenData = {
                     username: username
@@ -45,6 +45,8 @@ function login(request, response) {
                 loginMessages.loginIncorrect(response);
             }
         });
+    }else{
+        loginMessages.loginIncorrect(response);
     }
 };
 
