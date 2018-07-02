@@ -1,7 +1,8 @@
-import {Component} from "@angular/core";
-import {NavController} from "ionic-angular";
-import {TripService} from "../../services/trip-service";
-import {TripDetailPage} from "../trip-detail/trip-detail";
+import { Component } from "@angular/core";
+import { NavController } from "ionic-angular";
+import { TripService } from "../../services/trip-service";
+import { TripDetailPage } from "../trip-detail/trip-detail";
+import { RegisterServerPage } from "../register-server/register-server";
 
 @Component({
   selector: 'page-list-server',
@@ -13,14 +14,14 @@ export class ListServersPage {
 
   constructor(public nav: NavController, public tripService: TripService) {
     // set sample data
-    this.trips = tripService.getAll();
+    //this.trips = tripService.getAll();
   }
 
   // view trip detail
   viewDetail(id) {
-    this.nav.push(TripDetailPage, {id: id});
+    this.nav.push(TripDetailPage, { id: id });
   }
-  addServer(){
-    console.log("Aqui");
+  addServer() {
+    this.nav.push(RegisterServerPage);
   }
 }

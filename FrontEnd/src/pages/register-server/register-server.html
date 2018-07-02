@@ -1,0 +1,76 @@
+<!-- -->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      <span ion-text>Register Server</span>
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar color="light">
+    <p ion-text no-margin class="text-white">
+      <button ion-button no-margin block color="light" tappable (click)="register()">
+        Install BackEnd Server
+      </button>
+    </p>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="auth-page">
+  <div class="login-content">
+
+    <!-- Logo -->
+    <div padding text-center>
+      <div class="logo"></div>
+      <h2 ion-text class="text-primary">
+        <strong>Add</strong> New Server
+      </h2>
+    </div>
+
+    <!-- Login form -->
+    <form class="list-form" [formGroup]="registerForm">
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="laptop" item-start class="text-primary"></ion-icon>
+          Server Name
+        </ion-label>
+        <ion-input type="text" formControlName="serverName"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="compass" item-start class="text-primary"></ion-icon>
+          Domain/IP
+        </ion-label>
+        <ion-input type="text" formControlName="serverDomain"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="ios-person" item-start class="text-primary"></ion-icon>
+          User
+        </ion-label>
+        <ion-input type="text" formControlName="username"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+          Password
+        </ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+    </form>
+
+    <div margin-top>
+      <button ion-button block color="dark" tappable [disabled]="registerForm.invalid" (click)="register()">
+        Connect and Save
+      </button>
+    </div>
+
+    <!-- Other links 
+    <div text-center margin-top>
+      <span ion-text color="primary" tappable (click)="login()">I have an account</span>
+    </div>
+    -->
+  </div>
+</ion-content>

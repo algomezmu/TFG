@@ -11,6 +11,7 @@ import {Keyboard} from '@ionic-native/keyboard';
 import {ActivityService} from "../services/activity-service";
 import {TripService} from "../services/trip-service";
 import {WeatherProvider} from "../services/weather";
+import { LoginService } from "../services/login.service";
 
 import {MyApp} from "./app.component";
 
@@ -19,12 +20,11 @@ import {CheckoutTripPage} from "../pages/checkout-trip/checkout-trip";
 import {HomePage} from "../pages/home/home";
 import {LoginPage} from "../pages/login/login";
 import {NotificationsPage} from "../pages/notifications/notifications";
-import {RegisterPage} from "../pages/register/register";
+import {RegisterServerPage} from "../pages/register-server/register-server";
 import {SearchLocationPage} from "../pages/search-location/search-location";
 import {TripDetailPage} from "../pages/trip-detail/trip-detail";
 import {ListServersPage} from "../pages/list-servers/list-servers";
 import {LocalWeatherPage} from "../pages/local-weather/local-weather";
-
 // import services
 // end import services
 // end import services
@@ -41,7 +41,7 @@ import {LocalWeatherPage} from "../pages/local-weather/local-weather";
     LoginPage,
     LocalWeatherPage,
     NotificationsPage,
-    RegisterPage,
+    RegisterServerPage,
     SearchLocationPage,
     TripDetailPage,
     ListServersPage
@@ -68,7 +68,7 @@ import {LocalWeatherPage} from "../pages/local-weather/local-weather";
     LoginPage,
     LocalWeatherPage,
     NotificationsPage,
-    RegisterPage,
+    RegisterServerPage,
     SearchLocationPage,
     TripDetailPage,
     ListServersPage
@@ -79,7 +79,8 @@ import {LocalWeatherPage} from "../pages/local-weather/local-weather";
     Keyboard,
     ActivityService,
     TripService,
-    WeatherProvider
+    WeatherProvider,
+    LoginService
   ]
 })
 

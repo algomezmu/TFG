@@ -22,6 +22,11 @@ var server = require('http').Server(app);
 // Aceptaremos JSON y valores codificados en la propia URL
 app.use(bodyParser.json({limit: '4mb'}));
 app.use(bodyParser.urlencoded({limit: '4mb',extended: true}));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 // Todos los endpoint del API los colocaremos en este fichero
 var routes = require("./routes/routes.js")(app);
