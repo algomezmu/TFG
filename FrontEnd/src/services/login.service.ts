@@ -11,19 +11,13 @@ export class LoginService {
   }
   
   login(serverURL, username, password) {
-    console.log(serverURL);
-    //const headers = new HttpHeaders();
-    //headers.append('Content-Type', 'application/json');
-    //headers.append('Access-Control-Allow-Origin', '*'); 
     var headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Origin' , '*');
     headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
     headers.append('Accept','application/json');
     headers.append('content-type','application/json');
 
-    const body = JSON.stringify({ username: username, password: password });
-
-    return this.http.post(serverURL + "/api/login", body, {
+    return this.http.post(serverURL + "/api/login", { username, password }, {
         headers: headers
       })
       .map(res => {
