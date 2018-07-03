@@ -8,7 +8,7 @@ import {RegisterServerPage} from "../register-server/register-server";
   templateUrl: 'login.html'
 })
 export class LoginPage {
-
+  
   constructor(public nav: NavController, public forgotCtrl: AlertController, public menu: MenuController, public toastCtrl: ToastController) {
     this.menu.swipeEnable(false);
   }

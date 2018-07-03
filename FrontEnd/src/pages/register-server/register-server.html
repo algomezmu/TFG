@@ -35,14 +35,26 @@
         </ion-label>
         <ion-input type="text" formControlName="serverName"></ion-input>
       </ion-item>
-
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="compass" item-start class="text-primary"></ion-icon>
-          Domain/IP
-        </ion-label>
-        <ion-input type="text" formControlName="serverDomain"></ion-input>
-      </ion-item>
+      <ion-row>
+        <ion-col col-9>
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="compass" item-start class="text-primary"></ion-icon>
+              Domain/IP
+            </ion-label>
+            <ion-input type="text" formControlName="serverDomain"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col>
+          <ion-item>
+            <ion-label stacked>
+              <ion-icon name="outlet" item-start class="text-primary"></ion-icon>
+              Port
+            </ion-label>
+            <ion-input placeholder="3000" type="text" formControlName="port"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
       <ion-item>
         <ion-label floating>
