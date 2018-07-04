@@ -17,10 +17,10 @@ export class RegisterServerPage {
   constructor(public nav: NavController, private formBuilder: FormBuilder, private loginService: LoginService, public toastCtrl: ToastController) {
     this.registerForm = this.formBuilder.group({
       serverName: ['Prueba', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z1-9]*'), Validators.required])],
-      serverDomain: ['http://localhost:3000', Validators.compose([Validators.maxLength(60), Validators.required])],
+      serverDomain: ['localhost', Validators.compose([Validators.maxLength(60), Validators.required])],
       username: ['admin', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       password: ['12345678', Validators.compose([Validators.minLength(6), Validators.maxLength(20), Validators.required])],
-      port: ['3000', Validators.compose([Validators.pattern('0-9 ]*'), Validators.required])]
+      port: ['3000', Validators.compose([Validators.pattern('[0-9 ]*'), Validators.required])]
     });
   }
 
@@ -30,7 +30,18 @@ export class RegisterServerPage {
     var serverDomain = this.registerForm.controls['serverDomain'].value;
     var username = this.registerForm.controls['username'].value;
     var password = this.registerForm.controls['password'].value;
+    var port = this.registerForm.controls['port'].value;
 
+    if (!serverDomain.includes("http")) {
+      serverDomain = "http://" + serverDomain
+    }
+
+    if (!port || port == "") {
+      serverDomain = serverDomain + ":3000";
+    } else {
+      serverDomain = serverDomain + ":" + port;
+    }
+    
     this.loginService.login(serverDomain, username, password).subscribe(
       data => {
         if (data.status == "error") {
