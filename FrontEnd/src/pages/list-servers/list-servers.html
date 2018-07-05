@@ -37,7 +37,7 @@
     <div class="padding-sm primary-bg">
       <ion-icon name="time" class="text-white"></ion-icon>
       <span ion-text *ngIf="server.ping != -1" class="text-white">{{ server.ping }} ms</span>
-      <span ion-text *ngIf="server.ping == -1" class="text-white">Server Offline</span>
+      <span ion-text *ngIf="server.ping == -1" class="text-red">Server Offline</span>
       <span class="pull-right" ion-text color="light"><strong>{{ server.serverName }}</strong></span>
     </div>
   </div>
