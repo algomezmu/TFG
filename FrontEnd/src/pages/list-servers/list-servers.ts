@@ -1,8 +1,6 @@
 import { Component } from "@angular/core";
 import { NavController, ToastController, ActionSheetController } from "ionic-angular";
-import { TripService } from "../../services/trip-service";
 import { PingService } from "../../services/ping.service";
-import { TripDetailPage } from "../trip-detail/trip-detail";
 import { RegisterServerPage } from "../register-server/register-server";
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
 
@@ -14,7 +12,7 @@ export class ListServersPage {
   // list of trips
   public serverList: any;
 
-  constructor(public nav: NavController, public tripService: TripService, private secureStorage: SecureStorage,
+  constructor(public nav: NavController, private secureStorage: SecureStorage,
     public toastCtrl: ToastController, public ping: PingService, public actionSheetCtrl: ActionSheetController) {
     // set sample data
     //this.trips = tripService.getAll();
@@ -86,7 +84,6 @@ export class ListServersPage {
   }
 
   presentActionSheet(serverName) {
-    console.log("Aqui");
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Server Options',
       buttons: [
@@ -110,7 +107,7 @@ export class ListServersPage {
   // view trip detail
   viewDetail(id) {
     console.log(id);
-    this.nav.push(TripDetailPage, { id: id });
+    //this.nav.push(TripDetailPage, { id: id });
   }
 
   addServer() {

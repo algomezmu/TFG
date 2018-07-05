@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {NavController, AlertController, ToastController, MenuController} from "ionic-angular";
-import {HomePage} from "../home/home";
 import {RegisterServerPage} from "../register-server/register-server";
 
 @Component({
@@ -20,7 +19,7 @@ export class LoginPage {
 
   // login and go to home page
   login() {
-    this.nav.setRoot(HomePage);
+    //this.nav.setRoot(HomePage);
   }
 
   forgotPass() {
