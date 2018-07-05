@@ -18,11 +18,19 @@ export class RegisterServerPage {
   constructor(public nav: NavController, private formBuilder: FormBuilder,
     private loginService: LoginService, public toastCtrl: ToastController, private secureStorage: SecureStorage) {
     this.registerForm = this.formBuilder.group({
+<<<<<<< HEAD
       serverName: ['Prueba', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9]*'), Validators.required])],
       serverDomain: ['localhost', Validators.compose([Validators.maxLength(60), Validators.required])],
       username: ['admin', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       password: ['12345678', Validators.compose([Validators.minLength(6), Validators.maxLength(20), Validators.required])],
       port: ['3000', Validators.compose([Validators.pattern('[0-9 ]*')])]
+=======
+      serverName: ['Prueba', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z1-9]*'), Validators.required])],
+      serverDomain: ['localhost', Validators.compose([Validators.maxLength(60), Validators.required])],
+      username: ['admin', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      password: ['12345678', Validators.compose([Validators.minLength(6), Validators.maxLength(20), Validators.required])],
+      port: ['3000', Validators.compose([Validators.pattern('[0-9 ]*'), Validators.required])]
+>>>>>>> 8ee464e5db8dc776113d9f657267561b4c6bb3c8
     });
   }
 
@@ -33,6 +41,7 @@ export class RegisterServerPage {
     var username = this.registerForm.controls['username'].value;
     var password = this.registerForm.controls['password'].value;
     var port = this.registerForm.controls['port'].value;
+<<<<<<< HEAD
 
     if (!serverDomain.includes("http")) {
       serverDomain = "http://" + serverDomain
@@ -55,6 +64,19 @@ export class RegisterServerPage {
   }
 
   tryConnectAndSave(serverName, serverDomain, username, password){
+=======
+
+    if (!serverDomain.includes("http")) {
+      serverDomain = "http://" + serverDomain
+    }
+
+    if (!port || port == "") {
+      serverDomain = serverDomain + ":3000";
+    } else {
+      serverDomain = serverDomain + ":" + port;
+    }
+    
+>>>>>>> 8ee464e5db8dc776113d9f657267561b4c6bb3c8
     this.loginService.login(serverDomain, username, password).subscribe(
       data => {
         if (data.status == "error") {
