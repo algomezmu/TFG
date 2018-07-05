@@ -17,6 +17,15 @@ var appRouter = function (app) {
     });
     //endregion
 
+    app.get('/api/ping', function (request, response) {
+        console.log("GET /ping");
+        response.statusCode = 200;
+        response.set({
+            'Content-Type': 'application/json'
+        });
+        return response.send({"status": "ok", "message": "ping"})
+    });
+
     //region User
     app.get("/api/user", authService.verifytoken,  function (request, response) {
         console.log("GET /user");

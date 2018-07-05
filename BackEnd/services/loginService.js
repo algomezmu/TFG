@@ -16,7 +16,6 @@ var loginMessages = require('./../messages/loginMessages.js');
  }
  */
 function login(request, response) {
-
     var username = request.body.username;
     var password = request.body.password;
 

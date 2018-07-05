@@ -3,9 +3,21 @@ page-register,
 
 }
 
-.alert {
+.alert_red {
     .toast-wrapper {
       background: rgb(172, 30, 30);
+      opacity: 0.9;
+      text-align: center;
+    }
+    .toast-message {
+      font-size: 2.0rem;
+      color: white;
+    }
+  }
+
+.alert_green {
+    .toast-wrapper {
+      background: rgb(50, 161, 50);
       opacity: 0.9;
       text-align: center;
     }
