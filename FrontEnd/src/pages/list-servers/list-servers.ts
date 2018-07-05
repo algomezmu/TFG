@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, ToastController } from "ionic-angular";
+import { NavController, ToastController, ActionSheetController } from "ionic-angular";
 import { TripService } from "../../services/trip-service";
 import { PingService } from "../../services/ping.service";
 import { TripDetailPage } from "../trip-detail/trip-detail";
@@ -15,50 +15,50 @@ export class ListServersPage {
   public serverList: any;
 
   constructor(public nav: NavController, public tripService: TripService, private secureStorage: SecureStorage,
-     public toastCtrl: ToastController, public ping: PingService) {
+    public toastCtrl: ToastController, public ping: PingService, public actionSheetCtrl: ActionSheetController) {
     // set sample data
     //this.trips = tripService.getAll();
     this.refreshServers();
   }
 
-  refreshServers(){
+  refreshServers() {
     this.serverList = [];
     this.secureStorage.create('server_list')
-    .then((storage: SecureStorageObject) => {
+      .then((storage: SecureStorageObject) => {
         storage.keys()
-        .then(
-          data => this.loadServerList(data),
-          error => this.alertMessage(error, "red")
-      );
-    });
+          .then(
+            data => this.loadServerList(data),
+            error => this.alertMessage(error, "red")
+          );
+      });
   }
 
-  loadServerList(listKeys){
+  loadServerList(listKeys) {
     listKeys.forEach(element => {
       this.secureStorage.create('server_list')
-      .then((storage: SecureStorageObject) => {
+        .then((storage: SecureStorageObject) => {
           storage.get(element)
-          .then(
-            data => {
-              //"assets/img/trip/thumb/trip_5.jpg"
-              this.ping.getPing(JSON.parse(data).serverDomain).subscribe(
-                data => {
-                  this.serverList.push({ serverName: element, img: "assets/img/server-list/server.png", ping: data});
-                },
-                error => {
-                  this.serverList.push({ serverName: element, img: "assets/img/server-list/server.png", ping: -1});
-                }
-              );
-            },
-            error => this.alertMessage(error, "red")
-        );
-      });
+            .then(
+              data => {
+                //"assets/img/trip/thumb/trip_5.jpg"
+                this.ping.getPing(JSON.parse(data).serverDomain).subscribe(
+                  data => {
+                    this.serverList.push({ serverName: element, img: "assets/img/server-list/server.png", ping: data });
+                  },
+                  error => {
+                    this.serverList.push({ serverName: element, img: "assets/img/server-list/server.png", ping: -1 });
+                  }
+                );
+              },
+              error => this.alertMessage(error, "red")
+            );
+        });
     });
   }
 
-  alertMessage(message, type){
+  alertMessage(message, type) {
     var css = "alert_red";
-    if(type === "green"){
+    if (type === "green") {
       css = "alert_green";
     }
     let alert = this.toastCtrl.create({
@@ -71,6 +71,40 @@ export class ListServersPage {
     });
 
     alert.present();
+  }
+
+  removeServer(serverName) {
+    this.serverList = [];
+    this.secureStorage.create('server_list')
+      .then((storage: SecureStorageObject) => {
+        storage.remove(serverName)
+          .then(
+            data => this.refreshServers(),
+            error => this.alertMessage(error, "red")
+          );
+      });
+  }
+
+  presentActionSheet(serverName) {
+    console.log("Aqui");
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Server Options',
+      buttons: [
+        {
+          text: 'Remove',
+          role: 'destructive',
+          handler: () => {
+            this.removeServer(serverName);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    actionSheet.present();
   }
 
   // view trip detail
