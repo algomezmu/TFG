@@ -22,14 +22,13 @@
 </ion-header>
 
 <ion-content padding class="lists detail-bg">
-  <!--list of trips-->
+  <!--list of servers-->
   <div class="list card" *ngFor="let server of serverList" tappable (click)="viewDetail(server.serverName)" (press)="presentActionSheet(server.serverName)" margin-bottom>
     <div class="background border-bottom" [ngStyle]="{'background-image': 'url(' + server.img + ')'
     , 'background-size':'auto 100%', 'background-repeat':'no-repeat'}">
       <div class="background-filter rlt">
         <div class="align-bottom" padding-left padding-right>
           <h6 class="pull-left text-white" ion-text>{{ server.serverName }}</h6>
-          <!--<h6 class="pull-right text-white" ion-text>{{ trip.price_adult | currency:'USD':true }}</h6>-->
           <div class="clear"></div>
         </div>
       </div>

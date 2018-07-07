@@ -1,0 +1,47 @@
+<!-- -->
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <strong>List of Servers</strong>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button tappable (click)="presentNotifications($event)">
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+      <button ion-button tappable (click)="goToAccount()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="lists detail-bg">
+  <ion-grid>
+    <div *ngFor="let menu of menuList">
+      <ion-row>
+        <ion-col>
+          <button ion-button block color="menu-o" *ngIf="menu.first" (click)="openOption(menu.first)">
+            <div>
+              <ion-icon name='refresh'></ion-icon>
+              <br>
+              <label>{{menu.first}}</label>
+            </div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button block color="menu-o" *ngIf="menu.second" (click)="openOption(menu.second)">
+            <div>
+              <div>
+                <ion-icon name='refresh'></ion-icon>
+              </div>
+              <label>{{menu.second}}</label>
+            </div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>

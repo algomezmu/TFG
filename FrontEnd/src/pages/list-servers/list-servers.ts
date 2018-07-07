@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { NavController, ToastController, ActionSheetController } from "ionic-angular";
 import { PingService } from "../../services/ping.service";
 import { RegisterServerPage } from "../register-server/register-server";
+import { ServerMenuPage } from "../server-menu/server-menu";
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
 
 @Component({
@@ -107,7 +108,7 @@ export class ListServersPage {
   // view trip detail
   viewDetail(id) {
     console.log(id);
-    //this.nav.push(TripDetailPage, { id: id });
+    this.nav.push(ServerMenuPage, { id: id });
   }
 
   addServer() {

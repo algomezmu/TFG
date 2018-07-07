@@ -18,6 +18,7 @@ import { SettingsPage } from "../pages/settings/settings";
 import { LoginPage } from "../pages/login/login";
 import { NotificationsPage } from "../pages/notifications/notifications";
 import { RegisterServerPage } from "../pages/register-server/register-server";
+import { ServerMenuPage } from "../pages/server-menu/server-menu";
 import { SearchLocationPage } from "../pages/search-location/search-location";
 import { ListServersPage } from "../pages/list-servers/list-servers";
 import { SecureStorage } from '@ionic-native/secure-storage';
@@ -30,6 +31,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
     NotificationsPage,
     RegisterServerPage,
     SearchLocationPage,
+    ServerMenuPage,
     ListServersPage
   ],
   imports: [
@@ -52,6 +54,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
     LoginPage,
     NotificationsPage,
     RegisterServerPage,
+    ServerMenuPage,
     SearchLocationPage,
     ListServersPage
   ],
