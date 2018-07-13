@@ -15,6 +15,7 @@ const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
 var lookBot = require('./bots/lookBot.js');
 var eventsBot = require('./bots/eventsBot.js');
 var startServer = require('./utils/startingServer.js');
+const config = require('./config/config');
 
 startServer.firstUser();
 
@@ -26,15 +27,12 @@ var server;
 //SSL Security
 //var privatekeyDir = "./ssl/privatekey.pem";
 //var certificateDir = "./ssl/certificate.pem";
-var privatekeyDir = './ssl/server.key';
-var certificateDir = './ssl/server.crt';
-if (fs.existsSync(privatekeyDir) && fs.existsSync(certificateDir)) {
+var privatekeyDir = './ssl/localhost.key';
+var certificateDir = './ssl/localhost.crt';
+if (config.activateSSL && fs.existsSync(privatekeyDir) && fs.existsSync(certificateDir)) {
     var SSL = {
         key: fs.readFileSync(privatekeyDir),
-        cert: fs.readFileSync(certificateDir),
-        requestCert: false,
-        rejectUnauthorized: false,
-        passphrase: '1234'
+        cert: fs.readFileSync(certificateDir)
         //key: fs.readFileSync(privatekeyDir),
         //cert: fs.readFileSync(certificateDir),
     };

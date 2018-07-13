@@ -10,6 +10,8 @@ var crypt_secret = "farZxa_12P54r";
 
 var time_boot_look = 300000;
 
+var activateSSL = false;
+
 // BotLook
 var lookCPU = true;
 var lookMemory = true;
@@ -24,6 +26,7 @@ var lookCPUTimer = "5 m";
 var lookMemoryTimer = "5 m"; //s/m/h
 var lookNetworkTimer = "5 m"; //s/m/h
 
+exports.activateSSL = activateSSL;
 exports.first_user_name = first_user_name;
 exports.first_user_password = first_user_password;
 exports.lookCPUTimer = lookCPUTimer;

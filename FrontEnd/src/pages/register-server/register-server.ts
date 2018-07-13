@@ -44,7 +44,6 @@ export class RegisterServerPage {
       serverDomain = serverDomain + ":" + port;
     }
     this.storage.get(serverName).then((val) => {
-      console.log(val)
       if(val){
         this.alertMessage("The server name already exist", "red")
       }else{
@@ -64,11 +63,14 @@ export class RegisterServerPage {
   }
 
   tryConnectAndSave(serverName, serverDomain, username, password){
-    this.loginService.login(serverDomain, username, password).then(
+    this.loginService.login(serverDomain, username, password).subscribe(
       data => {
-        if (data.status == "error") {
+        if (data.status == "error" || data.error == "errorConexion") {
+          if(data.error == "errorConexion")
+            data.message = "Connexion error"
           this.alertMessage(data.message, "red");
         } else {
+          console.log(data);
           //Correct Login
           const result = {serverDomain: serverDomain, username: username, password: password }
           
@@ -114,6 +116,10 @@ export class RegisterServerPage {
   }
 
   installBackend() {
+    console.log("Aqui");
+    this.storage.forEach((value, key, index) => {
+      this.storage.remove(key);
+    });
   }
 
   // go to login page
