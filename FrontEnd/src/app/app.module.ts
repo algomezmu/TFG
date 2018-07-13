@@ -21,7 +21,7 @@ import { RegisterServerPage } from "../pages/register-server/register-server";
 import { ServerMenuPage } from "../pages/server-menu/server-menu";
 import { SearchLocationPage } from "../pages/search-location/search-location";
 import { ListServersPage } from "../pages/list-servers/list-servers";
-import { SecureStorage } from '@ionic-native/secure-storage';
+import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -65,7 +65,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
     ActivityService,
     LoginService,
     PingService,
-    SecureStorage
+    HTTP
   ]
 })
 

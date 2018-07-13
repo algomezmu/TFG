@@ -1,6 +1,12 @@
 var express = require("express");
 var cluster = require('cluster');
 var bodyParser = require("body-parser");
+
+const crypto = require('crypto');
+const fs = require("fs");
+
+const https = require("https");
+
 var app = express();
 
 const logConfig = require('./config/log-conf');
@@ -15,9 +21,28 @@ startServer.firstUser();
 lookBot.lookBot();
 eventsBot.loadEvents();
 
-//Libreria de threads
+var server;
 
-var server = require('http').Server(app);
+//SSL Security
+//var privatekeyDir = "./ssl/privatekey.pem";
+//var certificateDir = "./ssl/certificate.pem";
+var privatekeyDir = './ssl/server.key';
+var certificateDir = './ssl/server.crt';
+if (fs.existsSync(privatekeyDir) && fs.existsSync(certificateDir)) {
+    var SSL = {
+        key: fs.readFileSync(privatekeyDir),
+        cert: fs.readFileSync(certificateDir),
+        requestCert: false,
+        rejectUnauthorized: false,
+        passphrase: '1234'
+        //key: fs.readFileSync(privatekeyDir),
+        //cert: fs.readFileSync(certificateDir),
+    };
+    server = https.createServer(SSL, app);
+}else{
+    server = require('http').Server(app);
+}
+//server = require('http').Server(app);
 
 // Aceptaremos JSON y valores codificados en la propia URL
 app.use(bodyParser.json({limit: '4mb'}));

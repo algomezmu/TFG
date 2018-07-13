@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HTTP } from '@ionic-native/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
@@ -8,7 +9,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LoginService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HTTP) {
   }
   
   login(serverURL, username, password) {
@@ -19,9 +20,9 @@ export class LoginService {
     headers.append('content-type','application/json');
 
     return this.http.post(serverURL + "/api/login", { username, password }, {
-        headers: headers
+        headers: JSON.stringify(headers)
       })
-      .map(res => {
+      .then(res => {
         return JSON.parse(JSON.stringify(res));
       })
       .catch(err => {

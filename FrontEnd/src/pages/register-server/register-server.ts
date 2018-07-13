@@ -4,7 +4,7 @@ import { Validators, FormBuilder } from "@angular/forms";
 import { LoginPage } from "../login/login";
 import { LoginService } from "../../services/login.service";
 //import { HomePage } from "../home/home";
-import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
+import { Storage } from '@ionic/storage';
 import { ListServersPage } from "../list-servers/list-servers"
 
 @Component({
@@ -16,7 +16,7 @@ export class RegisterServerPage {
   public registerForm;
 
   constructor(public nav: NavController, private formBuilder: FormBuilder,
-    private loginService: LoginService, public toastCtrl: ToastController, private secureStorage: SecureStorage) {
+    private loginService: LoginService, public toastCtrl: ToastController, private storage: Storage) {
     this.registerForm = this.formBuilder.group({
       serverName: ['Prueba', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9]*'), Validators.required])],
       serverDomain: ['localhost', Validators.compose([Validators.maxLength(60), Validators.required])],
@@ -43,6 +43,15 @@ export class RegisterServerPage {
     } else {
       serverDomain = serverDomain + ":" + port;
     }
+    this.storage.get(serverName).then((val) => {
+      console.log(val)
+      if(val){
+        this.alertMessage("The server name already exist", "red")
+      }else{
+        this.tryConnectAndSave(serverName, serverDomain, username, password)
+      }
+    });
+    /*
     this.secureStorage.create('server_list')
       .then((storage: SecureStorageObject) => {
           storage.get(serverName)
@@ -50,19 +59,23 @@ export class RegisterServerPage {
             data => this.alertMessage("The server name already exist", "red"),
             error => this.tryConnectAndSave(serverName, serverDomain, username, password)
         );
-      });
+      });*/
     //this.nav.setRoot(HomePage);
   }
 
   tryConnectAndSave(serverName, serverDomain, username, password){
-    this.loginService.login(serverDomain, username, password).subscribe(
+    this.loginService.login(serverDomain, username, password).then(
       data => {
         if (data.status == "error") {
           this.alertMessage(data.message, "red");
         } else {
           //Correct Login
           const result = {serverDomain: serverDomain, username: username, password: password }
-
+          
+          this.storage.set(serverName, JSON.stringify(result));
+          this.alertMessage("Server Created", "green");
+          this.nav.setRoot(ListServersPage);
+          /*
           this.secureStorage.create('server_list')
             .then((storage: SecureStorageObject) => {
               storage.set(serverName, JSON.stringify(result))
@@ -74,6 +87,7 @@ export class RegisterServerPage {
                   error => this.alertMessage(error.message, "red")
                 );
             });
+            */
         }
       },
       error => {
@@ -100,14 +114,6 @@ export class RegisterServerPage {
   }
 
   installBackend() {
-    this.secureStorage.create('server_list')
-      .then((storage: SecureStorageObject) => {
-          storage.get('servers')
-          .then(
-            data => console.log("D " + data),
-            error => console.log("E " + error)
-        );
-      });
   }
 
   // go to login page

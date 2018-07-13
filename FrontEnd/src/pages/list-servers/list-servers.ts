@@ -3,7 +3,7 @@ import { NavController, ToastController, ActionSheetController } from "ionic-ang
 import { PingService } from "../../services/ping.service";
 import { RegisterServerPage } from "../register-server/register-server";
 import { ServerMenuPage } from "../server-menu/server-menu";
-import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-list-server',
@@ -13,7 +13,7 @@ export class ListServersPage {
   // list of trips
   public serverList: any;
 
-  constructor(public nav: NavController, private secureStorage: SecureStorage,
+  constructor(public nav: NavController, private storage: Storage,
     public toastCtrl: ToastController, public ping: PingService, public actionSheetCtrl: ActionSheetController) {
     // set sample data
     //this.trips = tripService.getAll();
@@ -22,6 +22,17 @@ export class ListServersPage {
 
   refreshServers() {
     this.serverList = [];
+    this.storage.forEach((value, key, index) => {
+      this.ping.getPing(JSON.parse(value).serverDomain).subscribe(
+        data => {
+          this.serverList.push({ serverName: key, img: "assets/img/server-list/server.png", ping: data });
+        },
+        error => {
+          this.serverList.push({ serverName: key, img: "assets/img/server-list/server.png", ping: -1 });
+        }
+      );
+    })
+    /*
     this.secureStorage.create('server_list')
       .then((storage: SecureStorageObject) => {
         storage.keys()
@@ -30,9 +41,11 @@ export class ListServersPage {
             error => this.alertMessage(error, "red")
           );
       });
+      */
   }
 
   loadServerList(listKeys) {
+    /*
     listKeys.forEach(element => {
       this.secureStorage.create('server_list')
         .then((storage: SecureStorageObject) => {
@@ -40,6 +53,7 @@ export class ListServersPage {
             .then(
               data => {
                 //"assets/img/trip/thumb/trip_5.jpg"
+                console.log(data);
                 this.ping.getPing(JSON.parse(data).serverDomain).subscribe(
                   data => {
                     this.serverList.push({ serverName: element, img: "assets/img/server-list/server.png", ping: data });
@@ -53,6 +67,7 @@ export class ListServersPage {
             );
         });
     });
+    */
   }
 
   alertMessage(message, type) {
@@ -74,6 +89,8 @@ export class ListServersPage {
 
   removeServer(serverName) {
     this.serverList = [];
+    this.storage.remove(serverName);
+    /*
     this.secureStorage.create('server_list')
       .then((storage: SecureStorageObject) => {
         storage.remove(serverName)
@@ -82,6 +99,7 @@ export class ListServersPage {
             error => this.alertMessage(error, "red")
           );
       });
+      */
   }
 
   presentActionSheet(serverName) {
