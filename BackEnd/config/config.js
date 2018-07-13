@@ -1,6 +1,7 @@
 // Recomended to delete this user
 var first_user_name = "admin"
-var first_user_password = "12345678"
+var first_user_password = "fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe";
+//"12345678"
 
 var domainDB = 'mongodb://localhost:27017/monitor';
 

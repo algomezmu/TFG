@@ -34,6 +34,7 @@
     "cordova-plugin-advanced-http": "^1.11.1",
     "cordova-plugin-file": "^6.0.1",
     "cordova-sqlite-storage": "^2.3.3",
+    "crypto-js": "^3.1.9-1",
     "ionic-angular": "3.8.0",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",

@@ -6,6 +6,7 @@ import { LoginService } from "../../services/login.service";
 //import { HomePage } from "../home/home";
 import { Storage } from '@ionic/storage';
 import { ListServersPage } from "../list-servers/list-servers"
+import * as crypto from 'crypto-js/sha512';
 
 @Component({
   selector: 'page-register',
@@ -63,7 +64,9 @@ export class RegisterServerPage {
   }
 
   tryConnectAndSave(serverName, serverDomain, username, password){
-    this.loginService.login(serverDomain, username, password).subscribe(
+    
+    var hash = crypto(password);
+    this.loginService.login(serverDomain, username, hash.toString()).subscribe(
       data => {
         if (data.status == "error" || data.error == "errorConexion") {
           if(data.error == "errorConexion")
