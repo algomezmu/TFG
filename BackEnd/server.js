@@ -27,8 +27,8 @@ var server;
 //SSL Security
 //var privatekeyDir = "./ssl/privatekey.pem";
 //var certificateDir = "./ssl/certificate.pem";
-var privatekeyDir = './ssl/localhost.key';
-var certificateDir = './ssl/localhost.crt';
+var privatekeyDir = './ssl/private_key.key';
+var certificateDir = './ssl/ssl_certificate.cer';
 if (config.activateSSL && fs.existsSync(privatekeyDir) && fs.existsSync(certificateDir)) {
     var SSL = {
         key: fs.readFileSync(privatekeyDir),
