@@ -2,13 +2,15 @@ import { NgModule } from "@angular/core";
 import { IonicApp, IonicModule } from "ionic-angular";
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP } from '@ionic-native/http';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Keyboard } from '@ionic-native/keyboard';
 
-import { ActivityService } from "../services/activity-service";
+import { ShareDataService } from "../utils/shareData";
+
 import { PingService } from "../services/ping.service";
 import { LoginService } from "../services/login.service";
 
@@ -21,7 +23,8 @@ import { RegisterServerPage } from "../pages/register-server/register-server";
 import { ServerMenuPage } from "../pages/server-menu/server-menu";
 import { SearchLocationPage } from "../pages/search-location/search-location";
 import { ListServersPage } from "../pages/list-servers/list-servers";
-import { HTTP } from '@ionic-native/http';
+import { CPUPage } from "../pages/server-menu-pages/cpu/cpu";
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { HTTP } from '@ionic-native/http';
     RegisterServerPage,
     SearchLocationPage,
     ServerMenuPage,
-    ListServersPage
+    ListServersPage,
+    CPUPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import { HTTP } from '@ionic-native/http';
     IonicStorageModule.forRoot({
       name: '__ionic3_start_theme',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,16 +61,17 @@ import { HTTP } from '@ionic-native/http';
     RegisterServerPage,
     ServerMenuPage,
     SearchLocationPage,
-    ListServersPage
+    ListServersPage,
+    CPUPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Keyboard,
-    ActivityService,
     LoginService,
     PingService,
-    HTTP
+    HTTP,
+    ShareDataService
   ]
 })
 

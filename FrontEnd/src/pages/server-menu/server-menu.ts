@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams  } from "ionic-angular";
+import { NavController, NavParams } from "ionic-angular";
+import { CPUPage } from "../server-menu-pages/cpu/cpu";
+import { ShareDataService } from "../../utils/shareData";
 
 @Component({
   selector: 'page-server-menu',
@@ -7,31 +9,64 @@ import { NavController, NavParams  } from "ionic-angular";
 })
 export class ServerMenuPage {
   // list of trips
-  public serverId: any;
+  public serverName: any;
   public menuList: any;
 
-  constructor(public nav: NavController, public navParams: NavParams) {
+  constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService) {
     // set sample data
-    console.log("Aqui");
-    this.serverId = navParams.get('id'); 
-    console.log("fin");
+    this.serverName = this.shareDataService.serverName;
+    console.log(this.serverName);
     this.createMenuList();
   }
 
-  createMenuList(){
+  createMenuList() {
     this.menuList = [
-      {first: "Status", second:"Config"},
-      {first: "Events", second:"Scritps"},
-      {first: "CPU", second:"Memory"},
-      {first: "Sockets", second:"Internet"},
-      {first: "Process", second:"Users"},
-      {first: "Discs"},
+      { first: "Status", second: "Config" },
+      { first: "Events", second: "Scritps" },
+      { first: "CPU", second: "Memory" },
+      { first: "Sockets", second: "Internet" },
+      { first: "Process", second: "Users" },
+      { first: "Discs" },
     ]
   }
 
-  // view trip detail
-  viewDetail(id) {
-    console.log(id);
-    //this.nav.push(TripDetailPage, { id: id });
+  openOption(id) {
+    switch (id) {
+      case "Status":
+
+        break;
+      case "Config":
+
+        break;
+      case "Events":
+
+        break;
+      case "Scritps":
+
+        break;
+      case "CPU":
+        this.nav.push(CPUPage);
+        break;
+      case "Memory":
+
+        break;
+      case "Sockets":
+
+        break;
+      case "Internet":
+
+        break;
+      case "Process":
+
+        break;
+        case "Users":
+
+        break;
+        case "Discs":
+
+        break;
+      default:
+        break;
+    }
   }
 }

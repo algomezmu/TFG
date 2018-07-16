@@ -65,34 +65,20 @@ export class RegisterServerPage {
 
   tryConnectAndSave(serverName, serverDomain, username, password){
     
-    var hash = crypto(password);
-    this.loginService.login(serverDomain, username, hash.toString()).subscribe(
+    var hash = crypto(password).toString();
+    this.loginService.login(serverDomain, username, hash).subscribe(
       data => {
         if (data.status == "error" || data.error == "errorConexion") {
           if(data.error == "errorConexion")
             data.message = "Connexion error"
           this.alertMessage(data.message, "red");
         } else {
-          console.log(data);
           //Correct Login
-          const result = {serverDomain: serverDomain, username: username, password: password }
+          const result = {serverDomain: serverDomain, username: username, password: hash }
           
           this.storage.set(serverName, JSON.stringify(result));
           this.alertMessage("Server Created", "green");
           this.nav.setRoot(ListServersPage);
-          /*
-          this.secureStorage.create('server_list')
-            .then((storage: SecureStorageObject) => {
-              storage.set(serverName, JSON.stringify(result))
-                .then(
-                  data => {
-                    this.alertMessage("Server Created", "green");
-                    this.nav.setRoot(ListServersPage);
-                  },
-                  error => this.alertMessage(error.message, "red")
-                );
-            });
-            */
         }
       },
       error => {

@@ -4,6 +4,8 @@ import { PingService } from "../../services/ping.service";
 import { RegisterServerPage } from "../register-server/register-server";
 import { ServerMenuPage } from "../server-menu/server-menu";
 import { Storage } from '@ionic/storage';
+import { LoginService } from "../../services/login.service";
+import { ShareDataService } from "../../utils/shareData";
 
 @Component({
   selector: 'page-list-server',
@@ -14,7 +16,8 @@ export class ListServersPage {
   public serverList: any;
 
   constructor(public nav: NavController, private storage: Storage,
-    public toastCtrl: ToastController, public ping: PingService, public actionSheetCtrl: ActionSheetController) {
+    public toastCtrl: ToastController, public ping: PingService, public actionSheetCtrl: ActionSheetController,
+    public loginService: LoginService, public shareData: ShareDataService) {
     // set sample data
     //this.trips = tripService.getAll();
     this.refreshServers();
@@ -125,8 +128,29 @@ export class ListServersPage {
 
   // view trip detail
   viewDetail(id) {
-    console.log(id);
-    this.nav.push(ServerMenuPage, { id: id });
+    this.storage.get(id).then((server) => {
+      server = JSON.parse(server);
+
+      this.loginService.login(server.serverDomain, server.username, server.password.toString()).subscribe(
+        data => {
+          if (data.status == "error" || data.error == "errorConexion") {
+            if(data.error == "errorConexion")
+              data.message = "Connexion error"
+            this.alertMessage(data.message, "red");
+          } else {
+            this.shareData.token = data.token;
+            this.shareData.serverName = id;
+            this.shareData.serverDomain = server.serverDomain;
+            this.nav.push(ServerMenuPage);
+          }
+        },
+        error => {
+          this.alertMessage("Connexion error", "red");
+        }
+      );
+    });
+    
+    //this.nav.push(ServerMenuPage, { id: id });
   }
 
   addServer() {
