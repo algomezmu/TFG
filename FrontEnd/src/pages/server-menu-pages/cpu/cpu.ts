@@ -1,78 +1,98 @@
-import { Component } from "@angular/core";
-import { NavController, NavParams  } from "ionic-angular";
+import { Component, ViewChild } from "@angular/core";
+import { NavController, NavParams } from "ionic-angular";
 import { ShareDataService } from "../../../utils/shareData";
+import { LookService } from "../../../services/look.service";
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 @Component({
   selector: 'page-cpu',
   templateUrl: 'cpu.html'
 })
 export class CPUPage {
-  // list of trips
-  public serverName: any;
-  private initDate: any;
-  private endDate: any ;
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  // list of process
+  public processList: any;
 
-  constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService) {
-    this.serverName = shareDataService.serverName; 
-    console.log(this.serverName);
+  //Data
+  private initDate: any;
+  private endDate: any;
+
+  //Chart Optipons
+  public lineChartData: Array<any> = [{ data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }];
+  public lineChartLabels: Array<any> = ['No Data'];
+  public lineChartOptions: any = {
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            callback: function (value, index, array) {
+              return null;
+            }
+          }
+        }
+      ]
+    }
+  };
+  //
+
+  public lineChartLegend: boolean = true;
+  public lineChartType: string = 'line';
+
+  constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService, public lookService: LookService) {
     this.initDate = new Date();
-    this.initDate.setDate(this.initDate.getDate() - 7);
+    this.initDate.setDate(this.initDate.getDate() - 3);
     this.initDate = this.initDate.toISOString();
     this.endDate = new Date().toISOString();
+    this.reloadChart(null);
   }
 
-  public lineChartData:Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
-    {data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
-  ];
-  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  public lineChartOptions:any = {
-    responsive: true
-  };
-  public lineChartColors:Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
-  public lineChartLegend:boolean = true;
-  public lineChartType:string = 'line';
- 
-  public randomize():void {
-    let _lineChartData:Array<any> = new Array(this.lineChartData.length);
-    for (let i = 0; i < this.lineChartData.length; i++) {
-      _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
-      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
+
+  reloadChart(refresher) {
+    this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
+      var avg = [];
+      var min = [];
+      var max = [];
+      var date = [];
+      res.message.forEach(element => {
+        avg.push(element.cpuAvg);
+        min.push(element.cpuMin);
+        max.push(element.cpuMax);
+        date.push(element.created_at);
+      });
+      this.lineChartLabels = date;
+      this.lineChartData = [
+        { data: avg, label: 'avg' },
+        { data: min, label: 'min' },
+        { data: max, label: 'max' }
+      ];
+
+      // The next code is for updating the chart DONT TOUCH
+      if (
+        this.chart !== undefined &&
+        this.chart.chart !== undefined
+      ) {
+        this.chart.chart.destroy();
+        this.chart.chart = 0;
+
+        this.chart.chartType = "line";
+        this.chart.datasets = this.lineChartData;
+        this.chart.labels = this.lineChartLabels;
+        this.chart.ngOnInit();
       }
-    }
-    this.lineChartData = _lineChartData;
-  }
 
-  reloadChart(){
-    console.log(this.initDate);
-    console.log(this.endDate);
-  }
 
+      this.lookService.process(this.shareDataService.serverDomain, this.shareDataService.token, 5).subscribe(res => {
+        res.message.forEach((process, index) => {
+          res.message[index].pcpu = Math.round(process.pcpu * 100) / 100;
+        });
+        this.processList = res.message;
+
+        if(refresher){
+          refresher.complete();
+        }
+      });
+    });
+  }
 }

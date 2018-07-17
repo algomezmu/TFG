@@ -6,6 +6,7 @@
   "license": "",
   "dependencies": {
     "cluster": "^0.7.7",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "js-logging": "^0.1.0",
     "jsonwebtoken": "^8.2.1",

@@ -20,15 +20,18 @@ export class ListServersPage {
     public loginService: LoginService, public shareData: ShareDataService) {
     // set sample data
     //this.trips = tripService.getAll();
-    this.refreshServers();
+    this.refreshServers(null);
   }
 
-  refreshServers() {
+  refreshServers(refresher) {
     this.serverList = [];
     this.storage.forEach((value, key, index) => {
       this.ping.getPing(JSON.parse(value).serverDomain).subscribe(
         data => {
           this.serverList.push({ serverName: key, img: "assets/img/server-list/server.png", ping: data });
+          if(refresher){
+            refresher.complete();
+          }
         },
         error => {
           this.serverList.push({ serverName: key, img: "assets/img/server-list/server.png", ping: -1 });

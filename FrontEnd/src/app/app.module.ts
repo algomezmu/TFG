@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { ChartsModule } from 'ng2-charts';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -13,6 +15,7 @@ import { ShareDataService } from "../utils/shareData";
 
 import { PingService } from "../services/ping.service";
 import { LoginService } from "../services/login.service";
+import { LookService } from "../services/look.service";
 
 import { MyApp } from "./app.component";
 
@@ -24,8 +27,6 @@ import { ServerMenuPage } from "../pages/server-menu/server-menu";
 import { SearchLocationPage } from "../pages/search-location/search-location";
 import { ListServersPage } from "../pages/list-servers/list-servers";
 import { CPUPage } from "../pages/server-menu-pages/cpu/cpu";
-import { ChartsModule } from 'ng2-charts';
-
 @NgModule({
   declarations: [
     MyApp,
@@ -71,7 +72,8 @@ import { ChartsModule } from 'ng2-charts';
     LoginService,
     PingService,
     HTTP,
-    ShareDataService
+    ShareDataService,
+    LookService
   ]
 })
 

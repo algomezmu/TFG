@@ -91,11 +91,14 @@ function getNetworkHistory(request, response) {
 }
 
 function processList(request, response){
-    lookFunctions.processFunction(response);
+    if(!isNaN(Number(request.params.nProcess))){
+        lookFunctions.processFunction(response, request.params.nProcess);
+    }
 }
 
 
 function processKiller(request, response){
+    req.params.number
     //process.kill(process.pid, 'SIGINT');
     if(request.body.pid && Number(request.body.pid) > 0){
         process.kill(request.body.pid);

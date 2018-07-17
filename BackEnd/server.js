@@ -1,6 +1,7 @@
 var express = require("express");
 var cluster = require('cluster');
 var bodyParser = require("body-parser");
+var cors = require('cors');
 
 const crypto = require('crypto');
 const fs = require("fs");
@@ -42,6 +43,7 @@ if (config.activateSSL && fs.existsSync(privatekeyDir) && fs.existsSync(certific
 }
 //server = require('http').Server(app);
 
+app.use(cors())
 // Aceptaremos JSON y valores codificados en la propia URL
 app.use(bodyParser.json({limit: '4mb'}));
 app.use(bodyParser.urlencoded({limit: '4mb',extended: true}));

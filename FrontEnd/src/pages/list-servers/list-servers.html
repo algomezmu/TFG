@@ -8,7 +8,7 @@
       <strong>List of Servers</strong>
     </ion-title>
     <ion-buttons end>
-      <button ion-button tappable (click)="refreshServers()">
+      <button ion-button tappable (click)="refreshServers(null)">
         <ion-icon name="ios-refresh"></ion-icon>
       </button>
       <button ion-button tappable (click)="presentNotifications($event)">
@@ -22,8 +22,13 @@
 </ion-header>
 
 <ion-content padding class="lists detail-bg">
+  <ion-refresher (ionRefresh)="refreshServers($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <!--list of servers-->
-  <div class="list card" *ngFor="let server of serverList" tappable (click)="viewDetail(server.serverName)" (press)="presentActionSheet(server.serverName)" margin-bottom>
+  <div class="list card" *ngFor="let server of serverList" tappable (click)="viewDetail(server.serverName)" (press)="presentActionSheet(server.serverName)"
+    margin-bottom>
     <div class="background border-bottom" [ngStyle]="{'background-image': 'url(' + server.img + ')'
     , 'background-size':'auto 100%', 'background-repeat':'no-repeat'}">
       <div class="background-filter rlt">
@@ -37,10 +42,14 @@
       <ion-icon name="time" class="text-white"></ion-icon>
       <span ion-text *ngIf="server.ping != -1" class="text-white">{{ server.ping }} ms</span>
       <span ion-text *ngIf="server.ping == -1" class="text-red">Server Offline</span>
-      <span class="pull-right" ion-text color="light"><strong>{{ server.serverName }}</strong></span>
+      <span class="pull-right" ion-text color="light">
+        <strong>{{ server.serverName }}</strong>
+      </span>
     </div>
   </div>
   <ion-fab bottom right>
-    <button ion-fab (click)="addServer()"><ion-icon ios="ios-add" md="md-add"></ion-icon></button>
+    <button ion-fab (click)="addServer()">
+      <ion-icon ios="ios-add" md="md-add"></ion-icon>
+    </button>
   </ion-fab>
 </ion-content>

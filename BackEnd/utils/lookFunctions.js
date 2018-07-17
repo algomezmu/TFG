@@ -107,9 +107,13 @@ function networkFunction(saveData, returnData, response){
     });
 }
 
-function processFunction(response){
+function processFunction(response, nProcess){
     si.processes(function(processInfo){
-        lookMessages.dataResponse(response, processInfo);
+        if(nProcess < 0){
+            lookMessages.dataResponse(response, processInfo);
+        }else{
+            lookMessages.dataResponse(response, processInfo.list.sort((a, b) => b.pcpu - a.pcpu).slice(0, nProcess));
+        }
     });
 }
 
