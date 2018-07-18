@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var config = require('./../config/config.js');
 var Schema = mongoose.Schema;
 
 
@@ -33,6 +34,7 @@ var NetworkSchema = new Schema({
     },
     created_at: {
         type: Date,
+        expires: 60*60*24*config.dLookROThan,
         required: false
     }
 });

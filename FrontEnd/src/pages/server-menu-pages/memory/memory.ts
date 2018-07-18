@@ -6,10 +6,10 @@ import { ListServersPage } from "../../list-servers/list-servers";
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 @Component({
-  selector: 'page-cpu',
-  templateUrl: 'cpu.html'
+  selector: 'page-memory',
+  templateUrl: 'memory.html'
 })
-export class CPUPage {
+export class MemoryPage {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   // list of process
   public processList: any;

@@ -27,12 +27,15 @@ var lookCPUTimer = "5 m";
 var lookMemoryTimer = "5 m"; //s/m/h
 var lookNetworkTimer = "5 m"; //s/m/h
 
+var dLookROThan = "7"; //Delete Look Registers Older Than 7 days (Once one register is saved, can't be changed for that register)
+
 exports.activateSSL = activateSSL;
 exports.first_user_name = first_user_name;
 exports.first_user_password = first_user_password;
 exports.lookCPUTimer = lookCPUTimer;
 exports.lookMemoryTimer = lookMemoryTimer;
 exports.lookNetworkTimer = lookNetworkTimer;
+exports.dLookROThan = dLookROThan;
 exports.lookCPU = lookCPU;
 exports.lookMemory = lookMemory;
 exports.lookNetwork = lookNetwork;

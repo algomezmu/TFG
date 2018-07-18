@@ -10,14 +10,14 @@ function verifytoken(req, res, next){
         // verifies secret and checks exp
         jwt.verify(token, authSecret.jwt_secret, function(err, decoded) {
             if (err) {
-                res.json({ "status": "error", "message": 'Failed to authenticate token.' });
+                res.json({ "status": "error", "code": "401",  "message": 'Failed to authenticate token.' });
             } else {
                 req.rol = decoded.rol;
                 next();
             }
         });
     }else{
-        res.json({ "status": "error", "message": 'Failed to authenticate token.' });
+        res.json({ "status": "error", "code": "401", "message": 'Failed to authenticate token.' });
     }
 }
 
