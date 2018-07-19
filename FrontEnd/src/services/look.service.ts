@@ -31,7 +31,7 @@ export class LookService {
       });
   }
 
-  process(serverURL, token, nProcess) {
+  mem(serverURL, token, dateStart, dateEnd, actualInfo) {
     const httpOptions = {
         headers: new HttpHeaders({
           'Access-Control-Allow-Origin' : '*',
@@ -42,7 +42,27 @@ export class LookService {
       })
     };
 
-    return this.http.get(serverURL + "/api/look/processList/" + nProcess, httpOptions)
+    return this.http.post(serverURL + "/api/look/mem", { dateStart, dateEnd, actualInfo }, httpOptions)
+      .map(res => {
+        return JSON.parse(JSON.stringify(res));
+      })
+      .catch(err => {
+        return Observable.throw('errorConexion');
+      });
+  }
+
+  process(serverURL, token, order, nProcess) {
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+          'Accept':'application/json',
+          'Content-Type':  'application/json',
+          'Authorization': token
+      })
+    };
+
+    return this.http.get(serverURL + "/api/look/processList/" + order + "/" + nProcess, httpOptions)
       .map(res => {
         return JSON.parse(JSON.stringify(res));
       })

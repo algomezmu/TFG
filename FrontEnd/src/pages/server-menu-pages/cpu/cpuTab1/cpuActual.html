@@ -1,0 +1,25 @@
+<!-- -->
+<ion-header style="z-index: -100">
+    <ion-navbar color="primary">
+    </ion-navbar>
+</ion-header>
+<ion-content padding class="lists detail-bg">
+  <ion-refresher (ionRefresh)="reloadChart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <div style="display: block">
+      <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+    </div>
+
+    <ion-list>
+      <ion-list-header>Actual Use of CPU (=5)</ion-list-header>
+      <ion-item *ngFor="let process of processList">
+        <h2>Name: {{process.name}}</h2>
+        PID: {{process.pid}}
+        <span item-end>Usage: {{process.pmem}} %</span>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+</ion-content>

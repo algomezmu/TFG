@@ -26,7 +26,13 @@ import { RegisterServerPage } from "../pages/register-server/register-server";
 import { ServerMenuPage } from "../pages/server-menu/server-menu";
 import { SearchLocationPage } from "../pages/search-location/search-location";
 import { ListServersPage } from "../pages/list-servers/list-servers";
-import { CPUPage } from "../pages/server-menu-pages/cpu/cpu";
+import { CPUPage } from "../pages/server-menu-pages/cpu/cpuMain";
+import { CpuActualPage } from "../pages/server-menu-pages/cpu/cpuTab1/cpuActual";
+import { CpuHistoryPage } from "../pages/server-menu-pages/cpu/cpuTab2/cpuHistory";
+import { MemoryPage } from "../pages/server-menu-pages/memory/memoryMain";
+import { MemoryActualPage } from "../pages/server-menu-pages/memory/memoryTab1/memoryActual";
+import { MemoryHistoryPage } from "../pages/server-menu-pages/memory/memoryTab2/memoryHistory";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -37,7 +43,12 @@ import { CPUPage } from "../pages/server-menu-pages/cpu/cpu";
     SearchLocationPage,
     ServerMenuPage,
     ListServersPage,
-    CPUPage
+    CPUPage,
+    CpuActualPage,
+    CpuHistoryPage,
+    MemoryPage,
+    MemoryActualPage,
+    MemoryHistoryPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +74,12 @@ import { CPUPage } from "../pages/server-menu-pages/cpu/cpu";
     ServerMenuPage,
     SearchLocationPage,
     ListServersPage,
-    CPUPage
+    CPUPage,
+    CpuActualPage,
+    CpuHistoryPage,
+    MemoryPage,
+    MemoryActualPage,
+    MemoryHistoryPage
   ],
   providers: [
     StatusBar,

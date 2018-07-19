@@ -92,7 +92,7 @@ function getNetworkHistory(request, response) {
 
 function processList(request, response){
     if(!isNaN(Number(request.params.nProcess))){
-        lookFunctions.processFunction(response, request.params.nProcess);
+        lookFunctions.processFunction(response, request.params.order, request.params.nProcess);
     }
 }
 

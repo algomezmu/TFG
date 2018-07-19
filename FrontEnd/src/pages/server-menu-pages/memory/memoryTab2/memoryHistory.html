@@ -1,0 +1,24 @@
+<ion-header style="z-index: -100">
+    <ion-navbar color="primary">
+    </ion-navbar>
+</ion-header>
+<ion-content padding class="lists detail-bg">
+  <ion-refresher (ionRefresh)="reloadChart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <ion-item>
+      <ion-label>Date Init</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="initDate" [max]="endDate" (ngModelChange)="reloadChart(null)"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date End</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="endDate" [min]="initDate" (ngModelChange)="reloadChart(null)"></ion-datetime>
+    </ion-item>
+    <div style="display: block;">
+      <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+        [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+    </div>
+  </ion-grid>
+</ion-content>

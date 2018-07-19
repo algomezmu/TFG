@@ -1,24 +1,21 @@
 import { Component, ViewChild } from "@angular/core";
 import { NavController, NavParams, ToastController } from "ionic-angular";
-import { ShareDataService } from "../../../utils/shareData";
-import { LookService } from "../../../services/look.service";
-import { ListServersPage } from "../../list-servers/list-servers";
+import { ShareDataService } from "../../../../utils/shareData";
+import { LookService } from "../../../../services/look.service";
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 @Component({
-  selector: 'page-memory',
-  templateUrl: 'memory.html'
+  selector: 'page-cpu-history',
+  templateUrl: 'cpuHistory.html'
 })
-export class MemoryPage {
+export class CpuHistoryPage {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
-  // list of process
-  public processList: any;
 
   //Data
   private initDate: any;
   private endDate: any;
 
-  //Chart Optipons
+  //Line Chart Optipons
   public lineChartData: Array<any> = [{ data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }];
   public lineChartLabels: Array<any> = ['No Data'];
   public lineChartOptions: any = {
@@ -50,7 +47,6 @@ export class MemoryPage {
     this.reloadChart(null);
   }
 
-
   reloadChart(refresher) {
     this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
       if (res.status != "error") {
@@ -79,26 +75,18 @@ export class MemoryPage {
           this.chart.chart.destroy();
           this.chart.chart = 0;
 
-          this.chart.chartType = "line";
+          this.chart.chartType = this.lineChartType;
           this.chart.datasets = this.lineChartData;
           this.chart.labels = this.lineChartLabels;
           this.chart.ngOnInit();
         }
 
-
-        this.lookService.process(this.shareDataService.serverDomain, this.shareDataService.token, 5).subscribe(res => {
-          res.message.forEach((process, index) => {
-            res.message[index].pcpu = Math.round(process.pcpu * 100) / 100;
-          });
-          this.processList = res.message;
-
-          if (refresher) {
-            refresher.complete();
-          }
-        });
+        if (refresher) {
+          refresher.complete();
+        }
       } else {
         if(res.code == "401"){
-          this.nav.push(ListServersPage);
+          this.nav.popToRoot();
         }
         this.alertMessage(res.message, "red");
 

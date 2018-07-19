@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
-import { CPUPage } from "../server-menu-pages/cpu/cpu";
+import { CPUPage } from "../server-menu-pages/cpu/cpuMain";
+import { MemoryPage } from "../server-menu-pages/memory/memoryMain";
 import { ShareDataService } from "../../utils/shareData";
 
 @Component({
@@ -48,7 +49,7 @@ export class ServerMenuPage {
         this.nav.push(CPUPage);
         break;
       case "Memory":
-
+        this.nav.push(MemoryPage);
         break;
       case "Sockets":
 

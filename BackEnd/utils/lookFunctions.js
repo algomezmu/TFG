@@ -107,12 +107,17 @@ function networkFunction(saveData, returnData, response){
     });
 }
 
-function processFunction(response, nProcess){
+function processFunction(response, order, nProcess){
     si.processes(function(processInfo){
         if(nProcess < 0){
             lookMessages.dataResponse(response, processInfo);
         }else{
-            lookMessages.dataResponse(response, processInfo.list.sort((a, b) => b.pcpu - a.pcpu).slice(0, nProcess));
+            lookMessages.dataResponse(response, processInfo.list.sort((a, b) => {
+                if(order == "c")
+                    return b.pcpu - a.pcpu;
+                if(order == "m")
+                    return b.pmem - a.pmem;                   
+            }).slice(0, nProcess));
         }
     });
 }

@@ -59,7 +59,7 @@ var appRouter = function (app) {
         lookServices.getNetworkHistory(request, response);
     });
 
-    app.get("/api/look/processList/:nProcess", authService.verifytoken,  function (request, response) {
+    app.get("/api/look/processList/:order/:nProcess", authService.verifytoken,  function (request, response) {
         console.log("GET /look/processList");
         lookServices.processList(request, response);
     });
