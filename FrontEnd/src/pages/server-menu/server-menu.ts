@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { CPUPage } from "../server-menu-pages/cpu/cpuMain";
 import { MemoryPage } from "../server-menu-pages/memory/memoryMain";
+import { StatusPage } from "../server-menu-pages/status/status";
 import { ShareDataService } from "../../utils/shareData";
 
 @Component({
@@ -34,7 +35,7 @@ export class ServerMenuPage {
   openOption(id) {
     switch (id) {
       case "Status":
-
+        this.nav.push(StatusPage);
         break;
       case "Config":
 

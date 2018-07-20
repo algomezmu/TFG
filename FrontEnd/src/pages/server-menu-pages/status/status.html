@@ -1,0 +1,103 @@
+<!-- -->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      <strong>Status</strong>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button tappable (click)="presentNotifications($event)">
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+      <button ion-button tappable (click)="goToAccount()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="lists detail-bg">
+  <ion-refresher (ionRefresh)="loadPage($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+
+    <!-- Uptime Info -->
+    <ion-list *ngIf='uptime'>
+      <ion-list-header>
+        <h2>Uptime Info</h2>
+      </ion-list-header>
+      <ion-item>
+        <h2>Uptime</h2>
+        <h3 item-end>
+          {{uptime.uptime }}
+        </h3>
+      </ion-item>
+      <ion-item>
+        <h2>Date</h2>
+        <h3 item-end>
+          {{uptime.current}}
+        </h3>
+      </ion-item>
+      <ion-item>
+        <h2>Time Zone</h2>
+        <h3 item-end>
+          {{uptime.timezone}}
+        </h3>
+      </ion-item>
+      <ion-item>
+        <h2>Time Zone Name</h2>
+        <h3 item-end>
+          {{uptime.timezoneName}}
+        </h3>
+      </ion-item>
+    </ion-list>
+
+
+    <!-- System Info-->
+    <ion-list *ngIf='system'>
+      <ion-list-header>
+        <h2>System Info</h2>
+      </ion-list-header>
+      <ion-item>
+        <h2>Baseboard</h2>
+        <ion-item>
+          <h3 item-end>
+            {{system.baseboard.manufacturer}} {{system.baseboard.model}}
+          </h3>
+        </ion-item>
+      </ion-item>
+      <ion-item>
+        <h2>Cpu</h2>
+        <ion-item>
+          <h3 item-end>
+            {{system.cpu.manufacturer}} {{system.cpu.brand}}
+          </h3>
+        </ion-item>
+      </ion-item>
+      <ion-item>
+        <h2>Network</h2>
+        <ion-item *ngFor="let item of system['net']">
+          <ion-item>
+            <h3>{{item.iface}}</h3>
+            <h3 item-end>
+              {{item.ip4}}
+            </h3>
+          </ion-item>
+          <ion-item>
+            <h3 item-end>
+              {{item.ip6}}
+            </h3>
+          </ion-item>
+        </ion-item>
+      </ion-item>
+      <ion-item>
+        <h2>OS</h2>
+        <ion-item>
+          <h3 item-end>
+            {{system.os.distro}} Kernel : {{system.os.kernel}}
+          </h3>
+        </ion-item>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+</ion-content>

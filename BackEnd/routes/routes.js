@@ -79,6 +79,11 @@ var appRouter = function (app) {
         lookServices.uptime(request, response);
     });
 
+    app.get("/api/look/status", authService.verifytoken,  function (request, response) {
+        console.log("GET /look/status");
+        lookServices.status(request, response);
+    });
+
     app.get("/api/look/networkCons", authService.verifytoken,  function (request, response) {
         console.log("GET /look/networkCons");
         lookServices.networkCons(request, response);

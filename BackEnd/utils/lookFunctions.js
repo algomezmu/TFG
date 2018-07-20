@@ -8,8 +8,8 @@ var config = require('./../config/config.js');
 var lookMessages = require('./../messages/lookMessages.js');
 
 function cpuFunction(saveData, returnData, response) {
-    si.cpuCurrentspeed(function(cpuActualInfo){
-        si.cpuTemperature(function(cpuTempInfo){
+    si.cpuCurrentspeed(function (cpuActualInfo) {
+        si.cpuTemperature(function (cpuTempInfo) {
 
             var newCPUData = cpuModel({
                 cpuMin: cpuActualInfo.min,
@@ -19,23 +19,23 @@ function cpuFunction(saveData, returnData, response) {
                 cpuTemp: cpuTempInfo.cores,
                 cpuMax: cpuTempInfo.max
             });
-            if(saveData){
+            if (saveData) {
                 newCPUData.save(function (err, data) {
                     if (err) {
-                        if(returnData){
-                            lookMessages.errorMessage(response,0);
-                        }else{
+                        if (returnData) {
+                            lookMessages.errorMessage(response, 0);
+                        } else {
                             console.log("Error");
                         }
                     } else {
-                        if(returnData){
+                        if (returnData) {
                             lookMessages.dataResponse(response, data);
-                        }else {
+                        } else {
                             console.log("Saved CPU");
                         }
                     }
                 });
-            }else{
+            } else {
                 lookMessages.dataResponse(response, newCPUData);
             }
         });
@@ -43,107 +43,125 @@ function cpuFunction(saveData, returnData, response) {
 }
 
 
-function memFunction(saveData, returnData, response){
-    si.mem(function(memInfo){
+function memFunction(saveData, returnData, response) {
+    si.mem(function (memInfo) {
         var newMemData = memModel({
             memTotal: memInfo.total,
             memFree: memInfo.free,
-            memSwaptotal : memInfo.swaptotal,
+            memSwaptotal: memInfo.swaptotal,
             memSwapfree: memInfo.swapfree
         });
-        if(saveData){
+        if (saveData) {
             newMemData.save(function (err, data) {
                 if (err) {
-                    if(returnData){
-                        lookMessages.errorMessage(response,0);
-                    }else{
+                    if (returnData) {
+                        lookMessages.errorMessage(response, 0);
+                    } else {
                         console.log("Error");
                     }
                 } else {
-                    if(returnData){
+                    if (returnData) {
                         lookMessages.dataResponse(response, data);
-                    }else {
+                    } else {
                         console.log("Saved Mem");
                     }
                 }
             });
-        }else{
+        } else {
             lookMessages.dataResponse(response, newMemData);
         }
     });
 }
 
 
-function networkFunction(saveData, returnData, response){
-    si.networkStats(function(networkInfo){
+function networkFunction(saveData, returnData, response) {
+    si.networkStats(function (networkInfo) {
         var newNetworkData = networkModel({
             iface: networkInfo.iface,
             operstate: networkInfo.operstate,
-            rx : networkInfo.rx,
+            rx: networkInfo.rx,
             tx: networkInfo.tx,
-            rx_sec : networkInfo.rx_sec,
-            tx_sec : networkInfo.tx_sec,
+            rx_sec: networkInfo.rx_sec,
+            tx_sec: networkInfo.tx_sec,
             ms: networkInfo.ms
         });
-        if(saveData){
+        if (saveData) {
             newNetworkData.save(function (err, data) {
                 if (err) {
-                    if(returnData){
-                        lookMessages.errorMessage(response,0);
-                    }else{
+                    if (returnData) {
+                        lookMessages.errorMessage(response, 0);
+                    } else {
                         console.log("Error");
                     }
                 } else {
-                    if(returnData){
+                    if (returnData) {
                         lookMessages.dataResponse(response, data);
-                    }else {
+                    } else {
                         console.log("Saved Network");
                     }
                 }
             });
-        }else{
+        } else {
             lookMessages.dataResponse(response, newNetworkData);
         }
     });
 }
 
-function processFunction(response, order, nProcess){
-    si.processes(function(processInfo){
-        if(nProcess < 0){
+function processFunction(response, order, nProcess) {
+    si.processes(function (processInfo) {
+        if (nProcess < 0) {
             lookMessages.dataResponse(response, processInfo);
-        }else{
+        } else {
             lookMessages.dataResponse(response, processInfo.list.sort((a, b) => {
-                if(order == "c")
+                if (order == "c")
                     return b.pcpu - a.pcpu;
-                if(order == "m")
-                    return b.pmem - a.pmem;                   
+                if (order == "m")
+                    return b.pmem - a.pmem;
             }).slice(0, nProcess));
         }
     });
 }
 
-function usersFunction(response){
-    si.users(function(usersInfo){
+function usersFunction(response) {
+    si.users(function (usersInfo) {
         lookMessages.dataResponse(response, usersInfo);
     });
 }
 
-function diskFunction(response){
-    si.fsSize(function(diskInfo){
+function diskFunction(response) {
+    si.fsSize(function (diskInfo) {
         lookMessages.dataResponse(response, diskInfo);
     });
 }
 
-function uptimeFunction(response){
+function uptimeFunction(response) {
     lookMessages.dataResponse(response, si.time());
 }
 
-function networkConsFunction(response){
-    si.networkConnections(function(netInfo){
+function networkConsFunction(response) {
+    si.networkConnections(function (netInfo) {
         lookMessages.dataResponse(response, netInfo);
     });
 }
 
+function statusFunction(response) {
+    /*
+    si.cpuCurrentspeed(function(cpuActualInfo){
+        si.mem(function(memInfo){
+        lookMessages.dataResponse(response, si.time());
+        });
+    });
+    */
+    si.getStaticData(function (all) {
+        si.cpuCurrentspeed(function (cpuActualInfo) {
+            si.mem(function (memInfo) {
+                lookMessages.dataResponse(response, [all, si.time(), cpuActualInfo, memInfo]);
+            });
+        });
+    });
+}
+
+exports.statusFunction = statusFunction;
 exports.networkConsFunction = networkConsFunction;
 exports.uptimeFunction = uptimeFunction;
 exports.diskFunction = diskFunction;

@@ -26,6 +26,7 @@ import { RegisterServerPage } from "../pages/register-server/register-server";
 import { ServerMenuPage } from "../pages/server-menu/server-menu";
 import { SearchLocationPage } from "../pages/search-location/search-location";
 import { ListServersPage } from "../pages/list-servers/list-servers";
+import { StatusPage } from "../pages/server-menu-pages/status/status";
 import { CPUPage } from "../pages/server-menu-pages/cpu/cpuMain";
 import { CpuActualPage } from "../pages/server-menu-pages/cpu/cpuTab1/cpuActual";
 import { CpuHistoryPage } from "../pages/server-menu-pages/cpu/cpuTab2/cpuHistory";
@@ -48,7 +49,8 @@ import { MemoryHistoryPage } from "../pages/server-menu-pages/memory/memoryTab2/
     CpuHistoryPage,
     MemoryPage,
     MemoryActualPage,
-    MemoryHistoryPage
+    MemoryHistoryPage,
+    StatusPage
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,8 @@ import { MemoryHistoryPage } from "../pages/server-menu-pages/memory/memoryTab2/
     CpuHistoryPage,
     MemoryPage,
     MemoryActualPage,
-    MemoryHistoryPage
+    MemoryHistoryPage,
+    StatusPage
   ],
   providers: [
     StatusBar,

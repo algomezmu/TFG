@@ -70,4 +70,44 @@ export class LookService {
         return Observable.throw('errorConexion');
       });
   }
+
+  status(serverURL, token) {
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+          'Accept':'application/json',
+          'Content-Type':  'application/json',
+          'Authorization': token
+      })
+    };
+
+    return this.http.get(serverURL + "/api/look/status", httpOptions)
+      .map(res => {
+        return JSON.parse(JSON.stringify(res));
+      })
+      .catch(err => {
+        return Observable.throw('errorConexion');
+      });
+  }
+
+  uptime(serverURL, token) {
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+          'Accept':'application/json',
+          'Content-Type':  'application/json',
+          'Authorization': token
+      })
+    };
+
+    return this.http.get(serverURL + "/api/look/uptime", httpOptions)
+      .map(res => {
+        return JSON.parse(JSON.stringify(res));
+      })
+      .catch(err => {
+        return Observable.throw('errorConexion');
+      });
+  }
 }

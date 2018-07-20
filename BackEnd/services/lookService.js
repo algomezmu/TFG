@@ -121,11 +121,16 @@ function uptime(request, response){
     lookFunctions.uptimeFunction(response);
 }
 
+function status(request, response){
+    lookFunctions.statusFunction(response);
+}
+
 
 function networkCons(request, response){
     lookFunctions.networkConsFunction(response);
 }
 
+exports.status = status;
 exports.networkCons = networkCons;
 exports.uptime = uptime;
 exports.disk = disk;
