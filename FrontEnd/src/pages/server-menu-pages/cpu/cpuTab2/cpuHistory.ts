@@ -1,8 +1,10 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, NavParams, ToastController } from "ionic-angular";
+import { NavController, ToastController, LoadingController } from "ionic-angular";
 import { ShareDataService } from "../../../../utils/shareData";
 import { LookService } from "../../../../services/look.service";
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { alertMessage } from "../../../../utils/lib";
+import { presentLoading } from "../../../../utils/lib";
 
 @Component({
   selector: 'page-cpu-history',
@@ -14,6 +16,7 @@ export class CpuHistoryPage {
   //Data
   private initDate: any;
   private endDate: any;
+  private loader: any;
 
   //Line Chart Optipons
   public lineChartData: Array<any> = [{ data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }];
@@ -38,8 +41,8 @@ export class CpuHistoryPage {
   public lineChartLegend: boolean = true;
   public lineChartType: string = 'line';
 
-  constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService,
-     public lookService: LookService, public toastCtrl: ToastController) {
+  constructor(public nav: NavController, public shareDataService: ShareDataService,
+     public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.initDate = new Date();
     this.initDate.setDate(this.initDate.getDate() - 3);
     this.initDate = this.initDate.toISOString();
@@ -48,7 +51,9 @@ export class CpuHistoryPage {
   }
 
   reloadChart(refresher) {
+    this.loader = presentLoading(this.loadingCtrl);
     this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
+      this.loader.dismiss();
       if (res.status != "error") {
         var avg = [];
         var min = [];
@@ -88,29 +93,12 @@ export class CpuHistoryPage {
         if(res.code == "401"){
           this.nav.popToRoot();
         }
-        this.alertMessage(res.message, "red");
+        alertMessage(this.toastCtrl,res.message, "red");
 
         if (refresher) {
           refresher.complete();
         }
       }
     });
-  }
-
-  alertMessage(message, type) {
-    var css = "alert_red";
-    if (type === "green") {
-      css = "alert_green";
-    }
-    let alert = this.toastCtrl.create({
-      message: message,
-      duration: 3000,
-      position: 'bottom',
-      cssClass: css,
-      closeButtonText: 'Ok',
-      showCloseButton: true
-    });
-
-    alert.present();
   }
 }

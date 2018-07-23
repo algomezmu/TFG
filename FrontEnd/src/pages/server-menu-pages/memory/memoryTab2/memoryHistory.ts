@@ -1,7 +1,10 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, NavParams, ToastController } from "ionic-angular";
+import { NavController, NavParams, ToastController, LoadingController } from "ionic-angular";
 import { ShareDataService } from "../../../../utils/shareData";
 import { LookService } from "../../../../services/look.service";
+import { converToMB } from "../../../../utils/lib";
+import { alertMessage } from "../../../../utils/lib";
+import { presentLoading } from "../../../../utils/lib";
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 @Component({
@@ -10,9 +13,11 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 })
 export class MemoryHistoryPage {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  
   //Data
   private initDate: any;
   private endDate: any;
+  loader: any;
 
   //Line Chart Optipons
   public lineChartData: Array<any> = [{ data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }];
@@ -38,7 +43,7 @@ export class MemoryHistoryPage {
   public lineChartType: string = 'line';
 
   constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService,
-     public lookService: LookService, public toastCtrl: ToastController) {
+     public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.initDate = new Date();
     this.initDate.setDate(this.initDate.getDate() - 3);
     this.initDate = this.initDate.toISOString();
@@ -46,12 +51,10 @@ export class MemoryHistoryPage {
     this.reloadChart(null);
   }
 
-  converToMB(bytes){
-    return (bytes/1048576).toFixed(2)
-  }
-
   reloadChart(refresher) {
+    this.loader = presentLoading(this.loadingCtrl);
     this.lookService.mem(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
+      this.loader.dismiss();
       if (res.status != "error") {
         var free = [];
         var used = [];
@@ -59,10 +62,10 @@ export class MemoryHistoryPage {
         var swapused = [];
         var date = [];
         res.message.forEach(element => {
-          free.push(this.converToMB(element.memFree));
-          used.push(this.converToMB(element.memTotal  - element.memFree));
-          swapfree.push(this.converToMB(element.memSwapfree));
-          swapused.push(this.converToMB(element.memSwaptotal - element.memSwapfree));
+          free.push(converToMB(element.memFree));
+          used.push(converToMB(element.memTotal  - element.memFree));
+          swapfree.push(converToMB(element.memSwapfree));
+          swapused.push(converToMB(element.memSwaptotal - element.memSwapfree));
           date.push(element.created_at);
         });
         this.lineChartLabels = date;
@@ -94,29 +97,12 @@ export class MemoryHistoryPage {
         if(res.code == "401"){
           this.nav.popToRoot();
         }
-        this.alertMessage(res.message, "red");
+        alertMessage(this.toastCtrl,res.message, "red");
 
         if (refresher) {
           refresher.complete();
         }
       }
     });
-  }
-
-  alertMessage(message, type) {
-    var css = "alert_red";
-    if (type === "green") {
-      css = "alert_green";
-    }
-    let alert = this.toastCtrl.create({
-      message: message,
-      duration: 3000,
-      position: 'bottom',
-      cssClass: css,
-      closeButtonText: 'Ok',
-      showCloseButton: true
-    });
-
-    alert.present();
   }
 }

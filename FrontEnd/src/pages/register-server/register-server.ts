@@ -3,6 +3,7 @@ import { NavController, ToastController } from "ionic-angular";
 import { Validators, FormBuilder } from "@angular/forms";
 import { LoginPage } from "../login/login";
 import { LoginService } from "../../services/login.service";
+import { alertMessage } from "../../utils/lib";
 //import { HomePage } from "../home/home";
 import { Storage } from '@ionic/storage';
 import { ListServersPage } from "../list-servers/list-servers"
@@ -46,7 +47,7 @@ export class RegisterServerPage {
     }
     this.storage.get(serverName).then((val) => {
       if(val){
-        this.alertMessage("The server name already exist", "red")
+        alertMessage(this.toastCtrl, "The server name already exist", "red")
       }else{
         this.tryConnectAndSave(serverName, serverDomain, username, password)
       }
@@ -71,37 +72,20 @@ export class RegisterServerPage {
         if (data.status == "error" || data.error == "errorConexion") {
           if(data.error == "errorConexion")
             data.message = "Connexion error"
-          this.alertMessage(data.message, "red");
+          alertMessage(this.toastCtrl, data.message, "red");
         } else {
           //Correct Login
           const result = {serverDomain: serverDomain, username: username, password: hash }
           
           this.storage.set(serverName, JSON.stringify(result));
-          this.alertMessage("Server Created", "green");
+          alertMessage(this.toastCtrl, "Server Created", "green");
           this.nav.setRoot(ListServersPage);
         }
       },
       error => {
-        this.alertMessage("Connexion error", "red");
+        alertMessage(this.toastCtrl, "Connexion error", "red");
       }
     );
-  }
-
-  alertMessage(message, type){
-    var css = "alert_red";
-    if(type === "green"){
-      css = "alert_green";
-    }
-    let alert = this.toastCtrl.create({
-      message: message,
-      duration: 3000,
-      position: 'bottom',
-      cssClass: css,
-      closeButtonText: 'Ok',
-      showCloseButton: true
-    });
-
-    alert.present();
   }
 
   installBackend() {

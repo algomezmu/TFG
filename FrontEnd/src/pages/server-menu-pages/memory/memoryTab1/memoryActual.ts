@@ -1,7 +1,10 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, NavParams, ToastController } from "ionic-angular";
+import { NavController, NavParams, ToastController, LoadingController } from "ionic-angular";
 import { ShareDataService } from "../../../../utils/shareData";
 import { LookService } from "../../../../services/look.service";
+import { converToMB } from "../../../../utils/lib";
+import { alertMessage } from "../../../../utils/lib";
+import { presentLoading } from "../../../../utils/lib";
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 @Component({
@@ -19,18 +22,16 @@ export class MemoryActualPage {
   public doughnutChartType:string = 'doughnut';
   //
   constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService,
-     public lookService: LookService, public toastCtrl: ToastController) {
+     public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.reloadChart(null);
   }
 
-  converToMB(bytes: number): number{
-    return Number((bytes/1048576).toFixed(2));
-  }
-
   reloadChart(refresher) {
+    var loader = presentLoading(this.loadingCtrl);
     this.lookService.mem(this.shareDataService.serverDomain, this.shareDataService.token, null, null, true).subscribe(res => {
+      loader.dismiss();
       if (res.status != "error") {
-        this.doughnutChartData = [ this.converToMB(res.message.memFree), this.converToMB(res.message.memTotal  - res.message.memFree) ];
+        this.doughnutChartData = [ converToMB(res.message.memFree), converToMB(res.message.memTotal  - res.message.memFree) ];
 
         this.lookService.process(this.shareDataService.serverDomain, this.shareDataService.token, "m", 5).subscribe(res => {
           res.message.forEach((process, index) => {
@@ -46,29 +47,12 @@ export class MemoryActualPage {
         if(res.code == "401"){
           this.nav.popToRoot();
         }
-        this.alertMessage(res.message, "red");
+        alertMessage(this.toastCtrl, res.message, "red");
 
         if (refresher) {
           refresher.complete();
         }
       }
     });
-  }
-
-  alertMessage(message, type) {
-    var css = "alert_red";
-    if (type === "green") {
-      css = "alert_green";
-    }
-    let alert = this.toastCtrl.create({
-      message: message,
-      duration: 3000,
-      position: 'bottom',
-      cssClass: css,
-      closeButtonText: 'Ok',
-      showCloseButton: true
-    });
-
-    alert.present();
   }
 }

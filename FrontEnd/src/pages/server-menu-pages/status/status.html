@@ -51,13 +51,52 @@
         </h3>
       </ion-item>
     </ion-list>
+    <br/>
 
+    <ion-list *ngIf='cpu && mem'>
+      <ion-list-header>
+        <h2>CPU & Memory Info</h2>
+      </ion-list-header>
+      <ion-item>
+        <h2>CPU</h2>
+        <ion-item>
+          <h3 item-end>
+            {{ cpu.avg }}
+          </h3>
+        </ion-item>
+      </ion-item>
+      <ion-item>
+        <h2>Used Memory</h2>
+        <ion-item>
+          <h3 item-end>
+            {{ mem.used }}
+          </h3>
+        </ion-item>
+      </ion-item>
+      <ion-item>
+        <h2>Free Memory</h2>
+        <ion-item>
+          <h3 item-end>
+            {{ mem.free }}
+          </h3>
+        </ion-item>
+      </ion-item>
+    </ion-list>
+    <br/>
 
     <!-- System Info-->
     <ion-list *ngIf='system'>
       <ion-list-header>
         <h2>System Info</h2>
       </ion-list-header>
+      <ion-item>
+        <h2>OS</h2>
+        <ion-item>
+          <h3 item-end>
+            {{system.os.distro}} Kernel : {{system.os.kernel}}
+          </h3>
+        </ion-item>
+      </ion-item>
       <ion-item>
         <h2>Baseboard</h2>
         <ion-item>
@@ -88,14 +127,6 @@
               {{item.ip6}}
             </h3>
           </ion-item>
-        </ion-item>
-      </ion-item>
-      <ion-item>
-        <h2>OS</h2>
-        <ion-item>
-          <h3 item-end>
-            {{system.os.distro}} Kernel : {{system.os.kernel}}
-          </h3>
         </ion-item>
       </ion-item>
     </ion-list>

@@ -1,7 +1,10 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams, ToastController } from "ionic-angular";
+import { NavController, NavParams, ToastController, LoadingController } from "ionic-angular";
 import { ShareDataService } from "../../../utils/shareData";
 import { LookService } from "../../../services/look.service";
+import { converToMB } from '../../../utils/lib';
+import { alertMessage } from '../../../utils/lib';
+import { presentLoading } from '../../../utils/lib';
 
 @Component({
   selector: 'page-status',
@@ -13,24 +16,29 @@ export class StatusPage {
   cpu : any;
   mem : any;
   uptime : any;
+  loader: any;
 
   constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService,
-     public lookService: LookService, public toastCtrl: ToastController) {
-    this.loadPage(null);
+     public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+      this.loadPage(null);
   }
 
   loadPage(refresher) {
+    this.loader = presentLoading(this.loadingCtrl);
     this.lookService.status(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {
+      this.loader.dismiss();
       if (res.status != "error") {
-        console.log(res);
         this.system = res.message[0];
-        this.cpu = res.message[1];
-        this.mem = res.message[2];
-        this.uptime = res.message[3];
+        this.uptime = res.message[1];
+        this.cpu = res.message[2];
+        this.mem = res.message[3];
 
-        //this.uptime.uptime = new Date(this.uptime.uptime * 1000).toISOString().substr(11, 8);
-        this.uptime.current = new Date(this.uptime.current);
-        var seconds = this.uptime.uptime;
+        //Prepare the date
+        var date = new Date(this.uptime.current);
+        this.uptime.current = date.getHours() + ':' + date.getMinutes() + ' ' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+        //Prepare the uptime
+        var seconds = Number(this.uptime.uptime);
         var days = Math.floor(seconds / (3600*24));
         seconds  -= days*3600*24;
         var hrs   = Math.floor(seconds / 3600);
@@ -39,6 +47,10 @@ export class StatusPage {
         seconds  -= mnts*60;
         this.uptime.uptime = days+" d, "+hrs+" H, "+mnts+" M, "+seconds+" S";
 
+        //Prepare Memory
+        this.mem.used = converToMB(this.mem.used);
+        this.mem.free = converToMB(this.mem.free);
+
           if (refresher) {
             refresher.complete();
           }
@@ -46,29 +58,12 @@ export class StatusPage {
         if(res.code == "401"){
           this.nav.popToRoot();
         }
-        this.alertMessage(res.message, "red");
+        alertMessage(this.toastCtrl, res.message, "red");
 
         if (refresher) {
           refresher.complete();
         }
       }
     });
-  }
-
-  alertMessage(message, type) {
-    var css = "alert_red";
-    if (type === "green") {
-      css = "alert_green";
-    }
-    let alert = this.toastCtrl.create({
-      message: message,
-      duration: 3000,
-      position: 'bottom',
-      cssClass: css,
-      closeButtonText: 'Ok',
-      showCloseButton: true
-    });
-
-    alert.present();
   }
 }
