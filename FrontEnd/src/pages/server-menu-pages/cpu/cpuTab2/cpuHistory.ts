@@ -1,8 +1,9 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, ToastController, LoadingController } from "ionic-angular";
+import { App, NavController, ToastController, LoadingController } from "ionic-angular";
 import { ShareDataService } from "../../../../utils/shareData";
 import { LookService } from "../../../../services/look.service";
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { ListServersPage } from "../../../../pages/list-servers/list-servers";
 import { alertMessage } from "../../../../utils/lib";
 import { presentLoading } from "../../../../utils/lib";
 
@@ -41,7 +42,7 @@ export class CpuHistoryPage {
   public lineChartLegend: boolean = true;
   public lineChartType: string = 'line';
 
-  constructor(public nav: NavController, public shareDataService: ShareDataService,
+  constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
      public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.initDate = new Date();
     this.initDate.setDate(this.initDate.getDate() - 3);
@@ -91,7 +92,7 @@ export class CpuHistoryPage {
         }
       } else {
         if(res.code == "401"){
-          this.nav.popToRoot();
+          this.appCtrl.getRootNav().setRoot(ListServersPage);
         }
         alertMessage(this.toastCtrl,res.message, "red");
 

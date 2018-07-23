@@ -3,6 +3,7 @@ import { NavController, NavParams } from "ionic-angular";
 import { CPUPage } from "../server-menu-pages/cpu/cpuMain";
 import { MemoryPage } from "../server-menu-pages/memory/memoryMain";
 import { StatusPage } from "../server-menu-pages/status/status";
+import { ConfigPage } from "../server-menu-pages/config/config";
 import { ShareDataService } from "../../utils/shareData";
 
 @Component({
@@ -38,7 +39,7 @@ export class ServerMenuPage {
         this.nav.push(StatusPage);
         break;
       case "Config":
-
+        this.nav.push(ConfigPage);
         break;
       case "Events":
 

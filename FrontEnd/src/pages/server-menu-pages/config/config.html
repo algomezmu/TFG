@@ -1,0 +1,60 @@
+<!-- -->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      <strong>Config</strong>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button tappable (click)="presentNotifications($event)">
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+      <button ion-button tappable (click)="goToAccount()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="lists detail-bg">
+  <ion-refresher (ionRefresh)="loadPage($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <ion-item>
+      <ion-label>CPU History</ion-label>
+      <ion-toggle disabled checked="false"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Timer Cpu</ion-label>
+      <ion-select [(ngModel)]="cpu">
+        <ion-option value="h">Hour</ion-option>
+        <ion-option value="m">Minutes</ion-option>
+        <ion-option value="s">Seconds</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Memory History</ion-label>
+      <ion-toggle disabled checked="false"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Timer Memory</ion-label>
+      <ion-select [(ngModel)]="gaming">
+        <ion-option value="h">Hour</ion-option>
+        <ion-option value="m">minutes</ion-option>
+        <ion-option value="s">Seconds</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Network History</ion-label>
+      <ion-toggle disabled checked="false"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Timer Network</ion-label>
+      <ion-select [(ngModel)]="gaming">
+        <ion-option value="h">Hour</ion-option>
+        <ion-option value="m">minutes</ion-option>
+        <ion-option value="s">Seconds</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-grid>
+</ion-content>

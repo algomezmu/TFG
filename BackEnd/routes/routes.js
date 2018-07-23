@@ -6,6 +6,7 @@ var appRouter = function (app) {
     var loginServices = require('./../services/loginService.js');
     var lookServices = require('./../services/lookService.js');
     var adminServices = require('./../services/adminsService.js');
+    var configServices = require('./../services/configService.js');
 
     const logConfig = require('../config/log-conf');
     const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
@@ -25,6 +26,18 @@ var appRouter = function (app) {
         });
         return response.send({"status": "ok", "message": "ping"})
     });
+
+    //region Config
+    app.get("/api/config", authService.verifytoken,  function (request, response) {
+        console.log("GET /config");
+        configServices.getConfig(response);
+    });
+
+    app.post("/api/config", authService.verifytoken,  function (request, response) {
+        console.log("POST /config");
+        configServices.modifyConfig(request, response);
+    });
+    //endregion
 
     //region User
     app.get("/api/user", authService.verifytoken,  function (request, response) {
@@ -113,7 +126,6 @@ var appRouter = function (app) {
         adminServices.deleteEvent(request, response);
     });
     //endregion
-
 
     //region Scripts
     app.get("/api/run/scripts", authService.verifytoken,  function (request, response) {
