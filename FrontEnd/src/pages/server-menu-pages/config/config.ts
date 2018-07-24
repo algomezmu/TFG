@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { NavController, NavParams, ToastController, LoadingController } from "ionic-angular";
 import { ShareDataService } from "../../../utils/shareData";
 import { ConfigService } from "../../../services/config.service";
-import { converToMB } from '../../../utils/lib';
 import { alertMessage } from '../../../utils/lib';
 import { presentLoading } from '../../../utils/lib';
 

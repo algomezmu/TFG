@@ -28,7 +28,11 @@ export class ListServersPage {
     this.storage.forEach((value, key, index) => {
       this.ping.getPing(JSON.parse(value).serverDomain).subscribe(
         data => {
-          this.serverList.push({ serverName: key, img: "assets/img/server-list/server.png", ping: data });
+          if(data >0){
+            this.serverList.push({ serverName: key, img: "assets/img/server-list/server.png", ping: data });
+          }else{
+            this.serverList.push({ serverName: key, img: "assets/img/server-list/server.png", ping: 0 });
+          }
           if(refresher){
             refresher.complete();
           }

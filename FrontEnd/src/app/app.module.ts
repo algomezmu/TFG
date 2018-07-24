@@ -34,6 +34,8 @@ import { CpuHistoryPage } from "../pages/server-menu-pages/cpu/cpuTab2/cpuHistor
 import { MemoryPage } from "../pages/server-menu-pages/memory/memoryMain";
 import { MemoryActualPage } from "../pages/server-menu-pages/memory/memoryTab1/memoryActual";
 import { MemoryHistoryPage } from "../pages/server-menu-pages/memory/memoryTab2/memoryHistory";
+import { EventsListPage } from "../pages/server-menu-pages/events/event-page-1/event-page-1";
+import { EventsCreatePage } from "../pages/server-menu-pages/events/event-page-2/event-page-2";
 import { ConfigPage } from "../pages/server-menu-pages/config/config";
 
 @NgModule({
@@ -53,7 +55,9 @@ import { ConfigPage } from "../pages/server-menu-pages/config/config";
     MemoryActualPage,
     MemoryHistoryPage,
     StatusPage,
-    ConfigPage
+    ConfigPage,
+    EventsListPage,
+    EventsCreatePage
   ],
   imports: [
     BrowserModule,
@@ -86,7 +90,9 @@ import { ConfigPage } from "../pages/server-menu-pages/config/config";
     MemoryActualPage,
     MemoryHistoryPage,
     StatusPage,
-    ConfigPage
+    ConfigPage,
+    EventsListPage,
+    EventsCreatePage
   ],
   providers: [
     StatusBar,
