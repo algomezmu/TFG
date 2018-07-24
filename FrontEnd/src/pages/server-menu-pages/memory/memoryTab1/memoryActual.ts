@@ -54,6 +54,11 @@ export class MemoryActualPage {
           refresher.complete();
         }
       }
+    },
+    error => {
+      loader.dismiss();
+      alertMessage(this.toastCtrl, "Conexion Error", "red");
+      this.appCtrl.getRootNav().setRoot(ListServersPage);
     });
   }
 }

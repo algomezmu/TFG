@@ -15,7 +15,6 @@ export class CpuActualPage {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   // list of process
   public processList: any;
-  private loader: any;
 
   // Doughnut
   public doughnutChartLabels:string[] = ['Max Usage', 'Min Usage'];
@@ -28,9 +27,9 @@ export class CpuActualPage {
   }
 
   reloadChart(refresher) {
-    this.loader = presentLoading(this.loadingCtrl);
+    var loader = presentLoading(this.loadingCtrl);
     this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token, null, null, true).subscribe(res => {
-      this.loader.dismiss();
+      loader.dismiss();
       if (res.status != "error") {
         this.doughnutChartData = [ res.message.cpuMax,res.message.cpuMin];
 
@@ -54,6 +53,11 @@ export class CpuActualPage {
           refresher.complete();
         }
       }
+    },
+    error => {
+      loader.dismiss();
+      alertMessage(this.toastCtrl, "Conexion Error", "red");
+      this.appCtrl.getRootNav().setRoot(ListServersPage);
     });
   }
 }

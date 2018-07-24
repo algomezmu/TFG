@@ -16,6 +16,7 @@ import { ShareDataService } from "../utils/shareData";
 import { PingService } from "../services/ping.service";
 import { LoginService } from "../services/login.service";
 import { LookService } from "../services/look.service";
+import { ConfigService } from "../services/config.service";
 
 import { MyApp } from "./app.component";
 
@@ -95,7 +96,8 @@ import { ConfigPage } from "../pages/server-menu-pages/config/config";
     PingService,
     HTTP,
     ShareDataService,
-    LookService
+    LookService,
+    ConfigService
   ]
 })
 

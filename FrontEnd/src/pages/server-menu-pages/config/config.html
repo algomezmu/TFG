@@ -19,42 +19,98 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-grid>
-    <ion-item>
-      <ion-label>CPU History</ion-label>
-      <ion-toggle disabled checked="false"></ion-toggle>
-    </ion-item>
-    <ion-item>
-      <ion-label>Timer Cpu</ion-label>
-      <ion-select [(ngModel)]="cpu">
-        <ion-option value="h">Hour</ion-option>
-        <ion-option value="m">Minutes</ion-option>
-        <ion-option value="s">Seconds</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Memory History</ion-label>
-      <ion-toggle disabled checked="false"></ion-toggle>
-    </ion-item>
-    <ion-item>
-      <ion-label>Timer Memory</ion-label>
-      <ion-select [(ngModel)]="gaming">
-        <ion-option value="h">Hour</ion-option>
-        <ion-option value="m">minutes</ion-option>
-        <ion-option value="s">Seconds</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Network History</ion-label>
-      <ion-toggle disabled checked="false"></ion-toggle>
-    </ion-item>
-    <ion-item>
-      <ion-label>Timer Network</ion-label>
-      <ion-select [(ngModel)]="gaming">
-        <ion-option value="h">Hour</ion-option>
-        <ion-option value="m">minutes</ion-option>
-        <ion-option value="s">Seconds</ion-option>
-      </ion-select>
-    </ion-item>
+  <ion-grid *ngIf="config">
+    <!--CPU-->
+    <ion-list>
+      <ion-list-header>CPU</ion-list-header>
+      <ion-item>
+        <ion-label>CPU History</ion-label>
+        <ion-toggle [(ngModel)]="config.lookCPU"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Every</ion-label>
+        <ion-datetime *ngIf="config.lCPU == 'h'" displayFormat="H" pickerFormat="HH" [(ngModel)]="config.lookCPUTimer"></ion-datetime>
+        <ion-datetime *ngIf="config.lCPU == 'm'" displayFormat="mm" pickerFormat="mm" [(ngModel)]="config.lookCPUTimer"></ion-datetime>
+        <ion-datetime *ngIf="config.lCPU == 's'" displayFormat="s" pickerFormat="ss" [(ngModel)]="config.lookCPUTimer"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Timer</ion-label>
+        <ion-select [(ngModel)]="config.lCPU">
+          <ion-option value="h">Hour</ion-option>
+          <ion-option value="m">Minutes</ion-option>
+          <ion-option value="s">Seconds</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <br>
+    <!--CPU-->
+
+    <!--MEM-->
+    <ion-list>
+      <ion-list-header>Memory</ion-list-header>
+      <ion-item>
+        <ion-label>Memory History</ion-label>
+        <ion-toggle [(ngModel)]="config.lookMemory"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Every</ion-label>
+        <ion-datetime *ngIf="config.lMem == 'h'" displayFormat="H" pickerFormat="HH" [(ngModel)]="config.lookMemoryTimer"></ion-datetime>
+        <ion-datetime *ngIf="config.lMem == 'm'" displayFormat="mm" pickerFormat="mm" [(ngModel)]="config.lookMemoryTimer"></ion-datetime>
+        <ion-datetime *ngIf="config.lMem == 's'" displayFormat="s" pickerFormat="ss" [(ngModel)]="config.lookMemoryTimer"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Timer</ion-label>
+        <ion-select [(ngModel)]="config.lMem">
+          <ion-option value="h">Hour</ion-option>
+          <ion-option value="m">Minutes</ion-option>
+          <ion-option value="s">Seconds</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <br>
+    <!--MEM-->
+    <!--Network-->
+    <ion-list>
+      <ion-list-header>Network</ion-list-header>
+      <ion-item>
+        <ion-label>Network History</ion-label>
+        <ion-toggle [(ngModel)]="config.lookNetwork"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Every</ion-label>
+        <ion-datetime *ngIf="config.lNetwork == 'h'" displayFormat="H" pickerFormat="HH" [(ngModel)]="config.lookNetworkTimer"></ion-datetime>
+        <ion-datetime *ngIf="config.lNetwork == 'm'" displayFormat="mm" pickerFormat="mm" [(ngModel)]="config.lookNetworkTimer"></ion-datetime>
+        <ion-datetime *ngIf="config.lNetwork == 's'" displayFormat="s" pickerFormat="ss" [(ngModel)]="config.lookNetworkTimer"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Timer</ion-label>
+        <ion-select [(ngModel)]="config.lNetwork">
+          <ion-option value="h">Hour</ion-option>
+          <ion-option value="m">Minutes</ion-option>
+          <ion-option value="s">Seconds</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <br>
+    <!--Network-->
+
+    <ion-list>
+        <ion-list-header>Delete Registers Older Than</ion-list-header>
+        <ion-item>
+          <ion-label>Day</ion-label>
+          <ion-datetime  displayFormat="m" pickerFormat="mm" [(ngModel)]="config.dLookROThan"></ion-datetime>
+        </ion-item>
+    </ion-list>
+
+    <ion-card>
+        <ion-card-header>
+          Info
+        </ion-card-header>
+      
+        <ion-card-content>
+          This configuration is saved only temporaly, if you want to change this permanentlly, go to the config file in the server.
+        </ion-card-content>
+      </ion-card>
+    <button ion-button block (click)="save()">Save Config</button>
   </ion-grid>
 </ion-content>

@@ -1,5 +1,6 @@
 var config = require('./../config/config');
 var configMessages = require('./../messages/configMessages');
+var lookBot = require('./../bots/lookBot');
 
 function getConfig(response) {
     var result = {
@@ -32,7 +33,8 @@ function modifyConfig(request, response) {
         config.lookNetwork = request.body.lookNetwork;
         config.lookNetworkTimer = request.body.lookNetworkTimer;
         config.dLookROThan = request.body.dLookROThan;
-        configMessages.configCorrectResponse(response);
+        lookBot.lookBot();
+        configMessages.configCorrectResponse(response,0);
     }
 
 }

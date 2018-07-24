@@ -17,7 +17,6 @@ export class CpuHistoryPage {
   //Data
   private initDate: any;
   private endDate: any;
-  private loader: any;
 
   //Line Chart Optipons
   public lineChartData: Array<any> = [{ data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }];
@@ -52,9 +51,9 @@ export class CpuHistoryPage {
   }
 
   reloadChart(refresher) {
-    this.loader = presentLoading(this.loadingCtrl);
+    var loader = presentLoading(this.loadingCtrl);
     this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
-      this.loader.dismiss();
+      loader.dismiss();
       if (res.status != "error") {
         var avg = [];
         var min = [];
@@ -100,6 +99,11 @@ export class CpuHistoryPage {
           refresher.complete();
         }
       }
+    },
+    error => {
+      loader.dismiss();
+      alertMessage(this.toastCtrl, "Conexion Error", "red");
+      this.appCtrl.getRootNav().setRoot(ListServersPage);
     });
   }
 }

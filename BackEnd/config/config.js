@@ -20,12 +20,12 @@ var lookNetwork = true;
 
 //s (seconds no more than 60)
 //m (minutes no more than 60)
-//h (hours no more than 60)
+//h (hours no more than 24)
 //"5 m" “At every 5th minute.”
 // The same as crontab
-var lookCPUTimer = "5 m";
-var lookMemoryTimer = "5 m"; //s/m/h
-var lookNetworkTimer = "5 m"; //s/m/h
+var lookCPUTimer = "1 m";
+var lookMemoryTimer = "1 m"; //s/m/h
+var lookNetworkTimer = "1 m"; //s/m/h
 
 var dLookROThan = "7"; //Delete Look Registers Older Than 7 days (Once one register is saved, can't be changed for that register)
 

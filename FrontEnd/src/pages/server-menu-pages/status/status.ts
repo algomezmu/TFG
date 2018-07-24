@@ -16,7 +16,6 @@ export class StatusPage {
   cpu : any;
   mem : any;
   uptime : any;
-  loader: any;
 
   constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService,
      public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
@@ -24,9 +23,9 @@ export class StatusPage {
   }
 
   loadPage(refresher) {
-    this.loader = presentLoading(this.loadingCtrl);
+    var loader = presentLoading(this.loadingCtrl);
     this.lookService.status(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {
-      this.loader.dismiss();
+      loader.dismiss();
       if (res.status != "error") {
         this.system = res.message[0];
         this.uptime = res.message[1];
@@ -64,6 +63,11 @@ export class StatusPage {
           refresher.complete();
         }
       }
+    },
+    error => {
+      loader.dismiss();
+      alertMessage(this.toastCtrl, "Conexion Error", "red");
+      this.nav.popToRoot();
     });
   }
 }
