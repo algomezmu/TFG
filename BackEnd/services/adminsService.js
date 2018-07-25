@@ -63,7 +63,7 @@ function checkLauchTime(launchType, launchTime){
 };
 
 function deleteEvent(request, response) {
-    var id = request.body.id;
+    var id = request.params.id;
     if(id) {
         eventsModel.remove({_id: id}, function (err) {
             if (err) {

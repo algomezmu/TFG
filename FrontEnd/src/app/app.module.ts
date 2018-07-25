@@ -17,6 +17,7 @@ import { PingService } from "../services/ping.service";
 import { LoginService } from "../services/login.service";
 import { LookService } from "../services/look.service";
 import { ConfigService } from "../services/config.service";
+import { RunService } from "../services/run.service";
 
 import { MyApp } from "./app.component";
 
@@ -103,7 +104,8 @@ import { ConfigPage } from "../pages/server-menu-pages/config/config";
     HTTP,
     ShareDataService,
     LookService,
-    ConfigService
+    ConfigService,
+    RunService
   ]
 })
 

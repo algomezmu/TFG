@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, ToastController, ActionSheetController } from "ionic-angular";
+import { NavController, ToastController, ActionSheetController, AlertController } from "ionic-angular";
 import { PingService } from "../../services/ping.service";
 import { RegisterServerPage } from "../register-server/register-server";
 import { ServerMenuPage } from "../server-menu/server-menu";
@@ -17,7 +17,7 @@ export class ListServersPage {
 
   constructor(public nav: NavController, private storage: Storage,
     public toastCtrl: ToastController, public ping: PingService, public actionSheetCtrl: ActionSheetController,
-    public loginService: LoginService, public shareData: ShareDataService) {
+    public loginService: LoginService, public shareData: ShareDataService, public alertCtrl: AlertController) {
     // set sample data
     //this.trips = tripService.getAll();
     this.refreshServers(null);
@@ -120,7 +120,7 @@ export class ListServersPage {
           text: 'Remove',
           role: 'destructive',
           handler: () => {
-            this.removeServer(serverName);
+            this.showConfirm(serverName);
           }
         },
         {
@@ -131,6 +131,26 @@ export class ListServersPage {
     });
 
     actionSheet.present();
+  }
+
+  showConfirm(serverName) {
+    const confirm = this.alertCtrl.create({
+      title: 'Remove the server',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => {
+            this.removeServer(serverName);
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   // view trip detail

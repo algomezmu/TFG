@@ -1,24 +1,24 @@
-page-servers,
-.lists {
-	.card {
-		border-radius: 1rem
-	}
-  .list {
-    overflow: hidden;
-
-    .background {
-      background-size: 100% auto;
-      background-position: center;
-
-      .background-filter {
-        height: 10rem;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
-
-        .align-bottom {
-          width: 100%;
-
-          h6 {
-            margin-top: 0;
+page-event-1 {
+  .round-borders{
+    border-radius: 1rem
+  }
+  .lists {
+    .card {
+      border-radius: 1rem
+    }
+    .list {
+      overflow: hidden;
+      .background {
+        background-size: 100% auto;
+        background-position: center;
+        .background-filter {
+          height: auto;
+          background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
+          .align-bottom {
+            width: 100%;
+            h6 {
+              margin-top: 0;
+            }
           }
         }
       }
@@ -26,6 +26,6 @@ page-servers,
   }
 }
 
-.text-red{
+.text-red {
   color: black;
 }

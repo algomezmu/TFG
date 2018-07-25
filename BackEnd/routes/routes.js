@@ -121,7 +121,7 @@ var appRouter = function (app) {
         adminServices.createEvent(request, response);
     });
 
-    app.delete("/api/run/events", authService.verifytoken,  function (request, response) {
+    app.delete("/api/run/events/:id", authService.verifytoken,  function (request, response) {
         console.log("DELETE /api/run/events");
         adminServices.deleteEvent(request, response);
     });
