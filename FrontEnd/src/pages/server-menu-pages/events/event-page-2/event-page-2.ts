@@ -1,7 +1,7 @@
 import { Component, ViewChild } from "@angular/core";
 import { App, NavController, ToastController, LoadingController } from "ionic-angular";
 import { ShareDataService } from "../../../../utils/shareData";
-import { LookService } from "../../../../services/look.service";
+import { RunService } from "../../../../services/run.service";
 import { ListServersPage } from "../../../../pages/list-servers/list-servers";
 import { alertMessage } from "../../../../utils/lib";
 import { presentLoading } from "../../../../utils/lib";
@@ -14,41 +14,22 @@ export class EventsCreatePage {
 
 
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
-     public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+     public runService: RunService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 
-    this.reloadChart(null);
   }
 
-  reloadChart(refresher) {
-    /*
+  saveEvent() {
     var loader = presentLoading(this.loadingCtrl);
+
+    var event = {
+
+    }
     
-    this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {
+    this.runService.saveEvents(this.shareDataService.serverDomain, this.shareDataService.token, event).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        var avg = [];
-        var min = [];
-        var max = [];
-        var date = [];
-        res.message.forEach(element => {
-          avg.push(element.cpuAvg);
-          min.push(element.cpuMin);
-          max.push(element.cpuMax);
-          date.push(element.created_at);
-        });
-
-        if (refresher) {
-          refresher.complete();
-        }
-      } else {
-        if(res.code == "401"){
-          this.appCtrl.getRootNav().setRoot(ListServersPage);
-        }
-        alertMessage(this.toastCtrl,res.message, "red");
-
-        if (refresher) {
-          refresher.complete();
-        }
+        alertMessage(this.toastCtrl, "Saved", "green");       
+        this.nav.pop();
       }
     },
     error => {
@@ -56,6 +37,5 @@ export class EventsCreatePage {
       alertMessage(this.toastCtrl, "Conexion Error", "red");
       this.appCtrl.getRootNav().setRoot(ListServersPage);
     });
-  */
   }
 }
