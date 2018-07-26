@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, App, ToastController, LoadingController, ActionSheetController } from "ionic-angular";
+import { NavController, App, ToastController, LoadingController, ActionSheetController, AlertController } from "ionic-angular";
 import { ShareDataService } from "../../../../utils/shareData";
 import { RunService } from "../../../../services/run.service";
 import { ListServersPage } from "../../../../pages/list-servers/list-servers";
@@ -17,16 +17,15 @@ export class EventsListPage {
 
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
      public runService: RunService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, 
-     public actionSheetCtrl: ActionSheetController) {
-    this.reloadChart(null);
+     public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
+    this.reloadEvents(null);
   }
 
-  reloadChart(refresher) {
+  reloadEvents(refresher) {
     var loader = presentLoading(this.loadingCtrl);
     this.runService.getEvents(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        console.log(res);
         this.eventList = res.message;
       } else {
         if(res.code == "401"){
@@ -50,31 +49,21 @@ export class EventsListPage {
     this.nav.push(EventsCreatePage);
   }
 
-  removeEvent(id){
-    var loader = presentLoading(this.loadingCtrl);
-    this.runService.deleteEvents(this.shareDataService.serverDomain, this.shareDataService.token, id).subscribe(res => {
-      loader.dismiss();
-      if (res.status != "error") {
-        this.reloadChart(null);
-      } else {
-        if(res.code == "401"){
-          this.appCtrl.getRootNav().setRoot(ListServersPage);
-        }
-        alertMessage(this.toastCtrl,res.message, "red");
-      }
-    },
-    error => {
-      loader.dismiss();
-      alertMessage(this.toastCtrl, "Conexion Error", "red");
-      this.appCtrl.getRootNav().setRoot(ListServersPage);
-    });
+  editEvent(id){
+    this.nav.push(EventsCreatePage);
   }
-
+ 
   presentActionSheet(id) {
     console.log(id);
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Event Options',
       buttons: [
+        {
+          text: 'Edit ',
+          handler: () => {
+            this.editEvent(id);
+          }
+        },
         {
           text: 'Remove',
           role: 'destructive',
@@ -89,5 +78,45 @@ export class EventsListPage {
       ]
     });
     actionSheet.present();
+  }
+
+  showConfirm(id) {
+    const confirm = this.alertCtrl.create({
+      title: 'Remove the server',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => {
+            this.removeEvent(id)
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  removeEvent(id){
+    var loader = presentLoading(this.loadingCtrl);
+    this.runService.deleteEvents(this.shareDataService.serverDomain, this.shareDataService.token, id).subscribe(res => {
+      loader.dismiss();
+      if (res.status != "error") {
+        this.reloadEvents(null);
+      } else {
+        if(res.code == "401"){
+          this.appCtrl.getRootNav().setRoot(ListServersPage);
+        }
+        alertMessage(this.toastCtrl,res.message, "red");
+      }
+    },
+    error => {
+      loader.dismiss();
+      alertMessage(this.toastCtrl, "Conexion Error", "red");
+      this.appCtrl.getRootNav().setRoot(ListServersPage);
+    });
   }
 }
