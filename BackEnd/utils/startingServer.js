@@ -20,7 +20,8 @@ function firstUser() {
             var newUser = userModel({
                 username: config.first_user_name,
                 password: password,
-                description: "First User"
+                description: "First User",
+                rol: "Administrator"
             });
             newUser.save(function (err) {
                 if (err) {

@@ -18,6 +18,7 @@ import { LoginService } from "../services/login.service";
 import { LookService } from "../services/look.service";
 import { ConfigService } from "../services/config.service";
 import { RunService } from "../services/run.service";
+import { UsersService } from "../services/users.service";
 
 import { MyApp } from "./app.component";
 
@@ -38,6 +39,8 @@ import { MemoryHistoryPage } from "../pages/server-menu-pages/memory/memoryTab2/
 import { EventsListPage } from "../pages/server-menu-pages/events/event-page-1/event-page-1";
 import { EventsCreatePage } from "../pages/server-menu-pages/events/event-page-2/event-page-2";
 import { ConfigPage } from "../pages/server-menu-pages/config/config";
+import { UsersListPage } from "../pages/server-menu-pages/users/users-page-1/users-page-1";
+import { UserCreatePage } from "../pages/server-menu-pages/users/users-page-2/users-page-2";
 
 @NgModule({
   declarations: [
@@ -58,7 +61,9 @@ import { ConfigPage } from "../pages/server-menu-pages/config/config";
     StatusPage,
     ConfigPage,
     EventsListPage,
-    EventsCreatePage
+    EventsCreatePage,
+    UsersListPage,
+    UserCreatePage
   ],
   imports: [
     BrowserModule,
@@ -93,7 +98,9 @@ import { ConfigPage } from "../pages/server-menu-pages/config/config";
     StatusPage,
     ConfigPage,
     EventsListPage,
-    EventsCreatePage
+    EventsCreatePage,
+    UsersListPage,
+    UserCreatePage
   ],
   providers: [
     StatusBar,
@@ -105,7 +112,8 @@ import { ConfigPage } from "../pages/server-menu-pages/config/config";
     ShareDataService,
     LookService,
     ConfigService,
-    RunService
+    RunService,
+    UsersService
   ]
 })
 

@@ -5,6 +5,7 @@ import { MemoryPage } from "../server-menu-pages/memory/memoryMain";
 import { StatusPage } from "../server-menu-pages/status/status";
 import { ConfigPage } from "../server-menu-pages/config/config";
 import { EventsListPage } from "../server-menu-pages/events/event-page-1/event-page-1";
+import { UsersListPage } from "../server-menu-pages/users/users-page-1/users-page-1";
 import { ShareDataService } from "../../utils/shareData";
 
 @Component({
@@ -43,7 +44,7 @@ export class ServerMenuPage {
         this.nav.push(ConfigPage);
         break;
       case "Events":
-      this.nav.push(EventsListPage);
+        this.nav.push(EventsListPage);
         break;
       case "Scritps":
 
@@ -63,10 +64,10 @@ export class ServerMenuPage {
       case "Process":
 
         break;
-        case "Users":
-
+      case "Users":
+      this.nav.push(UsersListPage);
         break;
-        case "Discs":
+      case "Discs":
 
         break;
       default:

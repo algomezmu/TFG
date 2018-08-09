@@ -33,9 +33,15 @@ function login(request, response) {
                 var tokenData = {
                     username: username
                 };
-
+                
+                var key;
+                if( obj.rol == "Administrator" ){
+                    key = config.jwt_secret_admin;
+                }else{
+                    key = config.jwt_secret_monitor;
+                }
                 // create a token
-                var token = jwt.sign(tokenData, config.jwt_secret, {
+                var token = jwt.sign(tokenData, key, {
                     expiresIn: "10m" // expires in 24 hours
                 });
 

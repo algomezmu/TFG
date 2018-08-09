@@ -28,117 +28,117 @@ var appRouter = function (app) {
     });
 
     //region Config
-    app.get("/api/config", authService.verifytoken,  function (request, response) {
+    app.get("/api/config", authService.verifytokenAll,  function (request, response) {
         console.log("GET /config");
         configServices.getConfig(response);
     });
 
-    app.post("/api/config", authService.verifytoken,  function (request, response) {
+    app.post("/api/config", authService.verifytokenAdmin,  function (request, response) {
         console.log("POST /config");
         configServices.modifyConfig(request, response);
     });
     //endregion
 
     //region User
-    app.get("/api/user", authService.verifytoken,  function (request, response) {
+    app.get("/api/user", authService.verifytokenAll,  function (request, response) {
         console.log("GET /user");
         usersServices.getUsers(response);
     });
 
-    app.post("/api/user", authService.verifytoken,  function (request, response) {
+    app.post("/api/user", authService.verifytokenAdmin,  function (request, response) {
         console.log("POST /user");
         usersServices.createUser(request, response);
     });
 
-    app.delete("/api/user", authService.verifytoken,  function (request, response) {
+    app.delete("/api/user/:id", authService.verifytokenAdmin,  function (request, response) {
         console.log("Delete /user");
         usersServices.deleteUsers(request, response);
     });
     //endregion
 
     //region Look
-    app.post("/api/look/cpu", authService.verifytoken,  function (request, response) {
+    app.post("/api/look/cpu", authService.verifytokenAll,  function (request, response) {
         console.log("POST /look/cpu");
         lookServices.getCPUHistory(request, response);
     });
 
-    app.post("/api/look/mem", authService.verifytoken,  function (request, response) {
+    app.post("/api/look/mem", authService.verifytokenAll,  function (request, response) {
         console.log("POST /look/mem");
         lookServices.getMemHistory(request, response);
     });
 
-    app.post("/api/look/network", authService.verifytoken,  function (request, response) {
+    app.post("/api/look/network", authService.verifytokenAll,  function (request, response) {
         console.log("POST /look/network");
         lookServices.getNetworkHistory(request, response);
     });
 
-    app.get("/api/look/processList/:order/:nProcess", authService.verifytoken,  function (request, response) {
+    app.get("/api/look/processList/:order/:nProcess", authService.verifytokenAll,  function (request, response) {
         console.log("GET /look/processList");
         lookServices.processList(request, response);
     });
 
-    app.get("/api/look/usersLogin", authService.verifytoken,  function (request, response) {
+    app.get("/api/look/usersLogin", authService.verifytokenAll,  function (request, response) {
         console.log("GET /look/usersLogin");
         lookServices.usersLogin(request, response);
     });
 
-    app.get("/api/look/disk", authService.verifytoken,  function (request, response) {
+    app.get("/api/look/disk", authService.verifytokenAll,  function (request, response) {
         console.log("GET /look/disk");
         lookServices.disk(request, response);
     });
 
-    app.get("/api/look/uptime", authService.verifytoken,  function (request, response) {
+    app.get("/api/look/uptime", authService.verifytokenAll,  function (request, response) {
         console.log("GET /look/uptime");
         lookServices.uptime(request, response);
     });
 
-    app.get("/api/look/status", authService.verifytoken,  function (request, response) {
+    app.get("/api/look/status", authService.verifytokenAll,  function (request, response) {
         console.log("GET /look/status");
         lookServices.status(request, response);
     });
 
-    app.get("/api/look/networkCons", authService.verifytoken,  function (request, response) {
+    app.get("/api/look/networkCons", authService.verifytokenAll,  function (request, response) {
         console.log("GET /look/networkCons");
         lookServices.networkCons(request, response);
     });
     //endregion
 
     //region Process
-    app.delete("/api/look/processKiller", authService.verifytoken,  function (request, response) {
+    app.delete("/api/look/processKiller", authService.verifytokenAdmin,  function (request, response) {
         console.log("Delete /look/processKiller");
         lookServices.processKiller(request, response);
     });
     //endregion
 
     //region Events
-    app.get("/api/run/events", authService.verifytoken,  function (request, response) {
+    app.get("/api/run/events", authService.verifytokenAll,  function (request, response) {
         console.log("GET /api/run/events");
         adminServices.getEvents(response);
     });
 
-    app.post("/api/run/events", authService.verifytoken,  function (request, response) {
+    app.post("/api/run/events", authService.verifytokenAdmin,  function (request, response) {
         console.log("POST /api/run/events");
         adminServices.createEvent(request, response);
     });
 
-    app.delete("/api/run/events/:id", authService.verifytoken,  function (request, response) {
+    app.delete("/api/run/events/:id", authService.verifytokenAdmin,  function (request, response) {
         console.log("DELETE /api/run/events");
         adminServices.deleteEvent(request, response);
     });
     //endregion
 
     //region Scripts
-    app.get("/api/run/scripts", authService.verifytoken,  function (request, response) {
+    app.get("/api/run/scripts", authService.verifytokenAll,  function (request, response) {
         console.log("GET /api/run/scripts");
         adminServices.getScripts(response);
     });
 
-    app.post("/api/run/scripts", authService.verifytoken,  function (request, response) {
+    app.post("/api/run/scripts", authService.verifytokenAdmin,  function (request, response) {
         console.log("POST /api/run/scripts");
         adminServices.createScripts(request, response);
     });
 
-    app.delete("/api/run/scripts", authService.verifytoken,  function (request, response) {
+    app.delete("/api/run/scripts", authService.verifytokenAdmin,  function (request, response) {
         console.log("DELETE /api/run/scripts");
         adminServices.deleteScripts(request, response);
     });

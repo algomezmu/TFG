@@ -22,6 +22,10 @@ var UserSchema = new Schema({
         type: String,
         required: false
     },
+    rol:{
+        type: String,
+        required: true
+    },
     created_at: {
         type: Date,
         required: false

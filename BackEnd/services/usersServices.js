@@ -52,7 +52,7 @@ function createUser(request, response) {
 };
 
 function deleteUsers(request, response) {
-    var id = request.body.id;
+    var id = request.params.id;
     if(id) {
         userModel.remove({_id: id}, function (err) {
             if (err) {

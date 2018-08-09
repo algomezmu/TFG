@@ -1,0 +1,53 @@
+<!-- -->
+<ion-header>
+  <ion-navbar color="primary">
+    <!--
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>-->
+    <ion-title>
+      <strong>User List</strong>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button tappable (click)="presentNotifications($event)">
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+      <button ion-button tappable (click)="goToAccount()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="lists detail-bg">
+  <ion-refresher (ionRefresh)="reloadChart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+
+    <!--list of servers-->
+    <div class="list card" *ngFor="let user of userList" tappable (press)="presentActionSheet(user._id)" margin-bottom>
+      <div class="padding-sm primary-bg">
+        <ion-list class="round-borders">
+          <ion-item>
+            <ion-icon name="person"></ion-icon>
+            <span ion-text><strong>Username:</strong> {{ user.username }}</span>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="text"></ion-icon>
+            <span ion-text><strong>Description:</strong> {{ user.description }}</span>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="people"></ion-icon>
+            <span ion-text><strong>Rol:</strong> {{ user.rol }}</span>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-grid>
+</ion-content>
+<ion-fab bottom right>
+  <button ion-fab (click)="addUser()">
+    <ion-icon ios="ios-add" md="md-add"></ion-icon>
+  </button>
+</ion-fab>
