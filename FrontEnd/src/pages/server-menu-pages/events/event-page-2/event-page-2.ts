@@ -12,10 +12,13 @@ import { presentLoading } from "../../../../utils/lib";
 })
 export class EventsCreatePage {
 
+  launchType: any;
+  dateProgrammed: any;
+  description:any;
 
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
      public runService: RunService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
-
+      this.launchType = "date";
   }
 
   saveEvent() {
