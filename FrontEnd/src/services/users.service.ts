@@ -42,7 +42,7 @@ export class UsersService {
       })
     };
 
-    return this.http.post(serverURL + "/api/users", user, 
+    return this.http.post(serverURL + "/api/user", user, 
       httpOptions
       )
       .map(res => {

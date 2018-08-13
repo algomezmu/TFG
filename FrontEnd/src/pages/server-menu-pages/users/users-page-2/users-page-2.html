@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      <strong>Create Event</strong>
+      <strong>Create User</strong>
     </ion-title>
     <ion-buttons end>
       <button ion-button tappable (click)="presentNotifications($event)">
@@ -43,96 +43,38 @@
         </ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
-    </form>
 
-    <ion-item>
-      <ion-label fixed>Description</ion-label>
-      <ion-textarea [(ngModel)]="description"></ion-textarea>
-    </ion-item>
-
-    <ion-list>
       <ion-item>
-        <ion-label>Rol</ion-label>
-        <ion-select [(ngModel)]="rol">
-          <ion-option value="Administrator">Administrator</ion-option>
-          <ion-option value="Monitor">Monitor</ion-option>
-        </ion-select>
+        <ion-label fixed>Description</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
       </ion-item>
-    </ion-list>
 
-    <ion-card>
-      <ion-card-header>
-        Info
-      </ion-card-header>
-    
-      <ion-card-content>
-        Administrator: Can do all the things in the APP.
-        Monitor: Can only look the system information.
-      </ion-card-content>
-    </ion-card>
+      <ion-list>
+        <ion-item>
+          <ion-label>Rol</ion-label>
+          <ion-select formControlName="rol">
+            <ion-option value="Administrator">Administrator</ion-option>
+            <ion-option value="Monitor">Monitor</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
 
-    <div margin-top>
-      <button ion-button block color="dark" tappable [disabled]="registerForm.invalid" (click)="register()">
-        Save
-      </button>
-    </div>
+      <ion-card>
+        <ion-card-header>
+          Info
+        </ion-card-header>
 
-    <!-- Other links 
-    <div text-center margin-top>
-      <span ion-text color="primary" tappable (click)="login()">I have an account</span>
-    </div>
-    -->
+        <ion-card-content>
+          Administrator: Can do all the things in the APP.
+          <br> Monitor: Can only look the system information.
+        </ion-card-content>
+      </ion-card>
+
+      <div margin-top>
+        <button ion-button block color="dark" tappable [disabled]="registerForm.invalid" (click)="saveUser()">
+          Save
+        </button>
+      </div>
+    </form>
   </div>
 </ion-content>
-
-<!--
-<ion-content padding class="lists detail-bg">
-  <ion-refresher (ionRefresh)="reloadChart($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-grid>
-    <ion-item>
-      <ion-label fixed>Username</ion-label>
-      <ion-input [(ngModel)]="username" type="text"></ion-input>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label fixed>Password</ion-label>
-      <ion-input [(ngModel)]="password" type="password"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label fixed>Description</ion-label>
-      <ion-textarea [(ngModel)]="description"></ion-textarea>
-    </ion-item>
-
-    <ion-list>
-      <ion-item>
-        <ion-label>Rol</ion-label>
-        <ion-select [(ngModel)]="rol">
-          <ion-option value="Administrator">Administrator</ion-option>
-          <ion-option value="Monitor">Monitor</ion-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-
-    <ion-card>
-      <ion-card-header>
-        Info
-      </ion-card-header>
-    
-      <ion-card-content>
-        Administrator: Can do all the things in the APP.
-        Monitor: Can only look the system information.
-      </ion-card-content>
-    </ion-card>
-
-  </ion-grid>
-</ion-content>
-<ion-footer no-shadow>
-	<ion-toolbar position="bottom">
-		<button ion-button full>Save</button>
-	</ion-toolbar>
-</ion-footer>
--->

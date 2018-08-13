@@ -25,11 +25,11 @@ function createUser(request, response) {
     var username = request.body.username;
     var password = request.body.password;
     var description = request.body.description;
+    var rol = request.body.rol;
 
     if (username &&
         password &&
-        description) {
-
+        rol) {
         var hash = crypto.createHmac('sha512', config.crypt_secret)
         hash.update(password)
         password = hash.digest('hex');
@@ -37,7 +37,8 @@ function createUser(request, response) {
         var newUser = userModel({
             username: username,
             password: password,
-            description: description
+            description: description,
+            rol: rol
         });
         newUser.save(function (err) {
             if (err) {

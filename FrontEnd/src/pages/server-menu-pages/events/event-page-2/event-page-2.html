@@ -13,33 +13,60 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content padding class="lists detail-bg">
-  <ion-refresher (ionRefresh)="reloadChart($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-grid>
-    <ion-item>
-      <ion-label>Launch Type</ion-label>
-      <ion-select [(ngModel)]="launchType">
-        <ion-option value="EveryDay">Every Day</ion-option>
-        <ion-option value="date">Exact date</ion-option>
-      </ion-select>
-    </ion-item>
-    <div *ngIf="launchType == 'EveryDay'">
-      <ion-item>
-        <ion-label>Launch Hour</ion-label>
-        <ion-datetime displayFormat="h:mm" pickerFormat="HH:mm" [(ngModel)]="dateProgrammed"></ion-datetime>
-      </ion-item>
+
+
+<ion-content class="auth-page">
+  <div class="login-content">
+
+    <!-- Logo -->
+    <div padding text-center>
+      <div class="logo"></div>
+      <h2 ion-text class="text-primary">
+        <strong>Add</strong> New Event
+      </h2>
     </div>
-    <div *ngIf="launchType == 'date'">
+
+    <!-- Login form -->
+    <form class="list-form" [formGroup]="registerForm">
       <ion-item>
-        <ion-label>Launch day and Hour</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MMMM/YYYY HH:mm"  [(ngModel)]="dateProgrammed"></ion-datetime>
+        <ion-label>Launch Type</ion-label>
+        <ion-select formControlName="launchType">
+          <ion-option value="EveryDay">Every Day</ion-option>
+          <ion-option value="date">Exact date</ion-option>
+        </ion-select>
       </ion-item>
-    </div>
-    <ion-item>
-      <ion-textarea placeholder="Description" [(ngModel)]="description"></ion-textarea>
-    </ion-item>
-  </ion-grid>
+      <div *ngIf="registerForm.get('launchType').value == 'EveryDay'">
+        <ion-item>
+          <ion-label>Launch Hour</ion-label>
+          <ion-datetime displayFormat="h:mm" pickerFormat="HH:mm" formControlName="dateProgrammed"></ion-datetime>
+        </ion-item>
+      </div>
+      <div *ngIf="registerForm.get('launchType').value  == 'date'">
+        <ion-item>
+          <ion-label>Launch day and Hour</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MMMM/YYYY HH:mm" formControlName="dateProgrammed"></ion-datetime>
+        </ion-item>
+      </div>
+      <ion-item>
+        <ion-textarea placeholder="Description" formControlName="description"></ion-textarea>
+      </ion-item>
+
+      <ion-card>
+        <ion-card-header>
+          Info
+        </ion-card-header>
+
+        <ion-card-content>
+          Administrator: Can do all the things in the APP.<br>
+          Monitor: Can only look the system information.<br>
+        </ion-card-content>
+      </ion-card>
+
+      <div margin-top>
+        <button ion-button block color="dark" tappable [disabled]="registerForm.invalid" (click)="register()">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
 </ion-content>

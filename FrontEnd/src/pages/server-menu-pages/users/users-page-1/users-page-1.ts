@@ -21,12 +21,15 @@ export class UsersListPage {
     this.reloadUsers(null);
   }
 
+  ionViewWillEnter() {
+    this.reloadUsers(null);
+  }
+
   reloadUsers(refresher) {
     var loader = presentLoading(this.loadingCtrl);
     this.usersService.getUsers(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        console.log(res.message);
         this.userList = res.message;
       } else {
         if(res.code == "401"){
@@ -49,22 +52,11 @@ export class UsersListPage {
   addUser(){
     this.nav.push(UserCreatePage);
   }
-
-  editUser(id){
-    this.nav.push(UserCreatePage);
-  }
  
   presentActionSheet(id) {
-    console.log(id);
     let actionSheet = this.actionSheetCtrl.create({
       title: 'User Options',
       buttons: [
-        {
-          text: 'Edit ',
-          handler: () => {
-            this.editUser(id);
-          }
-        },
         {
           text: 'Remove',
           role: 'destructive',

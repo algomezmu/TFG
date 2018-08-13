@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
-import { NavController, ToastController, ActionSheetController, AlertController } from "ionic-angular";
+import { NavController, ToastController, ActionSheetController, AlertController, LoadingController } from "ionic-angular";
 import { PingService } from "../../services/ping.service";
 import { RegisterServerPage } from "../register-server/register-server";
 import { ServerMenuPage } from "../server-menu/server-menu";
 import { Storage } from '@ionic/storage';
 import { LoginService } from "../../services/login.service";
 import { ShareDataService } from "../../utils/shareData";
+import { presentLoading } from '../../utils/lib';
 
 @Component({
   selector: 'page-list-server',
@@ -17,7 +18,8 @@ export class ListServersPage {
 
   constructor(public nav: NavController, private storage: Storage,
     public toastCtrl: ToastController, public ping: PingService, public actionSheetCtrl: ActionSheetController,
-    public loginService: LoginService, public shareData: ShareDataService, public alertCtrl: AlertController) {
+    public loginService: LoginService, public loadingCtrl: LoadingController, 
+    public shareData: ShareDataService, public alertCtrl: AlertController) {
     // set sample data
     //this.trips = tripService.getAll();
     this.refreshServers(null);
@@ -100,6 +102,7 @@ export class ListServersPage {
   removeServer(serverName) {
     this.serverList = [];
     this.storage.remove(serverName);
+    this.refreshServers(null);
     /*
     this.secureStorage.create('server_list')
       .then((storage: SecureStorageObject) => {
@@ -157,9 +160,10 @@ export class ListServersPage {
   viewDetail(id) {
     this.storage.get(id).then((server) => {
       server = JSON.parse(server);
-
+      var loader = presentLoading(this.loadingCtrl);
       this.loginService.login(server.serverDomain, server.username, server.password.toString()).subscribe(
         data => {
+          loader.dismiss();
           if (data.status == "error" || data.error == "errorConexion") {
             if(data.error == "errorConexion")
               data.message = "Connexion error"
