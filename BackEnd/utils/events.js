@@ -1,15 +1,18 @@
 var schedule = require('node-schedule');
 const exec = require('child_process').exec;
+var eventsModel = require('./../models/Events.js');
 
 const logConfig = require('../config/log-conf');
 const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
 
-var listEvents = [];
+var listEventsTimer = [];
+var listEventsStatus = [];
 
 function createEvent(id, command, lauchType, lauchTime) {
     var time = false;
     var oneTime = false;
     var cron;
+    var typesOfLaunch = ["cpu>","cpu<","mem>","mem<"];
 
     if (lauchType == "EveryDay") {
         time = true;
@@ -29,16 +32,59 @@ function createEvent(id, command, lauchType, lauchTime) {
         cron = lauchTime;
     }
 
+    console.log("R");
     if (time == true){
+        eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime)
+    }else if(typesOfLaunch.find(function(element) { return element == lauchType;}) != undefined ){
         logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
-        listEvents[id] = schedule.scheduleJob(cron, function () {
-            logger.info('Launch ' + command + ' ' + id);
-            launchComand(command);
-            if(oneTime == true) {
-                listEvents[id].cancel();
-                delete listEvents[id];
-            }
-        }.bind(command, id,  oneTime, listEvents));
+        console.log("AQui se crea");
+        listEventsStatus[id]= {command, lauchType, lauchTime};
+    }
+}
+
+function deleteEvent(id){
+    if(listEventsTimer[id] != undefined ){
+        listEventsTimer[id].cancel();
+        delete listEventsTimer[id];
+    }else if(listEventsStatus[id]!=undefined){
+        delete listEventsStatus[id];
+    }
+}
+
+function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime){
+    logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
+    listEventsTimer[id] = schedule.scheduleJob(cron, function () {
+        logger.info('Launch ' + command + ' ' + id);
+        launchComand(command);
+        if(oneTime == true) {
+            listEventsTimer[id].cancel();
+            delete listEventsTimer[id];
+
+            eventsModel.remove({_id: id}, function (err) {
+                if (err) {
+                    console.log("Error delete");
+                }
+                else {
+                    console.log("Delted");
+                }
+            });
+
+        }
+    }.bind(command, id,  oneTime, listEventsTimer));
+}
+
+function checkEventStatus(type, limit){
+    for(var k in listEventsStatus){
+        var launch = false;
+        if(listEventsStatus[k].lauchType == type+">" && limit > listEventsStatus[k].lauchTime){
+            launch = true;
+        }else if(listEventsStatus[k].lauchType == type+"<" && limit < listEventsStatus[k].lauchTime){
+            launch = true;
+        }
+
+        if(launch == true){
+            launchComand(listEventsStatus[k].command);
+        }
     }
 }
 
@@ -55,3 +101,5 @@ function launchComand(command){
 }
 
 exports.createEvent = createEvent;
+exports.deleteEvent = deleteEvent;
+exports.checkEventStatus = checkEventStatus;

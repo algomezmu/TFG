@@ -47,6 +47,8 @@ export class UserCreatePage {
       if (res.status != "error") {
         alertMessage(this.toastCtrl, "Saved", "green");       
         this.nav.pop();
+      }else{
+        alertMessage(this.toastCtrl, res.message, "red");       
       }
     },
     error => {

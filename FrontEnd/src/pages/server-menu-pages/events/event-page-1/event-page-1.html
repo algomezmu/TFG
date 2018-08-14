@@ -29,7 +29,7 @@
     <div class="list card" *ngFor="let event of eventList" tappable (press)="presentActionSheet(event._id)" margin-bottom>
       <div class="padding-sm primary-bg">
         <ion-icon name="time" class="text-white"></ion-icon>
-        <span ion-text class="text-white">{{ event.launchTime }}</span>
+        <span ion-text class="text-white">{{ event.launchTime}}</span>
         <span class="pull-right" ion-text color="light">
           <strong>{{ event.launchType }}</strong>
         </span>

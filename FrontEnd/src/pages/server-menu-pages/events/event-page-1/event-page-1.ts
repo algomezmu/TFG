@@ -21,6 +21,10 @@ export class EventsListPage {
     this.reloadEvents(null);
   }
 
+  ionViewWillEnter() {
+    this.reloadEvents(null);
+  }
+
   reloadEvents(refresher) {
     var loader = presentLoading(this.loadingCtrl);
     this.runService.getEvents(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {

@@ -10,7 +10,7 @@ function verifytokenAdmin(req, res, next){
         // verifies secret and checks exp
         jwt.verify(token, authSecret.jwt_secret_admin, function(err, decoded) {
             if (err) {
-                res.json({ "status": "error", "code": "401",  "message": 'Failed to authenticate token.' });
+                res.json({ "status": "error", "code": "401",  "message": 'Session expired or not authorised.' });
             } else {
                 req.rol = decoded.rol;
                 next();
@@ -31,7 +31,7 @@ function verifytokenAll(req, res, next){
             if (err) {
                 jwt.verify(token, authSecret.jwt_secret_monitor, function(err, decoded) {
                     if (err) {
-                        res.json({ "status": "error", "code": "401",  "message": 'Failed to authenticate token.' });
+                        res.json({ "status": "error", "code": "401",  "message": 'Session expired or not authorised.' });
                     } else {
                         req.rol = decoded.rol;
                         next();

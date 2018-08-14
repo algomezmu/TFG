@@ -70,6 +70,7 @@ function deleteEvent(request, response) {
                 adminMessages.errorMessage(response, 3);
             }
             else {
+                eventsUtils.deleteEvent(id);
                 adminMessages.adminEventCorrectResponse(response, 1);
             }
         });

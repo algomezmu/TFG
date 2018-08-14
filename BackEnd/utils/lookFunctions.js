@@ -6,10 +6,12 @@ var memModel = require('./../models/Mem.js');
 var networkModel = require('./../models/Network.js');
 var config = require('./../config/config.js');
 var lookMessages = require('./../messages/lookMessages.js');
+var events = require('./events');
 
 function cpuFunction(saveData, returnData, response) {
     si.cpuCurrentspeed(function (cpuActualInfo) {
         si.cpuTemperature(function (cpuTempInfo) {
+            events.checkEventStatus("cpu", cpuActualInfo.avg);
 
             var newCPUData = cpuModel({
                 cpuMin: cpuActualInfo.min,
@@ -45,6 +47,8 @@ function cpuFunction(saveData, returnData, response) {
 
 function memFunction(saveData, returnData, response) {
     si.mem(function (memInfo) {
+        events.checkEventStatus("mem", memInfo.total - memInfo.free);
+
         var newMemData = memModel({
             memTotal: memInfo.total,
             memFree: memInfo.free,
