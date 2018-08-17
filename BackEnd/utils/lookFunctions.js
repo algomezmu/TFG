@@ -47,7 +47,9 @@ function cpuFunction(saveData, returnData, response) {
 
 function memFunction(saveData, returnData, response) {
     si.mem(function (memInfo) {
-        events.checkEventStatus("mem", memInfo.total - memInfo.free);
+
+        var limiitMb = Number(((memInfo.total - memInfo.free)/1048576).toFixed(2));
+        events.checkEventStatus("mem", limiitMb);
 
         var newMemData = memModel({
             memTotal: memInfo.total,

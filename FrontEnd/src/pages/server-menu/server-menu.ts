@@ -6,6 +6,7 @@ import { StatusPage } from "../server-menu-pages/status/status";
 import { ConfigPage } from "../server-menu-pages/config/config";
 import { EventsListPage } from "../server-menu-pages/events/event-page-1/event-page-1";
 import { UsersListPage } from "../server-menu-pages/users/users-page-1/users-page-1";
+import { ScriptsListPage } from "../server-menu-pages/scripts/scripts-page-1/scripts-page-1";
 import { ShareDataService } from "../../utils/shareData";
 
 @Component({
@@ -47,7 +48,7 @@ export class ServerMenuPage {
         this.nav.push(EventsListPage);
         break;
       case "Scritps":
-
+      this.nav.push(ScriptsListPage);
         break;
       case "CPU":
         this.nav.push(CPUPage);

@@ -23,7 +23,7 @@ function createEvent(id, command, lauchType, lauchTime) {
     if (lauchType == "date" && new Date(lauchTime) > new Date()) {
         oneTime = true;
         time = true;
-        lauchTime = lauchTime.split(":");
+        console.log(lauchTime);
         cron = new Date(lauchTime);
     }
 
@@ -32,12 +32,10 @@ function createEvent(id, command, lauchType, lauchTime) {
         cron = lauchTime;
     }
 
-    console.log("R");
     if (time == true){
         eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime)
     }else if(typesOfLaunch.find(function(element) { return element == lauchType;}) != undefined ){
         logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
-        console.log("AQui se crea");
         listEventsStatus[id]= {command, lauchType, lauchTime};
     }
 }
@@ -53,6 +51,7 @@ function deleteEvent(id){
 
 function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime){
     logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
+    console.log("AAA");
     listEventsTimer[id] = schedule.scheduleJob(cron, function () {
         logger.info('Launch ' + command + ' ' + id);
         launchComand(command);
@@ -74,6 +73,12 @@ function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime){
 }
 
 function checkEventStatus(type, limit){
+    console.log("Aqui1");
+    console.log(listEventsTimer);
+    for (const key in listEventsTimer) {
+        console.log(listEventsTimer[key]);
+        console.log(listEventsTimer[key].nextInvocation());
+    }
     for(var k in listEventsStatus){
         var launch = false;
         if(listEventsStatus[k].lauchType == type+">" && limit > listEventsStatus[k].lauchTime){

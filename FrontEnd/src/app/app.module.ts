@@ -38,6 +38,9 @@ import { MemoryActualPage } from "../pages/server-menu-pages/memory/memoryTab1/m
 import { MemoryHistoryPage } from "../pages/server-menu-pages/memory/memoryTab2/memoryHistory";
 import { EventsListPage } from "../pages/server-menu-pages/events/event-page-1/event-page-1";
 import { EventsCreatePage } from "../pages/server-menu-pages/events/event-page-2/event-page-2";
+import { ScriptsListPage } from "../pages/server-menu-pages/scripts/scripts-page-1/scripts-page-1";
+import { ScriptsCreatePage } from "../pages/server-menu-pages/scripts/scripts-page-2/scripts-page-2";
+import { ScriptsLaunchPage } from "../pages/server-menu-pages/scripts/scripts-page-3/scripts-page-3";
 import { ConfigPage } from "../pages/server-menu-pages/config/config";
 import { UsersListPage } from "../pages/server-menu-pages/users/users-page-1/users-page-1";
 import { UserCreatePage } from "../pages/server-menu-pages/users/users-page-2/users-page-2";
@@ -63,7 +66,10 @@ import { UserCreatePage } from "../pages/server-menu-pages/users/users-page-2/us
     EventsListPage,
     EventsCreatePage,
     UsersListPage,
-    UserCreatePage
+    UserCreatePage,
+    ScriptsListPage,
+    ScriptsCreatePage,
+    ScriptsLaunchPage
   ],
   imports: [
     BrowserModule,
@@ -100,7 +106,10 @@ import { UserCreatePage } from "../pages/server-menu-pages/users/users-page-2/us
     EventsListPage,
     EventsCreatePage,
     UsersListPage,
-    UserCreatePage
+    UserCreatePage,
+    ScriptsListPage,
+    ScriptsCreatePage,
+    ScriptsLaunchPage
   ],
   providers: [
     StatusBar,
