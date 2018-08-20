@@ -3,6 +3,7 @@ var adminMessages = require('./../messages/adminMessages.js');
 var eventsModel = require('./../models/Events.js');
 var eventsUtils = require('./../utils/events.js');
 var scriptsModel = require('./../models/Scripts.js');
+const exec = require('child_process').exec;
 
 //region Events
 function getEvents(response) {
@@ -118,6 +119,19 @@ function createScripts(request, response) {
     }
 };
 
+function launchScript(request, response) {
+    console.log(request.body)
+    var command = request.body.command;
+
+    if (command) {
+        exec(command, function (error, stdout) {
+            adminMessages.adminCorrectResponseInfo(response, stdout);
+        });
+    } else{
+        adminMessages.errorMessage(response,4);
+    }
+};
+
 function deleteScripts(request, response) {
     var id = request.body.id;
     if(id) {
@@ -144,3 +158,4 @@ exports.deleteEvent = deleteEvent;
 exports.getScripts = getScripts;
 exports.createScripts = createScripts;
 exports.deleteScripts = deleteScripts;
+exports.launchScript = launchScript;

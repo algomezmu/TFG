@@ -6,7 +6,7 @@
         <ion-icon name="menu"></ion-icon>
       </button>-->
     <ion-title>
-      <strong>Event List</strong>
+      <strong>Scripts List</strong>
     </ion-title>
     <ion-buttons end>
       <button ion-button tappable (click)="presentNotifications($event)">
@@ -19,30 +19,23 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="lists detail-bg">
-  <ion-refresher (ionRefresh)="reloadChart($event)">
+  <ion-refresher (ionRefresh)="reloadScript($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-grid>
 
     <!--list of servers-->
-    <div class="list card" *ngFor="let event of eventList" tappable (press)="presentActionSheet(event._id)" margin-bottom>
-      <div class="padding-sm primary-bg">
-        <ion-icon name="time" class="text-white"></ion-icon>
-        <span ion-text class="text-white">{{ event.launchTime}}</span>
-        <span class="pull-right" ion-text color="light">
-          <strong>{{ event.launchType }}</strong>
-        </span>
-      </div>
+    <div class="list card" *ngFor="let script of scriptList" tappable (click)="viewDetail(script._id, script.command)" (press)="presentActionSheet(script._id)" margin-bottom>
       <div class="padding-sm primary-bg">
         <ion-list class="round-borders">
           <ion-item>
             <ion-icon name="text"></ion-icon>
-            <span ion-text>{{ event.description }}</span>
+            <span ion-text>{{ script.description }}</span>
           </ion-item>
           <ion-item>
             <ion-icon name="code"></ion-icon>
-            <span ion-text>{{ event.command }}</span>
+            <span ion-text>{{ script.command }}</span>
           </ion-item>
         </ion-list>
       </div>
@@ -50,7 +43,7 @@
   </ion-grid>
 </ion-content>
 <ion-fab bottom right>
-  <button ion-fab (click)="addEvent()">
+  <button ion-fab (click)="addScript()">
     <ion-icon ios="ios-add" md="md-add"></ion-icon>
   </button>
 </ion-fab>

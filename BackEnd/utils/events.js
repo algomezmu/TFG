@@ -51,10 +51,9 @@ function deleteEvent(id){
 
 function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime){
     logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
-    console.log("AAA");
     listEventsTimer[id] = schedule.scheduleJob(cron, function () {
         logger.info('Launch ' + command + ' ' + id);
-        launchComand(command);
+        launchCommand(command);
         if(oneTime == true) {
             listEventsTimer[id].cancel();
             delete listEventsTimer[id];
@@ -88,12 +87,12 @@ function checkEventStatus(type, limit){
         }
 
         if(launch == true){
-            launchComand(listEventsStatus[k].command);
+            launchCommand(listEventsStatus[k].command);
         }
     }
 }
 
-function launchComand(command){
+function launchCommand(command){
     exec(command, function (error, stdout) {
         if (!error) {
             logger.info('All ok with the command');
@@ -105,6 +104,7 @@ function launchComand(command){
     });
 }
 
+exports.launchCommand = launchCommand;
 exports.createEvent = createEvent;
 exports.deleteEvent = deleteEvent;
 exports.checkEventStatus = checkEventStatus;

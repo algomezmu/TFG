@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      <strong>Create Event</strong>
+      <strong>Create Script</strong>
     </ion-title>
     <ion-buttons end>
       <button ion-button tappable (click)="presentNotifications($event)">
@@ -22,65 +22,21 @@
     <div padding text-center>
       <div class="logo"></div>
       <h2 ion-text class="text-primary">
-        <strong>Add</strong> New Event
+        <strong>Add</strong> New Script
       </h2>
     </div>
 
     <!-- Login form -->
     <form class="list-form" [formGroup]="registerForm">
       <ion-item>
-        <ion-label>Launch Type</ion-label>
-        <ion-select formControlName="launchType">
-          <ion-option value="EveryDay">Every Day</ion-option>
-          <ion-option value="date">Exact date</ion-option>
-          <ion-option value="cpu">CPU</ion-option>
-          <ion-option value="mem">Memory</ion-option>
-        </ion-select>
-      </ion-item>
-      <div *ngIf="registerForm.get('launchType').value == 'EveryDay'">
-        <ion-item>
-          <ion-label>Launch Hour</ion-label>
-          <ion-datetime displayFormat="h:mm" pickerFormat="HH:mm" formControlName="dateProgrammed"></ion-datetime>
-        </ion-item>
-      </div>
-      <div *ngIf="registerForm.get('launchType').value  == 'date'">
-        <ion-item>
-          <ion-label>Launch day and Hour</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MMMM/YYYY HH:mm" formControlName="dateProgrammed"></ion-datetime>
-        </ion-item>
-      </div>
-      <div *ngIf="registerForm.get('launchType').value  == 'cpu' || registerForm.get('launchType').value == 'mem'">
-        <ion-item>
-          <ion-label>Options</ion-label>
-          <ion-select formControlName="statusSymbol">
-            <ion-option value="<">&lt;</ion-option>
-            <ion-option value=">">&gt;</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-input placeholder="Number" type="text" formControlName="dateProgrammed"></ion-input>
-        </ion-item>
-      </div>
-      <ion-item>
         <ion-textarea placeholder="Command" formControlName="command"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-textarea placeholder="Description" formControlName="description"></ion-textarea>
       </ion-item>
-      <ion-card>
-        <ion-card-header>
-          Info
-        </ion-card-header>
-
-        <ion-card-content>
-          CPU: Avg all Cps GHz
-          <br> 
-          Memory: In Mb
-        </ion-card-content>
-      </ion-card>
 
       <div margin-top>
-        <button ion-button block color="dark" tappable [disabled]="registerForm.invalid" (click)="saveEvent()">
+        <button ion-button block color="dark" tappable [disabled]="registerForm.invalid" (click)="saveScript()">
           Save
         </button>
       </div>

@@ -3,9 +3,10 @@ import { NavController, App, ToastController, LoadingController, ActionSheetCont
 import { ShareDataService } from "../../../../utils/shareData";
 import { RunService } from "../../../../services/run.service";
 import { ListServersPage } from "../../../../pages/list-servers/list-servers";
-import { EventsCreatePage } from "../../../../pages/server-menu-pages/events/event-page-2/event-page-2";
+import { ScriptsCreatePage } from "../../../../pages/server-menu-pages/scripts/scripts-page-2/scripts-page-2";
 import { alertMessage } from "../../../../utils/lib";
 import { presentLoading } from "../../../../utils/lib";
+import { ScriptsLaunchPage } from "../scripts-page-3/scripts-page-3";
 
 @Component({
   selector: 'page-scripts-1',
@@ -13,24 +14,30 @@ import { presentLoading } from "../../../../utils/lib";
 })
 export class ScriptsListPage {
   //List Events
-  eventList: any;
+  scriptList: any;
 
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
      public runService: RunService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, 
      public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
-    this.reloadEvents(null);
+    this.reloadScript(null);
   }
 
   ionViewWillEnter() {
-    this.reloadEvents(null);
+    this.reloadScript(null);
   }
 
-  reloadEvents(refresher) {
+  viewDetail(id, command){
+    this.nav.push(ScriptsLaunchPage, {
+      command: command
+    });
+  }
+
+  reloadScript(refresher) {
     var loader = presentLoading(this.loadingCtrl);
-    this.runService.getEvents(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {
+    this.runService.getScripts(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        this.eventList = res.message;
+        this.scriptList = res.message;
       } else {
         if(res.code == "401"){
           this.appCtrl.getRootNav().setRoot(ListServersPage);
@@ -49,12 +56,12 @@ export class ScriptsListPage {
     });
   }
 
-  addEvent(){
-    this.nav.push(EventsCreatePage);
+  addScript(){
+    this.nav.push(ScriptsCreatePage);
   }
 
-  editEvent(id){
-    this.nav.push(EventsCreatePage);
+  editScript(id){
+    this.nav.push(ScriptsCreatePage);
   }
  
   presentActionSheet(id) {
@@ -65,14 +72,14 @@ export class ScriptsListPage {
         {
           text: 'Edit ',
           handler: () => {
-            this.editEvent(id);
+            this.editScript(id);
           }
         },
         {
           text: 'Remove',
           role: 'destructive',
           handler: () => {
-            this.removeEvent(id);
+            this.removeScript(id);
           }
         },
         {
@@ -96,7 +103,7 @@ export class ScriptsListPage {
           text: 'Delete',
           role: 'destructive',
           handler: () => {
-            this.removeEvent(id)
+            this.removeScript(id)
           }
         }
       ]
@@ -104,12 +111,12 @@ export class ScriptsListPage {
     confirm.present();
   }
 
-  removeEvent(id){
+  removeScript(id){
     var loader = presentLoading(this.loadingCtrl);
-    this.runService.deleteEvents(this.shareDataService.serverDomain, this.shareDataService.token, id).subscribe(res => {
+    this.runService.deleteScript(this.shareDataService.serverDomain, this.shareDataService.token, id).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        this.reloadEvents(null);
+        this.reloadScript(null);
       } else {
         if(res.code == "401"){
           this.appCtrl.getRootNav().setRoot(ListServersPage);

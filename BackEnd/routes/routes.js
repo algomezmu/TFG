@@ -138,6 +138,11 @@ var appRouter = function (app) {
         adminServices.createScripts(request, response);
     });
 
+    app.post("/api/run/scripts/launch", authService.verifytokenAdmin,  function (request, response) {
+        console.log("POST /api/run/scripts/launch");
+        adminServices.launchScript(request, response);
+    });
+
     app.delete("/api/run/scripts", authService.verifytokenAdmin,  function (request, response) {
         console.log("DELETE /api/run/scripts");
         adminServices.deleteScripts(request, response);
