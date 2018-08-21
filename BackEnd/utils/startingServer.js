@@ -5,12 +5,34 @@ var crypto = require('crypto');
 const logConfig = require('../config/log-conf');
 const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
 
-function firstUser() {
-    userModel.find({}, function(err,obj) {
-        if(err){
-            logger.info('Error First User: DataBase mongo');
+const exec = require('child_process').exec;
+var fs = require('fs');
+
+function loadPasswordFile() {
+    fs.readFile("config/key", 'utf8', function (err, data) {
+        if (err) {
+            fs.writeFile("config/key", Math.random().toString(36).slice(-15), function (err) {
+                if (err) {
+                    logger.info('Error Create File');
+                }
+            });
+        } else {
+            config.crypt_secret = data;
         }
-        else if (obj.length == 0){
+    });
+}
+
+function userDirectory() {
+    exec("cd;pwd", function (error, stdout) {
+        config.userDirectory = stdout.substring(0, stdout.length - 1);;
+    });
+}
+
+function firstUser() {
+    userModel.find({}, function (err, obj) {
+        if (err) {
+            logger.info('Error First User: DataBase mongo');
+        } else if (obj.length == 0) {
             logger.info('Trying to create first user');
 
             var hash = crypto.createHmac('sha512', config.crypt_secret);
@@ -34,4 +56,6 @@ function firstUser() {
     }).select("-password");
 }
 
+exports.loadPasswordFile = loadPasswordFile;
+exports.userDirectory = userDirectory;
 exports.firstUser = firstUser;

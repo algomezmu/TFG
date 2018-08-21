@@ -60,11 +60,11 @@ export class ScriptsListPage {
     this.nav.push(ScriptsCreatePage);
   }
 
-  editScript(id){
-    this.nav.push(ScriptsCreatePage);
+  editScript(id, description, command){
+    this.nav.push(ScriptsCreatePage, {id, description, command});
   }
  
-  presentActionSheet(id) {
+  presentActionSheet(id, description, command) {
     console.log(id);
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Event Options',
@@ -72,7 +72,7 @@ export class ScriptsListPage {
         {
           text: 'Edit ',
           handler: () => {
-            this.editScript(id);
+            this.editScript(id, description, command);
           }
         },
         {

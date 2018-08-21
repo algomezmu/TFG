@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { App, NavController, ToastController, LoadingController } from "ionic-angular";
+import { App, NavController, ToastController, LoadingController, NavParams } from "ionic-angular";
 import { ShareDataService } from "../../../../utils/shareData";
 import { RunService } from "../../../../services/run.service";
 import { ListServersPage } from "../../../../pages/list-servers/list-servers";
@@ -14,20 +14,31 @@ import { Validators, FormBuilder } from "@angular/forms";
 export class EventsCreatePage {
 
   public registerForm;
+  public id;
 
-  constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
+  constructor(public appCtrl: App, public nav: NavController, private navParams: NavParams, public shareDataService: ShareDataService,
     public runService: RunService, private formBuilder: FormBuilder, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+    
+    this.id = navParams.get('id');
+    let lT = navParams.get('launchType');
+    let statusSymbol;
+    if(!lT){
+      lT = "date";
+    }else if(lT.slice(-1) == ">" || lT.slice(-1) == ">"){
+      statusSymbol = lT.slice(-1);
+      lT = lT.slice(0, lT.length -1);
+    }
+
     this.registerForm = this.formBuilder.group({
-      command: ['', Validators.compose([Validators.required])],
-      launchType: ['date', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
-      dateProgrammed: ['', Validators.compose([Validators.required])],
-      description: ['', Validators.compose([Validators.maxLength(100)])],
-      statusSymbol: ['', Validators.pattern('[><]')]
+      command: [navParams.get('command'), Validators.compose([Validators.required])],
+      launchType: [lT, Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      dateProgrammed: [navParams.get('launchTime'), Validators.compose([Validators.required])],
+      description: [navParams.get('description'), Validators.compose([Validators.maxLength(100)])],
+      statusSymbol: [statusSymbol, Validators.pattern('[><]')]
     });
   }
 
   saveEvent() {
-    console.log(this.registerForm.get('launchType'));
     var next = true;
 
     var loader = presentLoading(this.loadingCtrl);
@@ -48,6 +59,7 @@ export class EventsCreatePage {
 
     if (next) {
       var event = {
+        id: this.id,
         command,
         launchType,
         launchTime,

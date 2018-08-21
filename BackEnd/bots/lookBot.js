@@ -29,8 +29,6 @@ function lookBot() {
             lookFunctions.networkFunction(true, false, null);
         });
     }
-
-    //setTimeout(lookBot, config.time_boot_look);
 }
 
 function scheduleTime(time){

@@ -4,3 +4,5 @@ BackEnd/\.idea/
 FrontEnd/\.idea/
 
 FrontEnd/node_modules/
+
+BackEnd/config/key

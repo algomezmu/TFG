@@ -16,8 +16,8 @@ export class EventsListPage {
   eventList: any;
 
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
-     public runService: RunService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, 
-     public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
+    public runService: RunService, public toastCtrl: ToastController, public loadingCtrl: LoadingController,
+    public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
     this.reloadEvents(null);
   }
 
@@ -32,32 +32,32 @@ export class EventsListPage {
       if (res.status != "error") {
         this.eventList = res.message;
       } else {
-        if(res.code == "401"){
+        if (res.code == "401") {
           this.appCtrl.getRootNav().setRoot(ListServersPage);
         }
-        alertMessage(this.toastCtrl,res.message, "red");
+        alertMessage(this.toastCtrl, res.message, "red");
 
         if (refresher) {
           refresher.complete();
         }
       }
     },
-    error => {
-      loader.dismiss();
-      alertMessage(this.toastCtrl, "Conexion Error", "red");
-      this.appCtrl.getRootNav().setRoot(ListServersPage);
-    });
+      error => {
+        loader.dismiss();
+        alertMessage(this.toastCtrl, "Conexion Error", "red");
+        this.appCtrl.getRootNav().setRoot(ListServersPage);
+      });
   }
 
-  addEvent(){
+  addEvent() {
     this.nav.push(EventsCreatePage);
   }
 
-  editEvent(id){
-    this.nav.push(EventsCreatePage);
+  editEvent(id, command, launchType, launchTime, description) {
+    this.nav.push(EventsCreatePage, {id, command, launchType, launchTime, description});
   }
- 
-  presentActionSheet(id) {
+
+  presentActionSheet(id, command, launchType, launchTime, description) {
     console.log(id);
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Event Options',
@@ -65,7 +65,7 @@ export class EventsListPage {
         {
           text: 'Edit ',
           handler: () => {
-            this.editEvent(id);
+            this.editEvent(id, command, launchType, launchTime, description);
           }
         },
         {
@@ -104,23 +104,23 @@ export class EventsListPage {
     confirm.present();
   }
 
-  removeEvent(id){
+  removeEvent(id) {
     var loader = presentLoading(this.loadingCtrl);
     this.runService.deleteEvents(this.shareDataService.serverDomain, this.shareDataService.token, id).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
         this.reloadEvents(null);
       } else {
-        if(res.code == "401"){
+        if (res.code == "401") {
           this.appCtrl.getRootNav().setRoot(ListServersPage);
         }
-        alertMessage(this.toastCtrl,res.message, "red");
+        alertMessage(this.toastCtrl, res.message, "red");
       }
     },
-    error => {
-      loader.dismiss();
-      alertMessage(this.toastCtrl, "Conexion Error", "red");
-      this.appCtrl.getRootNav().setRoot(ListServersPage);
-    });
+      error => {
+        loader.dismiss();
+        alertMessage(this.toastCtrl, "Conexion Error", "red");
+        this.appCtrl.getRootNav().setRoot(ListServersPage);
+      });
   }
 }

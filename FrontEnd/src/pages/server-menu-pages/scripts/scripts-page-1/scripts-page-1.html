@@ -26,7 +26,7 @@
   <ion-grid>
 
     <!--list of servers-->
-    <div class="list card" *ngFor="let script of scriptList" tappable (click)="viewDetail(script._id, script.command)" (press)="presentActionSheet(script._id)" margin-bottom>
+    <div class="list card" *ngFor="let script of scriptList" tappable (click)="viewDetail(script._id, script.command)" (press)="presentActionSheet(script._id, script.description, script.command)" margin-bottom>
       <div class="padding-sm primary-bg">
         <ion-list class="round-borders">
           <ion-item>

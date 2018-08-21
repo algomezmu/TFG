@@ -143,7 +143,7 @@ var appRouter = function (app) {
         adminServices.launchScript(request, response);
     });
 
-    app.delete("/api/run/scripts", authService.verifytokenAdmin,  function (request, response) {
+    app.delete("/api/run/scripts/:id", authService.verifytokenAdmin,  function (request, response) {
         console.log("DELETE /api/run/scripts");
         adminServices.deleteScripts(request, response);
     });

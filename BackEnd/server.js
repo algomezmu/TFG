@@ -18,6 +18,8 @@ var eventsBot = require('./bots/eventsBot.js');
 var startServer = require('./utils/startingServer.js');
 const config = require('./config/config');
 
+startServer.loadPasswordFile();
+startServer.userDirectory();
 startServer.firstUser();
 
 lookBot.lookBot();

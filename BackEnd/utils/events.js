@@ -1,6 +1,7 @@
 var schedule = require('node-schedule');
 const exec = require('child_process').exec;
 var eventsModel = require('./../models/Events.js');
+var config = require('./../config/config.js');
 
 const logConfig = require('../config/log-conf');
 const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
@@ -93,7 +94,9 @@ function checkEventStatus(type, limit){
 }
 
 function launchCommand(command){
-    exec(command, function (error, stdout) {
+    exec(command, {
+        cwd: config.userDirectory
+    }, function (error, stdout) {
         if (!error) {
             logger.info('All ok with the command');
             console.log("All ok with the command");
