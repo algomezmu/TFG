@@ -34,6 +34,10 @@
       <ion-item>
         <ion-textarea placeholder="Description" formControlName="description"></ion-textarea>
       </ion-item>
+      <ion-item>
+        <ion-label>Root Permissions</ion-label>
+        <ion-checkbox color="dark" checked="true" formControlName="permissions"></ion-checkbox>
+      </ion-item>
 
       <div margin-top>
         <button ion-button block color="dark" tappable [disabled]="registerForm.invalid" (click)="saveScript()">

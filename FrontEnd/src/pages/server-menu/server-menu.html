@@ -18,10 +18,16 @@
   </ion-navbar>
 </ion-header>
 
+
 <ion-content padding class="lists detail-bg">
   <ion-grid>
     <div *ngFor="let menu of menuList">
-      <ion-row>
+      <ion-card *ngIf="menu.first == 'Separator'">
+        <ion-card-header>
+          {{menu.second}}
+        </ion-card-header>
+      </ion-card>
+      <ion-row  *ngIf="menu.first != 'Separator'">
         <ion-col>
           <button ion-button block color="menu-o" *ngIf="menu.first" (click)="openOption(menu.first)">
             <div>

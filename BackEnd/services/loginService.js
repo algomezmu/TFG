@@ -42,7 +42,8 @@ function login(request, response) {
                 }
                 // create a token
                 var token = jwt.sign(tokenData, key, {
-                    expiresIn: "10m" // expires in 24 hours
+                    //expiresIn: "10m" // expires in 24 hours
+                    expiresIn: "24h"
                 });
 
                 loginMessages.loginCorrect(response, token);

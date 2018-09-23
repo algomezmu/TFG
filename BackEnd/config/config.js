@@ -33,6 +33,15 @@ var jwt_secret_monitor = "3Z4rve33_dfg";
 
 var crypt_secret = "farZxa_12P54r";
 
+//If you want to use a root user in the app
+//WARNING use this only if necessary, recommend to put permissions to the user for a specify command and not root
+var permUser = "root";
+var permPassword = "VrpaqHZUAX6hAu}B";
+var authentificatePerm = "fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe"; //SHA512
+
+exports.authentificatePerm = authentificatePerm;
+exports.permUser = permUser;
+exports.permPassword = permPassword;
 exports.userDirectory = userDirectory;
 exports.activateSSL = activateSSL;
 exports.first_user_name = first_user_name;

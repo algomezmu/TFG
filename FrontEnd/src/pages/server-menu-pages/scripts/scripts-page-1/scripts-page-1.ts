@@ -26,9 +26,10 @@ export class ScriptsListPage {
     this.reloadScript(null);
   }
 
-  viewDetail(id, command){
+  viewDetail(id, command, perm){
     this.nav.push(ScriptsLaunchPage, {
-      command: command
+      command: command,
+      perm: perm
     });
   }
 
@@ -60,19 +61,18 @@ export class ScriptsListPage {
     this.nav.push(ScriptsCreatePage);
   }
 
-  editScript(id, description, command){
-    this.nav.push(ScriptsCreatePage, {id, description, command});
+  editScript(id, description, command, perm){
+    this.nav.push(ScriptsCreatePage, {id, description, command, perm});
   }
  
-  presentActionSheet(id, description, command) {
-    console.log(id);
+  presentActionSheet(id, description, command, perm) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Event Options',
       buttons: [
         {
           text: 'Edit ',
           handler: () => {
-            this.editScript(id, description, command);
+            this.editScript(id, description, command, perm);
           }
         },
         {

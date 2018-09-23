@@ -27,12 +27,15 @@ export class ServerMenuPage {
 
   createMenuList() {
     this.menuList = [
-      { first: "Status", second: "Config" },
-      { first: "Events", second: "Scritps" },
+      { first: "Separator", second: "Server Configuration" },
+      { first: "Config", second: "Users" },
+      { first: "Separator", second: "Server Information" },
+      { first: "Status", second: "Internet" },
       { first: "CPU", second: "Memory" },
-      { first: "Sockets", second: "Internet" },
-      { first: "Process", second: "Users" },
-      { first: "Discs" },
+      { first: "Sockets", second: "Process" },
+      { first: "Discs", second: "" },
+      { first: "Separator", second: "Server Events & Scripts" },
+      { first: "Events", second: "Scritps" }
     ]
   }
 

@@ -15,6 +15,10 @@ var ScriptSchema = new Schema({
     description: {
         type: String,
         required: false
+    },
+    perm: {
+        type: Boolean,
+        required: true
     }
 });
 
