@@ -55,14 +55,23 @@ function createUser(request, response) {
 function deleteUsers(request, response) {
     var id = request.params.id;
     if(id) {
-        userModel.remove({_id: id}, function (err) {
-            if (err) {
-                userMessages.errorMessage(response, 3);
+        userModel.count({}, function( err, count){
+            console.log( "Number of users:", count );
+            if(count == 1){
+                userMessages.errorMessage(response, 6);
             }
-            else {
-                userMessages.userCorrectResponse(response, 1);
+            else{
+                userModel.remove({_id: id}, function (err) {
+                    if (err) {
+                        userMessages.errorMessage(response, 3);
+                    }
+                    else {
+                        userMessages.userCorrectResponse(response, 1);
+                    }
+                });
             }
-        });
+        })
+
     }else{
         userMessages.errorMessage(response,5);
     }

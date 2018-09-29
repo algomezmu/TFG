@@ -27,8 +27,11 @@ function createEvent(request, response) {
     var launchType = request.body.launchType;
     var launchTime = request.body.launchTime;
     var description = request.body.description;
-    
-    if (command &&
+    var notify = request.body.notify;
+    console.log( request.body);
+
+
+    if ((notify || command) &&
         launchType &&
         launchTime && checkLauchTime(launchType, launchTime)) {
 
@@ -40,7 +43,8 @@ function createEvent(request, response) {
             command: command,
             launchType: launchType,
             launchTime: launchTime,
-            description: description
+            description: description,
+            notify: notify
         };
         eventsModel.findOneAndUpdate({
             _id: id
@@ -52,7 +56,7 @@ function createEvent(request, response) {
             if (err) {
                 adminMessages.errorMessage(response, 0);
             } else {
-                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime);
+                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime, event.notify);
                 adminMessages.adminEventCorrectResponse(response, 0);
             }
         });

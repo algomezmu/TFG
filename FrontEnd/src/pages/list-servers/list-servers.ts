@@ -177,6 +177,7 @@ export class ListServersPage {
         },
         error => {
           this.alertMessage("Connexion error", "red");
+          loader.dismiss();
         }
       );
     });
