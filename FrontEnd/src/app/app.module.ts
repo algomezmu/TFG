@@ -45,6 +45,22 @@ import { ConfigPage } from "../pages/server-menu-pages/config/config";
 import { UsersListPage } from "../pages/server-menu-pages/users/users-page-1/users-page-1";
 import { UserCreatePage } from "../pages/server-menu-pages/users/users-page-2/users-page-2";
 
+import { Firebase } from '@ionic-native/firebase';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { FcmProvider } from '../providers/fcm/fcm';
+
+
+const firebase = {
+  // your firebase web config
+    apiKey: "AIzaSyCRp-C6RiMH_1r9cquHZMc0gSEnzIJQQYE",
+    authDomain: "tfg-uni.firebaseapp.com",
+    databaseURL: "https://tfg-uni.firebaseio.com",
+    projectId: "tfg-uni",
+    storageBucket: "tfg-uni.appspot.com",
+    messagingSenderId: "795676300412"
+ }
+
 @NgModule({
   declarations: [
     MyApp,
@@ -83,7 +99,9 @@ import { UserCreatePage } from "../pages/server-menu-pages/users/users-page-2/us
       name: '__ionic3_start_theme',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
-    ChartsModule
+    ChartsModule,
+    AngularFireModule.initializeApp(firebase), 
+    AngularFirestoreModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -122,7 +140,9 @@ import { UserCreatePage } from "../pages/server-menu-pages/users/users-page-2/us
     LookService,
     ConfigService,
     RunService,
-    UsersService
+    UsersService,
+    Firebase,
+    FcmProvider
   ]
 })
 
