@@ -1,7 +1,9 @@
+import { DiscsPage } from './../server-menu-pages/discs/discsMain';
 import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { CPUPage } from "../server-menu-pages/cpu/cpuMain";
 import { MemoryPage } from "../server-menu-pages/memory/memoryMain";
+import { NetworkingPage } from './../server-menu-pages/networking/networkingMain';
 import { StatusPage } from "../server-menu-pages/status/status";
 import { ConfigPage } from "../server-menu-pages/config/config";
 import { EventsListPage } from "../server-menu-pages/events/event-page-1/event-page-1";
@@ -48,7 +50,7 @@ export class ServerMenuPage {
         this.nav.push(EventsListPage);
         break;
       case "Scritps":
-      this.nav.push(ScriptsListPage);
+        this.nav.push(ScriptsListPage);
         break;
       case "CPU":
         this.nav.push(CPUPage);
@@ -57,19 +59,19 @@ export class ServerMenuPage {
         this.nav.push(MemoryPage);
         break;
       case "Sockets":
-
+        
         break;
       case "Internet":
-
+        this.nav.push(NetworkingPage);
         break;
       case "Process":
 
         break;
       case "Users":
-      this.nav.push(UsersListPage);
+        this.nav.push(UsersListPage);
         break;
       case "Discs":
-
+        this.nav.push(DiscsPage);
         break;
       default:
         break;
