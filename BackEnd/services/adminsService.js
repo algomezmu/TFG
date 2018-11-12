@@ -27,8 +27,11 @@ function createEvent(request, response) {
     var launchType = request.body.launchType;
     var launchTime = request.body.launchTime;
     var description = request.body.description;
-    
-    if (command &&
+    var notify = request.body.notify;
+    console.log( request.body);
+
+
+    if ((notify || command) &&
         launchType &&
         launchTime && checkLauchTime(launchType, launchTime)) {
 
@@ -40,7 +43,8 @@ function createEvent(request, response) {
             command: command,
             launchType: launchType,
             launchTime: launchTime,
-            description: description
+            description: description,
+            notify: notify
         };
         eventsModel.findOneAndUpdate({
             _id: id
@@ -52,7 +56,7 @@ function createEvent(request, response) {
             if (err) {
                 adminMessages.errorMessage(response, 0);
             } else {
-                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime);
+                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime, event.notify);
                 adminMessages.adminEventCorrectResponse(response, 0);
             }
         });
@@ -105,7 +109,7 @@ function getScripts(response) {
         } else if (obj && obj.length != 0) {
             adminMessages.adminCorrectResponseInfo(response, obj);
         } else {
-            adminMessages.errorMessage(response, 2);
+            adminMessages.errorMessage(response, 5);
         }
     })
 };
@@ -115,15 +119,17 @@ function createScripts(request, response) {
     var id = request.body.id;
     var command = request.body.command;
     var description = request.body.description;
+    var perm = request.body.perm;
 
-    if (command) {
+    if (command && perm) {
         if (!id) {
             id = new ObjectId();
         }
 
         var newScript = {
             command: command,
-            description: description
+            description: description,
+            perm: perm
         };
         scriptsModel.findOneAndUpdate({
             _id: id
@@ -161,6 +167,33 @@ function launchScript(request, response) {
     }
 };
 
+function launchScriptPerm(request, response) {
+    var command = request.body.command.command;
+    var auth = request.body.perm;
+
+    if (command) {
+
+        if(auth != config.authentificatePerm){
+            adminMessages.errorMessage(response, 6);
+        }else
+        {
+            var line = " sh -c 'sleep 1; echo " + config.permPassword + "' | script -qc 'su " + config.permUser + " -c \"" + command + "\"'"
+            exec(line, {
+                cwd: config.userDirectory
+            }, function (error, stdout) {
+                if (error) {
+                    adminMessages.adminCorrectResponseInfo(response, error.toString());
+                } else {
+                    stdout = stdout.substring(14);
+                    adminMessages.adminCorrectResponseInfo(response, stdout);
+                }
+            });
+        }
+    } else {
+        adminMessages.errorMessage(response, 4);
+    }
+};
+
 function deleteScripts(request, response) {
     var id = request.params.id;
     if (id) {
@@ -189,3 +222,4 @@ exports.getScripts = getScripts;
 exports.createScripts = createScripts;
 exports.deleteScripts = deleteScripts;
 exports.launchScript = launchScript;
+exports.launchScriptPerm = launchScriptPerm;

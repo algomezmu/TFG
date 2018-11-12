@@ -54,6 +54,8 @@ var errorMessage = function (response, type) {
         return response.send({"status": "error", "message": "User already exist"});
     }else if(type == 5) {
         return response.send({"status": "error", "message": "Incorrect input"});
+    }else if(type == 6) {
+        return response.send({"status": "error", "message": "Can't delete last user"});
     }
 };
 

@@ -143,13 +143,16 @@ var appRouter = function (app) {
         adminServices.launchScript(request, response);
     });
 
+    app.post("/api/run/scripts/launch/perm", authService.verifytokenAdmin,  function (request, response) {
+        console.log("POST /api/run/scripts/launch/perm");
+        adminServices.launchScriptPerm(request, response);
+    });
+
     app.delete("/api/run/scripts/:id", authService.verifytokenAdmin,  function (request, response) {
         console.log("DELETE /api/run/scripts");
         adminServices.deleteScripts(request, response);
     });
     //endregion
-
-
 };
 
 module.exports = appRouter;

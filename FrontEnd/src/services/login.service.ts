@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -25,7 +24,8 @@ export class LoginService {
         return JSON.parse(JSON.stringify(res));
       })
       .catch(err => {
-        return Observable.throw('errorConexion');
+        console.log(err);
+        return Observable.throw(err.message);
       });
   }
 }

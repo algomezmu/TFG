@@ -83,7 +83,7 @@ export class RegisterServerPage {
         }
       },
       error => {
-        alertMessage(this.toastCtrl, "Connexion error", "red");
+        alertMessage(this.toastCtrl,error, "red");
       }
     );
   }

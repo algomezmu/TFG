@@ -5,7 +5,7 @@ import { RunService } from "../../../../services/run.service";
 import { ListServersPage } from "../../../../pages/list-servers/list-servers";
 import { alertMessage } from "../../../../utils/lib";
 import { presentLoading } from "../../../../utils/lib";
-import { Validators, FormBuilder } from "@angular/forms";
+import { Validators, FormBuilder, AbstractControl } from "@angular/forms";
 
 @Component({
   selector: 'page-event-2',
@@ -30,11 +30,12 @@ export class EventsCreatePage {
     }
 
     this.registerForm = this.formBuilder.group({
-      command: [navParams.get('command'), Validators.compose([Validators.required])],
+      command: [navParams.get('command')],
       launchType: [lT, Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       dateProgrammed: [navParams.get('launchTime'), Validators.compose([Validators.required])],
       description: [navParams.get('description'), Validators.compose([Validators.maxLength(100)])],
-      statusSymbol: [statusSymbol, Validators.pattern('[><]')]
+      statusSymbol: [statusSymbol, Validators.pattern('[><]')],
+      notify:[navParams.get('notify')]
     });
   }
 
@@ -48,13 +49,23 @@ export class EventsCreatePage {
     var launchTime = this.registerForm.controls['dateProgrammed'].value;
     var description = this.registerForm.controls['description'].value;
     var statusSymbol = this.registerForm.controls['statusSymbol'].value;
+    var notify = this.registerForm.controls['notify'].value;
+
+    var message;
+
 
     if (launchType == "cpu" || launchType == "mem") {
-      if (!isNaN(Number(launchTime))) {
+      if (!isNaN(Number(launchTime)) && (statusSymbol == ">" || statusSymbol == "<")) {
         launchType = launchType + statusSymbol;
       } else {
         next = false;
+        message = "GHz/Mb is not a Number or Options needed";
       }
+    }
+
+    if(!command && !notify){
+      next = false;
+      message = "Command needed";
     }
 
     if (next) {
@@ -63,7 +74,8 @@ export class EventsCreatePage {
         command,
         launchType,
         launchTime,
-        description
+        description,
+        notify
       }
 
       this.runService.saveEvents(this.shareDataService.serverDomain, this.shareDataService.token, event).subscribe(res => {
@@ -80,7 +92,7 @@ export class EventsCreatePage {
         });
     }else{
       loader.dismiss();
-      alertMessage(this.toastCtrl, "Is not a Number", "red");
+      alertMessage(this.toastCtrl, message, "red");
     }
 
   }

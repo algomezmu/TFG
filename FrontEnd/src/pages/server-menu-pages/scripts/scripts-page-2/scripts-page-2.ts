@@ -19,9 +19,13 @@ export class ScriptsCreatePage {
   constructor(public appCtrl: App, public nav: NavController, private navParams: NavParams,  public shareDataService: ShareDataService,
     public runService: RunService, private formBuilder: FormBuilder, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.id = navParams.get('id');
+    var perm = navParams.get('perm');
+    if(!perm)
+      perm = false;
     this.registerForm = this.formBuilder.group({
       command: [navParams.get('command'), Validators.compose([Validators.required])],
       description: [navParams.get('description'), Validators.compose([Validators.maxLength(100)])],
+      permissions: [perm, Validators.compose([Validators.required])],
     });
   }
 
@@ -32,11 +36,13 @@ export class ScriptsCreatePage {
 
     var command = this.registerForm.controls['command'].value;
     var description = this.registerForm.controls['description'].value;
+    var perm = this.registerForm.controls['permissions'].value;
 
     var script = {
       id: this.id,
       command,
-      description
+      description,
+      perm
     }
 
     this.runService.saveScript(this.shareDataService.serverDomain, this.shareDataService.token, script).subscribe(res => {

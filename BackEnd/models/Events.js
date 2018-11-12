@@ -10,7 +10,7 @@ if (mongoose.connection.readyState === 0) {
 var EventSchema = new Schema({
     command: {
         type: String,
-        required: true
+        required: false
     },
     launchType: {
         type: String,
@@ -22,6 +22,10 @@ var EventSchema = new Schema({
     },
     description: {
         type: String,
+        required: false
+    },
+    notify: {
+        type: Boolean,
         required: false
     }
 });

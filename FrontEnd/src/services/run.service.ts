@@ -162,4 +162,27 @@ export class RunService {
       });
   }
 
+  
+  launchScriptWith(serverURL, token, script) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token
+      })
+    };
+
+    return this.http.post(serverURL + "/api/run/scripts/launch/perm", script,
+      httpOptions
+    )
+      .map(res => {
+        return JSON.parse(JSON.stringify(res));
+      })
+      .catch(err => {
+        return Observable.throw('errorConexion');
+      });
+  }
+
 }

@@ -9,7 +9,7 @@ const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
 var listEventsTimer = [];
 var listEventsStatus = [];
 
-function createEvent(id, command, lauchType, lauchTime) {
+function createEvent(id, command, lauchType, lauchTime, notify) {
     var time = false;
     var oneTime = false;
     var cron;
@@ -34,10 +34,10 @@ function createEvent(id, command, lauchType, lauchTime) {
     }
 
     if (time == true){
-        eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime)
+        eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, notify)
     }else if(typesOfLaunch.find(function(element) { return element == lauchType;}) != undefined ){
         logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
-        listEventsStatus[id]= {command, lauchType, lauchTime};
+        listEventsStatus[id]= {command, lauchType, lauchTime, notify};
     }
 }
 
@@ -50,7 +50,7 @@ function deleteEvent(id){
     }
 }
 
-function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime){
+function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, notify){
     logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
     listEventsTimer[id] = schedule.scheduleJob(cron, function () {
         logger.info('Launch ' + command + ' ' + id);
@@ -64,21 +64,22 @@ function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime){
                     console.log("Error delete");
                 }
                 else {
-                    console.log("Delted");
+                    console.log("Deleted");
                 }
             });
 
         }
-    }.bind(command, id,  oneTime, listEventsTimer));
+    }.bind(command, id,  oneTime, listEventsTimer, notify));
 }
 
 function checkEventStatus(type, limit){
-    console.log("Aqui1");
     console.log(listEventsTimer);
+    /*
     for (const key in listEventsTimer) {
         console.log(listEventsTimer[key]);
         console.log(listEventsTimer[key].nextInvocation());
     }
+    */
     for(var k in listEventsStatus){
         var launch = false;
         if(listEventsStatus[k].lauchType == type+">" && limit > listEventsStatus[k].lauchTime){
@@ -87,8 +88,12 @@ function checkEventStatus(type, limit){
             launch = true;
         }
 
-        if(launch == true){
+        if(launch == true && listEventsStatus[k].command){
             launchCommand(listEventsStatus[k].command);
+        }
+
+        if(listEventsStatus[k].notify && launch){
+            console.log("Notify Me");
         }
     }
 }
@@ -99,10 +104,8 @@ function launchCommand(command){
     }, function (error, stdout) {
         if (!error) {
             logger.info('All ok with the command');
-            console.log("All ok with the command");
         } else {
             logger.info('Error with the command');
-            console.log("Error with the command");
         }
     });
 }

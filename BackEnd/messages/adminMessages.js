@@ -70,6 +70,10 @@ var errorMessage = function (response, type) {
         return response.send({"status": "error", "message": "Can not be deleted"});
     }else if(type == 4) {
         return response.send({"status": "error", "message": "Incorrect input"});
+    }else if(type == 5) {
+        return response.send({"status": "error", "message": "No Scripts"});
+    }else if(type == 6) {
+        return response.send({"status": "error", "message": "Error Password"});
     }
 };
 
