@@ -36,6 +36,11 @@ import { CpuHistoryPage } from "../pages/server-menu-pages/cpu/cpuTab2/cpuHistor
 import { MemoryPage } from "../pages/server-menu-pages/memory/memoryMain";
 import { MemoryActualPage } from "../pages/server-menu-pages/memory/memoryTab1/memoryActual";
 import { MemoryHistoryPage } from "../pages/server-menu-pages/memory/memoryTab2/memoryHistory";
+import { NetworkingPage } from "../pages/server-menu-pages/networking/networkingMain";
+import { NetworkingActualPage } from "../pages/server-menu-pages/networking/networkingTab1/networkingActual";
+import { NetworkingHistoryPage } from "../pages/server-menu-pages/networking/networkingTab2/networkingHistory";
+import { DiscsPage } from "../pages/server-menu-pages/discs/discsMain";
+import { DiscsActualPage } from "../pages/server-menu-pages/discs/discsTab1/discsActual";
 import { EventsListPage } from "../pages/server-menu-pages/events/event-page-1/event-page-1";
 import { EventsCreatePage } from "../pages/server-menu-pages/events/event-page-2/event-page-2";
 import { ScriptsListPage } from "../pages/server-menu-pages/scripts/scripts-page-1/scripts-page-1";
@@ -77,6 +82,11 @@ const firebase = {
     MemoryPage,
     MemoryActualPage,
     MemoryHistoryPage,
+    NetworkingPage,
+    NetworkingActualPage,
+    NetworkingHistoryPage,
+    DiscsPage,
+    DiscsActualPage,
     StatusPage,
     ConfigPage,
     EventsListPage,
@@ -119,6 +129,11 @@ const firebase = {
     MemoryPage,
     MemoryActualPage,
     MemoryHistoryPage,
+    NetworkingPage,
+    NetworkingActualPage,
+    NetworkingHistoryPage,
+    DiscsPage,
+    DiscsActualPage,
     StatusPage,
     ConfigPage,
     EventsListPage,

@@ -39,8 +39,13 @@ export class MyApp {
     this.initializeApp();
 
     this.appMenuItems = [
+<<<<<<< HEAD
+      {title: 'Server List', component: ListServersPage, icon: 'home'},
+      {title: 'Local Weather', component: ListServersPage, icon: 'partly-sunny'}
+=======
       { title: 'Home', component: ListServersPage, icon: 'home' },
       { title: 'Local Weather', component: ListServersPage, icon: 'partly-sunny' }
+>>>>>>> 817dcdfe776e983553e7453f87548d653d66483d
     ];
     
     platform.ready().then(() => {
