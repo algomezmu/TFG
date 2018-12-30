@@ -58,6 +58,7 @@ app.use(function(req, res, next) {
 // Todos los endpoint del API los colocaremos en este fichero
 var routes = require("./routes/routes.js")(app);
 
+
 server.listen(3000, function() {
     console.log("Servidor escuchando peticiones en el puerto %s...", server.address().port);
     logger.info("Servidor escuchando peticiones en el puerto %s...", server.address().port);

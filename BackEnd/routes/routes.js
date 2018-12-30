@@ -104,8 +104,8 @@ var appRouter = function (app) {
     //endregion
 
     //region Process
-    app.delete("/api/look/processKiller", authService.verifytokenAdmin,  function (request, response) {
-        console.log("Delete /look/processKiller");
+    app.delete("/api/run/processKiller", authService.verifytokenAdmin,  function (request, response) {
+        console.log("Delete /api/run/processKiller");
         lookServices.processKiller(request, response);
     });
     //endregion
