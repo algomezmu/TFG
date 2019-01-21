@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { ListServersPage } from "../list-servers/list-servers"
 import * as crypto from 'crypto-js/sha512';
 import { ShareDataService } from "../../utils/shareData";
+import { BackendInstallerPage } from "../backend-installer/backend-installer";
 
 @Component({
   selector: 'page-register',
@@ -90,10 +91,7 @@ export class RegisterServerPage {
   }
 
   installBackend() {
-    console.log("Aqui");
-    this.storage.forEach((value, key, index) => {
-      this.storage.remove(key);
-    });
+    this.nav.push(BackendInstallerPage);
   }
 
   // go to login page

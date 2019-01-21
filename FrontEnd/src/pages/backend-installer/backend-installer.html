@@ -1,0 +1,20 @@
+<!-- -->
+<ion-header>
+    <ion-navbar color="primary">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>
+        <strong>Backend Installer</strong>
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+<ion-content padding class="lists detail-bg">
+<ion-refresher (ionRefresh)="reloadChart($event)">
+  <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+  </ion-refresher-content>
+</ion-refresher>
+<ion-grid>
+  Hola
+</ion-grid>
+</ion-content>

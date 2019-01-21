@@ -58,6 +58,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { SocketsPage } from "../pages/server-menu-pages/sockets/socketsMain";
 import { SocketsActualPage } from "../pages/server-menu-pages/sockets/socketsTab1/socketsActual";
+import { BackendInstallerPage } from "../pages/backend-installer/backend-installer";
 
 
 const firebase = {
@@ -103,7 +104,8 @@ const firebase = {
     ProcessPage,
     ProcessActualPage,
     SocketsPage,
-    SocketsActualPage
+    SocketsActualPage,
+    BackendInstallerPage
   ],
   imports: [
     BrowserModule,
@@ -154,7 +156,8 @@ const firebase = {
     ProcessPage,
     ProcessActualPage,
     SocketsPage,
-    SocketsActualPage
+    SocketsActualPage,
+    BackendInstallerPage
   ],
   providers: [
     StatusBar,
