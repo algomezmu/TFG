@@ -98,10 +98,9 @@ function processList(request, response){
 
 
 function processKiller(request, response){
-    req.params.number
     //process.kill(process.pid, 'SIGINT');
-    if(request.body.pid && Number(request.body.pid) > 0){
-        process.kill(request.body.pid);
+    if(request.params.pid && Number(request.params.pid) > 0){
+        process.kill(request.params.pid);
         lookMessages.dataResponse(response, "Done");
     }else{
         lookMessages.errorMessage(response, 2);

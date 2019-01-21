@@ -2,19 +2,18 @@ import { Component, ViewChild } from "@angular/core";
 import { App, NavController, ToastController, LoadingController } from "ionic-angular";
 import { ShareDataService } from "../../../../utils/shareData";
 import { LookService } from "../../../../services/look.service";
-import { converToMB } from "../../../../utils/lib";
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { ListServersPage } from "../../../list-servers/list-servers";
 import { alertMessage } from "../../../../utils/lib";
 import { presentLoading } from "../../../../utils/lib";
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
-import { ListServersPage } from "../../../../pages/list-servers/list-servers";
 
 @Component({
-  selector: 'page-networking-history',
-  templateUrl: 'networkingHistory.html'
+  selector: 'page-disk-history',
+  templateUrl: 'diskHistory.html'
 })
-export class NetworkingHistoryPage {
+export class DiskHistoryPage {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
-  
+
   //Data
   private initDate: any;
   private endDate: any;
@@ -53,28 +52,24 @@ export class NetworkingHistoryPage {
 
   reloadChart(refresher) {
     var loader = presentLoading(this.loadingCtrl);
-    this.lookService.network(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
+    this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        console.log(res.message);
-        var free = [];
-        var used = [];
-        var swapfree = [];
-        var swapused = [];
+        var avg = [];
+        var min = [];
+        var max = [];
         var date = [];
         res.message.forEach(element => {
-          free.push(converToMB(element.memFree));
-          used.push(converToMB(element.memTotal  - element.memFree));
-          swapfree.push(converToMB(element.memSwapfree));
-          swapused.push(converToMB(element.memSwaptotal - element.memSwapfree));
+          avg.push(element.cpuAvg);
+          min.push(element.cpuMin);
+          max.push(element.cpuMax);
           date.push(element.created_at);
         });
         this.lineChartLabels = date;
         this.lineChartData = [
-          { data: free, label: 'free' },
-          { data: used, label: 'used' },
-          { data: swapfree, label: 'swapfree' },
-          { data: swapused, label: 'swapused' }
+          { data: avg, label: 'avg' },
+          { data: min, label: 'min' },
+          { data: max, label: 'max' }
         ];
 
         // The next code is for updating the chart DONT TOUCH

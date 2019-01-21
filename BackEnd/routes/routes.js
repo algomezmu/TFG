@@ -104,7 +104,7 @@ var appRouter = function (app) {
     //endregion
 
     //region Process
-    app.delete("/api/run/processKiller", authService.verifytokenAdmin,  function (request, response) {
+    app.delete("/api/run/processKiller/:pid", authService.verifytokenAdmin,  function (request, response) {
         console.log("Delete /api/run/processKiller");
         lookServices.processKiller(request, response);
     });

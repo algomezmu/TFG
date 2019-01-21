@@ -27,7 +27,6 @@ import { LoginPage } from "../pages/login/login";
 import { NotificationsPage } from "../pages/notifications/notifications";
 import { RegisterServerPage } from "../pages/register-server/register-server";
 import { ServerMenuPage } from "../pages/server-menu/server-menu";
-import { SearchLocationPage } from "../pages/search-location/search-location";
 import { ListServersPage } from "../pages/list-servers/list-servers";
 import { StatusPage } from "../pages/server-menu-pages/status/status";
 import { CPUPage } from "../pages/server-menu-pages/cpu/cpuMain";
@@ -39,8 +38,11 @@ import { MemoryHistoryPage } from "../pages/server-menu-pages/memory/memoryTab2/
 import { NetworkingPage } from "../pages/server-menu-pages/networking/networkingMain";
 import { NetworkingActualPage } from "../pages/server-menu-pages/networking/networkingTab1/networkingActual";
 import { NetworkingHistoryPage } from "../pages/server-menu-pages/networking/networkingTab2/networkingHistory";
-import { DiscsPage } from "../pages/server-menu-pages/discs/discsMain";
-import { DiscsActualPage } from "../pages/server-menu-pages/discs/discsTab1/discsActual";
+import { DiskPage } from "../pages/server-menu-pages/disks/diskMain";
+import { DiskActualPage } from "../pages/server-menu-pages/disks/diskTab1/diskActual";
+import { DiskHistoryPage } from "../pages/server-menu-pages/disks/diskTab2/diskHistory";
+import { ProcessPage } from "../pages/server-menu-pages/process/processMain";
+import { ProcessActualPage } from "../pages/server-menu-pages/process/processTab1/processActual";
 import { EventsListPage } from "../pages/server-menu-pages/events/event-page-1/event-page-1";
 import { EventsCreatePage } from "../pages/server-menu-pages/events/event-page-2/event-page-2";
 import { ScriptsListPage } from "../pages/server-menu-pages/scripts/scripts-page-1/scripts-page-1";
@@ -54,6 +56,8 @@ import { Firebase } from '@ionic-native/firebase';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FcmProvider } from '../providers/fcm/fcm';
+import { SocketsPage } from "../pages/server-menu-pages/sockets/socketsMain";
+import { SocketsActualPage } from "../pages/server-menu-pages/sockets/socketsTab1/socketsActual";
 
 
 const firebase = {
@@ -73,7 +77,6 @@ const firebase = {
     LoginPage,
     NotificationsPage,
     RegisterServerPage,
-    SearchLocationPage,
     ServerMenuPage,
     ListServersPage,
     CPUPage,
@@ -85,8 +88,9 @@ const firebase = {
     NetworkingPage,
     NetworkingActualPage,
     NetworkingHistoryPage,
-    DiscsPage,
-    DiscsActualPage,
+    DiskPage,
+    DiskActualPage,
+    DiskHistoryPage,
     StatusPage,
     ConfigPage,
     EventsListPage,
@@ -95,7 +99,11 @@ const firebase = {
     UserCreatePage,
     ScriptsListPage,
     ScriptsCreatePage,
-    ScriptsLaunchPage
+    ScriptsLaunchPage,
+    ProcessPage,
+    ProcessActualPage,
+    SocketsPage,
+    SocketsActualPage
   ],
   imports: [
     BrowserModule,
@@ -121,7 +129,6 @@ const firebase = {
     NotificationsPage,
     RegisterServerPage,
     ServerMenuPage,
-    SearchLocationPage,
     ListServersPage,
     CPUPage,
     CpuActualPage,
@@ -132,8 +139,9 @@ const firebase = {
     NetworkingPage,
     NetworkingActualPage,
     NetworkingHistoryPage,
-    DiscsPage,
-    DiscsActualPage,
+    DiskPage,
+    DiskActualPage,
+    DiskHistoryPage,
     StatusPage,
     ConfigPage,
     EventsListPage,
@@ -142,7 +150,11 @@ const firebase = {
     UserCreatePage,
     ScriptsListPage,
     ScriptsCreatePage,
-    ScriptsLaunchPage
+    ScriptsLaunchPage,
+    ProcessPage,
+    ProcessActualPage,
+    SocketsPage,
+    SocketsActualPage
   ],
   providers: [
     StatusBar,

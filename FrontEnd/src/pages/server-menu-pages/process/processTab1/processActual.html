@@ -1,0 +1,43 @@
+<!-- -->
+<ion-header style="z-index: -100">
+  <ion-navbar color="primary">
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="lists detail-bg">
+  <ion-refresher (ionRefresh)="reloadChart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid *ngIf="processList">
+    <ion-list>
+      <ion-list-header>General Info</ion-list-header>
+      <ion-item>
+        <h2>Number of process: {{processList.all}}</h2>
+      </ion-item>
+      <ion-item>
+        <h2>Blocked: {{processList.blocked}}</h2>
+        <span item-end>Running: {{processList.running}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>Sleeping: {{processList.sleeping}}</h2>
+        <span item-end>Unknown: {{processList.unknown}}</span>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>Process</ion-list-header>
+      <ion-item *ngFor="let process of processList.list">
+        <h2>Name: {{process.name}}</h2>
+        <h3>PID: {{process.pid}}​​​</h3>
+        <h3>State: {{process.state}}​​​</h3>
+        <h3>CpuUsage: {{(process.pcpu.toString().length>4)? (process.pcpu.toString() | slice:0:4)+'..':(process.pcpu) }} %​​​</h3>
+        <h3>MemUsage: {{(process.pmem.toString().length>4)? (process.pmem.toString() | slice:0:4)+'..':(process.pmem) }}​​​ %</h3>
+        <h3>Command: {{process.command}}​​​</h3>
+        <span item-end>      
+          <button ion-button block color="red" tappable (click)="processKiller(process.pid)">
+            Kill Process
+          </button></span>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+</ion-content>

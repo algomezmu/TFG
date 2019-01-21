@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DiscsActualPage } from './discsTab1/discsActual';
+import { SocketsActualPage } from './socketsTab1/socketsActual';
   
 @Component({
   template: `
@@ -10,7 +10,7 @@ import { DiscsActualPage } from './discsTab1/discsActual';
           <ion-icon name="menu"></ion-icon>
         </button>-->
         <ion-title>
-          <strong>Disc Info</strong>
+          <strong>Sockets Info</strong>
         </ion-title>
         <ion-buttons end>
           <button ion-button tappable (click)="presentNotifications($event)">
@@ -26,11 +26,11 @@ import { DiscsActualPage } from './discsTab1/discsActual';
       <ion-tab tabIcon="play" [root]="tab1"></ion-tab>
     </ion-tabs>`
 })
-export class DiscsPage {
+export class SocketsPage {
 
   tab1: any;
 
   constructor() {
-    this.tab1 = DiscsActualPage;
+    this.tab1 = SocketsActualPage;
   }
 }

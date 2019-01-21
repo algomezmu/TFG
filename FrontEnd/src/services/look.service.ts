@@ -50,6 +50,27 @@ export class LookService {
         return Observable.throw('errorConexion');
       });
   }
+  
+  disk(serverURL, token, dateStart, dateEnd, actualInfo) {
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+          'Accept':'application/json',
+          'Content-Type':  'application/json',
+          'Authorization': token
+      })
+    };
+
+    return this.http.get(serverURL + "/api/look/disk", httpOptions)
+      .map(res => {
+        return JSON.parse(JSON.stringify(res));
+      })
+      .catch(err => {
+        console.log(err);
+        return Observable.throw('errorConexion');
+      });
+  }
 
   process(serverURL, token, order, nProcess) {
     const httpOptions = {
@@ -63,6 +84,68 @@ export class LookService {
     };
 
     return this.http.get(serverURL + "/api/look/processList/" + order + "/" + nProcess, httpOptions)
+      .map(res => {
+        return JSON.parse(JSON.stringify(res));
+      })
+      .catch(err => {
+        return Observable.throw('errorConexion');
+      });
+  }
+
+  sockets(serverURL, token) {
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+          'Accept':'application/json',
+          'Content-Type':  'application/json',
+          'Authorization': token
+      })
+    };
+
+    return this.http.get(serverURL + "/api/look/networkCons", httpOptions)
+      .map(res => {
+        return JSON.parse(JSON.stringify(res));
+      })
+      .catch(err => {
+        return Observable.throw('errorConexion');
+      });
+  }
+
+  processKiller(serverURL, token, pid) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token
+      })
+    };
+
+    return this.http.delete(serverURL + "/api/run/processKiller/" + pid,
+      httpOptions
+    )
+      .map(res => {
+        return JSON.parse(JSON.stringify(res));
+      })
+      .catch(err => {
+        return Observable.throw('errorConexion');
+      });
+  }
+
+  network(serverURL, token, dateStart, dateEnd, actualInfo) {
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+          'Accept':'application/json',
+          'Content-Type':  'application/json',
+          'Authorization': token
+      })
+    };
+
+    return this.http.post(serverURL + "/api/look/network", { dateStart, dateEnd, actualInfo }, httpOptions)
       .map(res => {
         return JSON.parse(JSON.stringify(res));
       })

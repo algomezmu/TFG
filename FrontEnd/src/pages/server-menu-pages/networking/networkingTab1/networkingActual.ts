@@ -29,9 +29,10 @@ export class NetworkingActualPage {
 
   reloadChart(refresher) {
     var loader = presentLoading(this.loadingCtrl);
-    this.lookService.mem(this.shareDataService.serverDomain, this.shareDataService.token, null, null, true).subscribe(res => {
+    this.lookService.network(this.shareDataService.serverDomain, this.shareDataService.token, null, null, true).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
+        console.log(res.message);
         this.doughnutChartData = [ converToMB(res.message.memFree), converToMB(res.message.memTotal  - res.message.memFree) ];
 
         this.lookService.process(this.shareDataService.serverDomain, this.shareDataService.token, "m", 5).subscribe(res => {

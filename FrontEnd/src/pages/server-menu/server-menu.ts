@@ -1,4 +1,4 @@
-import { DiscsPage } from './../server-menu-pages/discs/discsMain';
+import { DiskPage } from './../server-menu-pages/disks/diskMain';
 import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { CPUPage } from "../server-menu-pages/cpu/cpuMain";
@@ -10,6 +10,8 @@ import { EventsListPage } from "../server-menu-pages/events/event-page-1/event-p
 import { UsersListPage } from "../server-menu-pages/users/users-page-1/users-page-1";
 import { ScriptsListPage } from "../server-menu-pages/scripts/scripts-page-1/scripts-page-1";
 import { ShareDataService } from "../../utils/shareData";
+import { ProcessPage } from '../server-menu-pages/process/processMain';
+import { SocketsPage } from '../server-menu-pages/sockets/socketsMain';
 
 @Component({
   selector: 'page-server-menu',
@@ -23,7 +25,6 @@ export class ServerMenuPage {
   constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService) {
     // set sample data
     this.serverName = this.shareDataService.serverName;
-    console.log(this.serverName);
     this.createMenuList();
   }
 
@@ -32,10 +33,10 @@ export class ServerMenuPage {
       { first: "Separator", second: "Server Configuration" },
       { first: "Config", second: "Users" },
       { first: "Separator", second: "Server Information" },
-      { first: "Status", second: "Internet" },
+      { first: "Status", second: "Network" },
       { first: "CPU", second: "Memory" },
       { first: "Sockets", second: "Process" },
-      { first: "Discs", second: "" },
+      { first: "Disks", second: "" },
       { first: "Separator", second: "Server Events & Scripts" },
       { first: "Events", second: "Scritps" }
     ]
@@ -62,19 +63,19 @@ export class ServerMenuPage {
         this.nav.push(MemoryPage);
         break;
       case "Sockets":
-        
+        this.nav.push(SocketsPage);
         break;
-      case "Internet":
+      case "Network":
         this.nav.push(NetworkingPage);
         break;
       case "Process":
-
+        this.nav.push(ProcessPage);
         break;
       case "Users":
         this.nav.push(UsersListPage);
         break;
-      case "Discs":
-        this.nav.push(DiscsPage);
+      case "Disks":
+        this.nav.push(DiskPage);
         break;
       default:
         break;

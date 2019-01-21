@@ -82,6 +82,7 @@ function memFunction(saveData, returnData, response) {
 
 function networkFunction(saveData, returnData, response) {
     si.networkStats(function (networkInfo) {
+        console.log(networkInfo);
         var newNetworkData = networkModel({
             iface: networkInfo.iface,
             operstate: networkInfo.operstate,

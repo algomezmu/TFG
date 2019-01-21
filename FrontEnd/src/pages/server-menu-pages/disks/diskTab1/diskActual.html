@@ -1,0 +1,43 @@
+<!-- -->
+<ion-header style="z-index: -100">
+  <ion-navbar color="primary">
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="lists detail-bg">
+  <ion-refresher (ionRefresh)="reloadChart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <div *ngFor="let data of doughnutChartData; let i = index">
+      <ion-list>      
+        <ion-list-header>
+          <h2>Info Disk/Partition {{i}}</h2>
+        </ion-list-header>
+        <ion-item>
+          <h2>Partition</h2>
+          <h3 item-end>
+            {{data.fs}}
+          </h3>
+        </ion-item>
+        <ion-item>
+          <h2>Mounted</h2>
+          <h3 item-end>
+             {{data.mount}}
+          </h3>
+        </ion-item>
+        <ion-item>
+          <h2>Type</h2>
+          <h3 item-end>
+            {{data.type}}
+          </h3>
+        </ion-item>
+      </ion-list>
+      <div style="display: block">
+        <canvas baseChart [data]="data.data" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+      </div>
+      <br/>
+    </div>
+  </ion-grid>
+</ion-content>
