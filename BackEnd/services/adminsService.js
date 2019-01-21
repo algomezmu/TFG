@@ -28,12 +28,14 @@ function createEvent(request, response) {
     var launchTime = request.body.launchTime;
     var description = request.body.description;
     var notify = request.body.notify;
+    var fcm = request.body.fcm;
+
     console.log( request.body);
 
 
     if ((notify || command) &&
         launchType &&
-        launchTime && checkLauchTime(launchType, launchTime)) {
+        launchTime && checkLaunchTime(launchType, launchTime)) {
 
         if (!id) {
             id = new ObjectId();
@@ -44,7 +46,7 @@ function createEvent(request, response) {
             launchType: launchType,
             launchTime: launchTime,
             description: description,
-            notify: notify
+            fcm: fcm
         };
         eventsModel.findOneAndUpdate({
             _id: id
@@ -56,7 +58,7 @@ function createEvent(request, response) {
             if (err) {
                 adminMessages.errorMessage(response, 0);
             } else {
-                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime, event.notify);
+                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime, event.fcm);
                 adminMessages.adminEventCorrectResponse(response, 0);
             }
         });
@@ -65,7 +67,7 @@ function createEvent(request, response) {
     }
 };
 
-function checkLauchTime(launchType, launchTime) {
+function checkLaunchTime(launchType, launchTime) {
     if (launchType === "EveryDay") {
         var lt = launchTime.split(":");
         if ((lt.length != 2 && lt.length != 3)  || isNaN(Number(lt[0])) || isNaN(Number(lt[1]))) {

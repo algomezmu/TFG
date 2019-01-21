@@ -18,16 +18,18 @@ export class EventsCreatePage {
 
   constructor(public appCtrl: App, public nav: NavController, private navParams: NavParams, public shareDataService: ShareDataService,
     public runService: RunService, private formBuilder: FormBuilder, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
-    
+
     this.id = navParams.get('id');
     let lT = navParams.get('launchType');
     let statusSymbol;
-    if(!lT){
+    if (!lT) {
       lT = "date";
-    }else if(lT.slice(-1) == ">" || lT.slice(-1) == ">"){
+    } else if (lT.slice(-1) == ">" || lT.slice(-1) == ">") {
       statusSymbol = lT.slice(-1);
-      lT = lT.slice(0, lT.length -1);
+      lT = lT.slice(0, lT.length - 1);
     }
+
+    let notify = this.checkFCM(this.navParams.get('fcm'));
 
     this.registerForm = this.formBuilder.group({
       command: [navParams.get('command')],
@@ -35,8 +37,23 @@ export class EventsCreatePage {
       dateProgrammed: [navParams.get('launchTime'), Validators.compose([Validators.required])],
       description: [navParams.get('description'), Validators.compose([Validators.maxLength(100)])],
       statusSymbol: [statusSymbol, Validators.pattern('[><]')],
-      notify:[navParams.get('notify')]
+      notify: [notify]
     });
+  }
+
+  checkFCM(fcmString){
+    if (fcmString) {
+      let aux = fcmString.split(",");
+      let res = aux.indexOf(this.shareDataService.tokenFCM);
+      if(res != -1){
+        return true;
+      }
+      else{
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   saveEvent() {
@@ -50,6 +67,7 @@ export class EventsCreatePage {
     var description = this.registerForm.controls['description'].value;
     var statusSymbol = this.registerForm.controls['statusSymbol'].value;
     var notify = this.registerForm.controls['notify'].value;
+    var fcmString = this.navParams.get('fcm');
 
     var message;
 
@@ -63,19 +81,39 @@ export class EventsCreatePage {
       }
     }
 
-    if(!command && !notify){
+    if (!command && !notify) {
       next = false;
       message = "Command needed";
     }
 
     if (next) {
-      var event = {
+      let fcm;
+
+      if (notify == true) {
+        if(this.checkFCM(this.navParams.get('fcm'))){
+          fcm = fcmString;
+        }else{
+          fcm = fcmString + "," + this.shareDataService.tokenFCM;
+        }
+      }
+      else{
+        if(this.checkFCM(this.navParams.get('fcm'))){
+          let aux = fcmString.split(",");
+          let res = aux.indexOf(this.shareDataService.tokenFCM);
+          aux.splice(res, 1);
+          fcm = aux.toString();
+        }else{
+          fcm = fcmString;
+        }
+      }
+
+      let event = {
         id: this.id,
         command,
         launchType,
         launchTime,
         description,
-        notify
+        fcm
       }
 
       this.runService.saveEvents(this.shareDataService.serverDomain, this.shareDataService.token, event).subscribe(res => {
@@ -90,7 +128,7 @@ export class EventsCreatePage {
           alertMessage(this.toastCtrl, "Conexion Error", "red");
           this.appCtrl.getRootNav().setRoot(ListServersPage);
         });
-    }else{
+    } else {
       loader.dismiss();
       alertMessage(this.toastCtrl, message, "red");
     }

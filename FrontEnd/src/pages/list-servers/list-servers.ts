@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, ToastController, ActionSheetController, AlertController, LoadingController } from "ionic-angular";
+import { NavController, ToastController, ActionSheetController, AlertController, LoadingController, Platform } from "ionic-angular";
 import { PingService } from "../../services/ping.service";
 import { RegisterServerPage } from "../register-server/register-server";
 import { ServerMenuPage } from "../server-menu/server-menu";
@@ -7,6 +7,8 @@ import { Storage } from '@ionic/storage';
 import { LoginService } from "../../services/login.service";
 import { ShareDataService } from "../../utils/shareData";
 import { presentLoading } from '../../utils/lib';
+import { FcmProvider } from '../../providers/fcm/fcm';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'page-list-server',
@@ -19,10 +21,37 @@ export class ListServersPage {
   constructor(public nav: NavController, private storage: Storage,
     public toastCtrl: ToastController, public ping: PingService, public actionSheetCtrl: ActionSheetController,
     public loginService: LoginService, public loadingCtrl: LoadingController, 
-    public shareData: ShareDataService, public alertCtrl: AlertController) {
+    public shareData: ShareDataService, public alertCtrl: AlertController,
+    public platform: Platform, public fcm: FcmProvider) {
     // set sample data
     //this.trips = tripService.getAll();
     this.refreshServers(null);
+    this.connectFirebase();
+  }
+
+  connectFirebase(){
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      
+        if( this.shareData.fcmListener){
+          this.shareData.fcmListener.unsubscribe();
+        }
+        // Get a FCM token
+        this.fcm.getToken();
+  
+        // Listen to incoming messages
+        this.shareData.fcmListener = this.fcm.listenToNotifications().pipe(
+          tap(msg => {
+            // show a toast
+            const toast = this.toastCtrl.create({
+              message: msg["_body"].toString(),
+              duration: 3000
+            });
+            toast.present();
+          })
+        )
+          .subscribe()
+    });
   }
 
   refreshServers(refresher) {

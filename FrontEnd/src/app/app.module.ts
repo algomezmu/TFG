@@ -58,12 +58,12 @@ import { FcmProvider } from '../providers/fcm/fcm';
 
 const firebase = {
   // your firebase web config
-    apiKey: "AIzaSyCRp-C6RiMH_1r9cquHZMc0gSEnzIJQQYE",
-    authDomain: "tfg-uni.firebaseapp.com",
-    databaseURL: "https://tfg-uni.firebaseio.com",
-    projectId: "tfg-uni",
-    storageBucket: "tfg-uni.appspot.com",
-    messagingSenderId: "795676300412"
+  apiKey: "AIzaSyCRp-C6RiMH_1r9cquHZMc0gSEnzIJQQYE",
+  authDomain: "tfg-uni.firebaseapp.com",
+  databaseURL: "https://tfg-uni.firebaseio.com",
+  projectId: "tfg-uni",
+  storageBucket: "tfg-uni.appspot.com",
+  messagingSenderId: "795676300412"
  }
 
 @NgModule({

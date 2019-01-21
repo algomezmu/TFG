@@ -53,19 +53,18 @@ export class EventsListPage {
     this.nav.push(EventsCreatePage);
   }
 
-  editEvent(id, command, launchType, launchTime, description) {
-    this.nav.push(EventsCreatePage, {id, command, launchType, launchTime, description});
+  editEvent(id, command, launchType, launchTime, description, fcm) {
+    this.nav.push(EventsCreatePage, {id, command, launchType, launchTime, description, fcm});
   }
 
-  presentActionSheet(id, command, launchType, launchTime, description) {
-    console.log(id);
+  presentActionSheet(id, command, launchType, launchTime, description, fcm) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Event Options',
       buttons: [
         {
           text: 'Edit ',
           handler: () => {
-            this.editEvent(id, command, launchType, launchTime, description);
+            this.editEvent(id, command, launchType, launchTime, description, fcm);
           }
         },
         {

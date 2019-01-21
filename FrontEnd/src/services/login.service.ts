@@ -17,7 +17,9 @@ export class LoginService {
     headers.append('Accept','application/json');
     headers.append('content-type','application/json');
 
-    return this.http.post(serverURL + "/api/login", { username, password }, {
+    let body = { username, password };
+
+    return this.http.post(serverURL + "/api/login", body, {
         headers: headers
       })
       .map(res => {

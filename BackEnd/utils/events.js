@@ -6,10 +6,23 @@ var config = require('./../config/config.js');
 const logConfig = require('../config/log-conf');
 const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
 
+var fcm = require('fcm-notification');
+
+var  key = require('../config/key.json');
+var FCM = new fcm(key);
+/*
+var admin = require('firebase-admin');
+var serviceAccount = require('../config/key.json');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://tfg-uni.firebaseio.com"
+});
+*/
 var listEventsTimer = [];
 var listEventsStatus = [];
 
-function createEvent(id, command, lauchType, lauchTime, notify) {
+function createEvent(id, command, lauchType, lauchTime, fcm) {
     var time = false;
     var oneTime = false;
     var cron;
@@ -34,10 +47,10 @@ function createEvent(id, command, lauchType, lauchTime, notify) {
     }
 
     if (time == true){
-        eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, notify)
+        eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, fcm)
     }else if(typesOfLaunch.find(function(element) { return element == lauchType;}) != undefined ){
         logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
-        listEventsStatus[id]= {command, lauchType, lauchTime, notify};
+        listEventsStatus[id]= {command, lauchType, lauchTime, fcm};
     }
 }
 
@@ -50,7 +63,7 @@ function deleteEvent(id){
     }
 }
 
-function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, notify){
+function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, fcm){
     logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
     listEventsTimer[id] = schedule.scheduleJob(cron, function () {
         logger.info('Launch ' + command + ' ' + id);
@@ -69,7 +82,7 @@ function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, n
             });
 
         }
-    }.bind(command, id,  oneTime, listEventsTimer, notify));
+    }.bind(command, id,  oneTime, listEventsTimer, fcm));
 }
 
 function checkEventStatus(type, limit){
@@ -92,8 +105,23 @@ function checkEventStatus(type, limit){
             launchCommand(listEventsStatus[k].command);
         }
 
-        if(listEventsStatus[k].notify && launch){
-            console.log("Notify Me");
+        if(listEventsStatus[k].fcm && listEventsStatus[k].fcm.length > 0  && launch) {
+
+            var Tokens = listEventsStatus[k].fcm.split(",");;
+            var message = {
+                notification: {
+                    title: 'Navish',
+                    body: 'Test message by navish'
+                }
+            };
+            FCM.sendToMultipleToken(message, Tokens, function (err, response) {
+                console.log(err);
+                if (err) {
+                    console.log('err--', err);
+                } else {
+                    console.log('response-----', response);
+                }
+            })
         }
     }
 }

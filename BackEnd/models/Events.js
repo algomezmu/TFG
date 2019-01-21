@@ -24,8 +24,8 @@ var EventSchema = new Schema({
         type: String,
         required: false
     },
-    notify: {
-        type: Boolean,
+    fcm: {
+        type: String,
         required: false
     }
 });

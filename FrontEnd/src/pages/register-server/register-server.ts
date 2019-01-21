@@ -8,6 +8,7 @@ import { alertMessage } from "../../utils/lib";
 import { Storage } from '@ionic/storage';
 import { ListServersPage } from "../list-servers/list-servers"
 import * as crypto from 'crypto-js/sha512';
+import { ShareDataService } from "../../utils/shareData";
 
 @Component({
   selector: 'page-register',
@@ -18,7 +19,7 @@ export class RegisterServerPage {
   public registerForm;
 
   constructor(public nav: NavController, private formBuilder: FormBuilder,
-    private loginService: LoginService, public toastCtrl: ToastController, private storage: Storage) {
+    private loginService: LoginService, public toastCtrl: ToastController, private storage: Storage, private shareDataService: ShareDataService) {
     this.registerForm = this.formBuilder.group({
       serverName: ['Prueba', Validators.compose([Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       serverDomain: ['localhost', Validators.compose([Validators.maxLength(60), Validators.required])],
