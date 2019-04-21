@@ -60,7 +60,6 @@ import { SocketsPage } from "../pages/server-menu-pages/sockets/socketsMain";
 import { SocketsActualPage } from "../pages/server-menu-pages/sockets/socketsTab1/socketsActual";
 import { BackendInstallerPage } from "../pages/backend-installer/backend-installer";
 
-
 const firebase = {
   // your firebase web config
   apiKey: "AIzaSyCRp-C6RiMH_1r9cquHZMc0gSEnzIJQQYE",

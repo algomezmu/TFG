@@ -10,11 +10,7 @@
     </ion-navbar>
   </ion-header>
 <ion-content padding class="lists detail-bg">
-<ion-refresher (ionRefresh)="reloadChart($event)">
-  <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-  </ion-refresher-content>
-</ion-refresher>
 <ion-grid>
-  Hola
+  <div #terminal id="terminal"></div>
 </ion-grid>
 </ion-content>

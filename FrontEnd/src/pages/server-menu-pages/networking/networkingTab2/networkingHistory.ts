@@ -22,6 +22,7 @@ export class NetworkingHistoryPage {
   //Line Chart Optipons
   public lineChartData: Array<any> = [{ data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }];
   public lineChartLabels: Array<any> = ['No Data'];
+  public lineChartData2: Array<any> = [{ data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }, { data: [0], label: 'No Data' }];
   public lineChartOptions: any = {
     responsive: true,
     scales: {
@@ -56,27 +57,44 @@ export class NetworkingHistoryPage {
     this.lookService.network(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        console.log(res.message);
-        var free = [];
-        var used = [];
-        var swapfree = [];
-        var swapused = [];
-        var date = [];
-        res.message.forEach(element => {
-          free.push(converToMB(element.memFree));
-          used.push(converToMB(element.memTotal  - element.memFree));
-          swapfree.push(converToMB(element.memSwapfree));
-          swapused.push(converToMB(element.memSwaptotal - element.memSwapfree));
-          date.push(element.created_at);
-        });
-        this.lineChartLabels = date;
-        this.lineChartData = [
-          { data: free, label: 'free' },
-          { data: used, label: 'used' },
-          { data: swapfree, label: 'swapfree' },
-          { data: swapused, label: 'swapused' }
-        ];
 
+        let interfacesDataIn = [];
+        let interfacesDataOut = [];
+        let interfacesDate = [];
+        let interfacesName = [];
+        res.message.forEach(element => {
+          interfacesDate.push(element.created_at);
+          JSON.parse(element.ifaces).forEach(element => {
+            if(!interfacesDataIn[element.interface]){
+              interfacesDataIn[element.interface] = [];
+              interfacesDataOut[element.interface] = [];
+              interfacesName.push(element.interface);
+            }
+            interfacesDataIn[element.interface].push(element.data[0]);
+            interfacesDataOut[element.interface].push(element.data[1]);
+          });
+        });
+        
+        this.lineChartLabels = interfacesDate;
+
+        this.lineChartData = [];
+        interfacesName.forEach(element => {
+          let aux = interfacesDataIn[element];
+          aux.forEach((element, index) => {
+            aux[index] = Number(aux[index].replace(",", "."));
+          });
+          this.lineChartData.push({ data: aux, label: element + " Data In"  });
+        });
+
+        interfacesName.forEach(element => {
+          let aux = interfacesDataOut[element];
+          aux.forEach((element, index) => {
+            aux[index] = Number(aux[index].replace(",", "."));
+          });
+          this.lineChartData.push({ data: aux, label: element  + " Data Out" });
+        });
+
+        
         // The next code is for updating the chart DONT TOUCH
         if (
           this.chart !== undefined &&

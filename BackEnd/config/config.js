@@ -5,7 +5,7 @@ var first_user_password = "fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e
 
 var domainDB = 'mongodb://localhost:27017/monitor';
 
-var activateSSL = false;
+var activateSSL = true;
 
 // BotLook
 var lookCPU = true;

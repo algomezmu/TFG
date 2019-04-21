@@ -8,29 +8,19 @@ if (mongoose.connection.readyState === 0) {
 }
 
 var NetworkSchema = new Schema({
-    iface: {
+    ifaces: {
         type: String,
-        required: false
-    },
-    operstate: {
-        type: String,
+        get: function(data) {
+            try {
+                return JSON.parse(data);
+            } catch(err) {
+                return err;
+            }
+        },
+        set: function(data) {
+            return JSON.stringify(data);
+        },
         required: true
-    },
-    rx: {
-        type: Number,
-        required: false
-    },
-    rx_sec: {
-        type: Number,
-        required: false
-    },
-    tx_sec: {
-        type: Number,
-        required: false
-    },
-    ms: {
-        type: Number,
-        required: false
     },
     created_at: {
         type: Date,

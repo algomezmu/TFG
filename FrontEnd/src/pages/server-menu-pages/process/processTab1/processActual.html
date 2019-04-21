@@ -33,7 +33,7 @@
         <h3>CpuUsage: {{(process.pcpu.toString().length>4)? (process.pcpu.toString() | slice:0:4)+'..':(process.pcpu) }} %​​​</h3>
         <h3>MemUsage: {{(process.pmem.toString().length>4)? (process.pmem.toString() | slice:0:4)+'..':(process.pmem) }}​​​ %</h3>
         <h3>Command: {{process.command}}​​​</h3>
-        <span item-end>      
+        <span item-end style="min-width: 100px;">      
           <button ion-button block color="red" tappable (click)="processKiller(process.pid)">
             Kill Process
           </button></span>

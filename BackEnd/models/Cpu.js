@@ -8,6 +8,14 @@ if (mongoose.connection.readyState === 0) {
 }
 
 var CpuSchema = new Schema({
+    cpuIDE: {
+        type: Number,
+        required: true
+    },
+    cpuWORK: {
+        type: Number,
+        required: true
+    },
     cpuMin: {
         type: Number,
         required: true

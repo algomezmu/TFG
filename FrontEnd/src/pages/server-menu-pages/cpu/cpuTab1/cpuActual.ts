@@ -17,7 +17,7 @@ export class CpuActualPage {
   public processList: any;
 
   // Doughnut
-  public doughnutChartLabels:string[] = ['Max Usage', 'Min Usage'];
+  public doughnutChartLabels:string[] = ['Usage', 'IDE'];
   public doughnutChartData:number[] = [100, 0];
   public doughnutChartType:string = 'doughnut';
   //
@@ -31,7 +31,7 @@ export class CpuActualPage {
     this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token, null, null, true).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        this.doughnutChartData = [ res.message.cpuMax,res.message.cpuMin];
+        this.doughnutChartData = [ res.message.cpuWORK,res.message.cpuIDE];
 
         this.lookService.process(this.shareDataService.serverDomain, this.shareDataService.token, "c", 5).subscribe(res => {
           res.message.forEach((process, index) => {

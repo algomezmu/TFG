@@ -18,8 +18,8 @@ export class NetworkingActualPage {
   public processList: any;
 
   // Doughnut
-  public doughnutChartLabels:string[] = ['Used (Mb)', 'Free (Mb)'];
-  public doughnutChartData:number[] = [100, 0];
+  public doughnutChartLabels:string[] = ['Loading'];
+  public doughnutChartData:number[] = [];
   public doughnutChartType:string = 'doughnut';
   //
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
@@ -32,19 +32,11 @@ export class NetworkingActualPage {
     this.lookService.network(this.shareDataService.serverDomain, this.shareDataService.token, null, null, true).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        console.log(res.message);
-        this.doughnutChartData = [ converToMB(res.message.memFree), converToMB(res.message.memTotal  - res.message.memFree) ];
+        this.doughnutChartData = res.message;
 
-        this.lookService.process(this.shareDataService.serverDomain, this.shareDataService.token, "m", 5).subscribe(res => {
-          res.message.forEach((process, index) => {
-            res.message[index].pmem = Math.round(process.pmem * 100) / 100;
-          });
-          this.processList = res.message;
-
-          if (refresher) {
-            refresher.complete();
-          }
-        });
+        if (refresher) {
+          refresher.complete();
+        }
       } else {
         if(res.code == "401"){
           this.appCtrl.getRootNav().setRoot(ListServersPage);

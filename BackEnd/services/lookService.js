@@ -63,7 +63,7 @@ function getMemHistory(request, response) {
 }
 
 function getNetworkHistory(request, response) {
-    if (request.body.actualInfo == false) {
+    if (!request.body.actualInfo) {
         var dateStart = new Date(request.body.dateStart);
         var dateEnd;
 

@@ -8,38 +8,50 @@ var config = require('./../config/config.js');
 var lookMessages = require('./../messages/lookMessages.js');
 var events = require('./events');
 
+const {exec} = require('child_process');
+
 function cpuFunction(saveData, returnData, response) {
     si.cpuCurrentspeed(function (cpuActualInfo) {
         si.cpuTemperature(function (cpuTempInfo) {
             events.checkEventStatus("cpu", cpuActualInfo.avg);
-
-            var newCPUData = cpuModel({
-                cpuMin: cpuActualInfo.min,
-                cpuMax: cpuActualInfo.max,
-                cpuAvg: cpuActualInfo.avg,
-                cpuTempMain: cpuTempInfo.main,
-                cpuTemp: cpuTempInfo.cores,
-                cpuMax: cpuTempInfo.max
-            });
-            if (saveData) {
-                newCPUData.save(function (err, data) {
-                    if (err) {
-                        if (returnData) {
-                            lookMessages.errorMessage(response, 0);
-                        } else {
-                            console.log("Error");
-                        }
+            exec('mpstat 1 1 |tail -1|awk \'{print $NF}\'', (err, stdout, stderr) => {
+                if (err) {
+                    lookMessages.errorMessage(response, 0);
+                } else {
+                    stdout = stdout.replace(/[\r\n]/g, '');
+                    stdout = stdout.replace(",", ".");
+                    var newCPUData = cpuModel({
+                        cpuIDE: stdout,
+                        cpuWORK: 100 - stdout,
+                        cpuMin: cpuActualInfo.min,
+                        cpuMax: cpuActualInfo.max,
+                        cpuAvg: cpuActualInfo.avg,
+                        cpuTempMain: cpuTempInfo.main,
+                        cpuTemp: cpuTempInfo.cores,
+                        cpuMax: cpuTempInfo.max
+                    });
+                    if (saveData) {
+                        newCPUData.save(function (err, data) {
+                            if (err) {
+                                if (returnData) {
+                                    lookMessages.errorMessage(response, 0);
+                                } else {
+                                    console.log(err);
+                                    console.log("Error");
+                                }
+                            } else {
+                                if (returnData) {
+                                    lookMessages.dataResponse(response, data);
+                                } else {
+                                    console.log("Saved CPU");
+                                }
+                            }
+                        });
                     } else {
-                        if (returnData) {
-                            lookMessages.dataResponse(response, data);
-                        } else {
-                            console.log("Saved CPU");
-                        }
+                        lookMessages.dataResponse(response, newCPUData);
                     }
-                });
-            } else {
-                lookMessages.dataResponse(response, newCPUData);
-            }
+                }
+            });
         });
     });
 }
@@ -48,7 +60,7 @@ function cpuFunction(saveData, returnData, response) {
 function memFunction(saveData, returnData, response) {
     si.mem(function (memInfo) {
 
-        var limiitMb = Number(((memInfo.total - memInfo.free)/1048576).toFixed(2));
+        var limiitMb = Number(((memInfo.total - memInfo.free) / 1048576).toFixed(2));
         events.checkEventStatus("mem", limiitMb);
 
         var newMemData = memModel({
@@ -63,6 +75,7 @@ function memFunction(saveData, returnData, response) {
                     if (returnData) {
                         lookMessages.errorMessage(response, 0);
                     } else {
+                        console.log(err);
                         console.log("Error");
                     }
                 } else {
@@ -79,39 +92,70 @@ function memFunction(saveData, returnData, response) {
     });
 }
 
+async function getNetwork(interfac) {
+    const {stdout, stderr} = await exec('sar -n DEV 1 3 | grep ' + interfac + ' | tail -n1 | awk \'{print $5, $6}\'');
+
+    if (stderr) {
+        console.error(stderr);
+    }
+    console.log(stdout);
+    return stdout;
+}
 
 function networkFunction(saveData, returnData, response) {
-    si.networkStats(function (networkInfo) {
-        console.log(networkInfo);
-        var newNetworkData = networkModel({
-            iface: networkInfo.iface,
-            operstate: networkInfo.operstate,
-            rx: networkInfo.rx,
-            tx: networkInfo.tx,
-            rx_sec: networkInfo.rx_sec,
-            tx_sec: networkInfo.tx_sec,
-            ms: networkInfo.ms
+    si.networkInterfaces(function (interf) {
+        let interfacesNames = [];
+        interf.forEach(function (element) {
+            interfacesNames.push(element.iface);
         });
-        if (saveData) {
-            newNetworkData.save(function (err, data) {
-                if (err) {
-                    if (returnData) {
-                        lookMessages.errorMessage(response, 0);
-                    } else {
-                        console.log("Error");
-                    }
+
+        exec('sar -n DEV 1 3 | grep "Media" | tail -n +2 | awk \'{print $2, $5, $6}\'', (err, stdout, stderr) => {
+            if(!stdout){
+                if (returnData) {
+                    lookMessages.errorMessage(response, 0);
                 } else {
-                    if (returnData) {
-                        lookMessages.dataResponse(response, data);
-                    } else {
-                        console.log("Saved Network");
-                    }
+                    console.log(err);
+                    console.log("Error");
                 }
-            });
-        } else {
-            lookMessages.dataResponse(response, newNetworkData);
-        }
+            }else {
+                let lines = [];
+
+                stdout.split("\n").forEach(function (element) {
+                    let aux = element.split(" ");
+                    if (aux.length > 0 && interfacesNames.includes(aux[0])) {
+                        let auxInter = aux[0];
+                        aux.shift();
+                        lines.push({interface: auxInter, data: aux});
+                    }
+                });
+
+                var newNetworkData = networkModel({
+                    ifaces: lines
+                });
+                if (saveData) {
+                    newNetworkData.save(function (err, data) {
+                        if (err) {
+                            if (returnData) {
+                                lookMessages.errorMessage(response, 0);
+                            } else {
+                                console.log(err);
+                                console.log("Error");
+                            }
+                        } else {
+                            if (returnData) {
+                                lookMessages.dataResponse(response, data);
+                            } else {
+                                console.log("Saved Network");
+                            }
+                        }
+                    });
+                } else {
+                    lookMessages.dataResponse(response, lines);
+                }
+            }
+        });
     });
+
 }
 
 function processFunction(response, order, nProcess) {

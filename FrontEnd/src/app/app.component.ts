@@ -73,7 +73,6 @@ initializeApp() {
 openPage(page) {
   // Reset the content nav to have just this page
   // we wouldn't want the back button to show in this scenario
-  console.log(page.title );
   if(page.title === "Server List"){
     this.nav.setRoot(ListServersPage);
   }else{

@@ -16,6 +16,12 @@
       <ion-label>Date End</ion-label>
       <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="endDate" [min]="initDate" (ngModelChange)="reloadChart(null)"></ion-datetime>
     </ion-item>
+    <br>
+    <ion-list>
+      <ion-list-header>
+        <h2>Data receiving rate</h2>
+      </ion-list-header>
+    </ion-list>
     <div style="display: block;">
       <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
         [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>

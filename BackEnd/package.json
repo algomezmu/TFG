@@ -6,14 +6,18 @@
   "license": "",
   "dependencies": {
     "cluster": "^0.7.7",
-    "cors": "^2.8.4",
+    "cors": "^2.8.5",
     "express": "^4.16.3",
+    "fcm-notification": "^2.0.0",
+    "firebase-admin": "^6.4.0",
     "js-logging": "^0.1.0",
     "jsonwebtoken": "^8.2.1",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.23.0",
     "mongoose": "^5.0.13",
     "node-schedule": "^1.3.0",
     "sleep": "^5.1.1",
-    "systeminformation": "^3.42.0",
+    "systeminformation": "^4.1.4",
     "url": "^0.11.0"
   },
   "scripts": {

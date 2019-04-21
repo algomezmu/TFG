@@ -38,8 +38,8 @@ export class RegisterServerPage {
     var password = this.registerForm.controls['password'].value;
     var port = this.registerForm.controls['port'].value;
 
-    if (!serverDomain.includes("http")) {
-      serverDomain = "http://" + serverDomain
+    if (!serverDomain.includes("https")) {
+      serverDomain = "https://" + serverDomain
     }
 
     if (!port || port == "") {

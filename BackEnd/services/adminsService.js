@@ -123,7 +123,7 @@ function createScripts(request, response) {
     var description = request.body.description;
     var perm = request.body.perm;
 
-    if (command && perm) {
+    if (command && perm != undefined) {
         if (!id) {
             id = new ObjectId();
         }

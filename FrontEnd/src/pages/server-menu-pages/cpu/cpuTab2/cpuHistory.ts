@@ -55,21 +55,18 @@ export class CpuHistoryPage {
     this.lookService.cpu(this.shareDataService.serverDomain, this.shareDataService.token, this.initDate, this.endDate, false).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        var avg = [];
-        var min = [];
-        var max = [];
+        var cpuWORK = [];
+        var cpuIDE = [];
         var date = [];
         res.message.forEach(element => {
-          avg.push(element.cpuAvg);
-          min.push(element.cpuMin);
-          max.push(element.cpuMax);
+          cpuWORK.push(element.cpuWORK);
+          cpuIDE.push(element.cpuIDE);
           date.push(element.created_at);
         });
         this.lineChartLabels = date;
         this.lineChartData = [
-          { data: avg, label: 'avg' },
-          { data: min, label: 'min' },
-          { data: max, label: 'max' }
+          { data: cpuIDE, label: 'IDE' },
+          { data: cpuWORK, label: 'Work' }
         ];
 
         // The next code is for updating the chart DONT TOUCH
