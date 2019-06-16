@@ -21,10 +21,27 @@ export class MemoryActualPage {
   public doughnutChartLabels:string[] = ['Used (Mb)', 'Free (Mb)'];
   public doughnutChartData:number[] = [100, 0];
   public doughnutChartType:string = 'doughnut';
+  private autoreload;
+  private buttonColor;
   //
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
      public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.reloadChart(null);
+  }
+
+  autoUpdate(){
+    if(this.autoreload){
+      clearTimeout(this.autoreload);
+      this.autoreload = undefined;
+      
+      this.buttonColor = undefined;
+    }else{
+      
+      var self = this;
+      this.autoreload = setInterval(function(){ console.log("aqui");self.reloadChart(null); }, 60000);
+      
+      this.buttonColor = "#000";
+    } 
   }
 
   reloadChart(refresher) {
@@ -32,7 +49,7 @@ export class MemoryActualPage {
     this.lookService.mem(this.shareDataService.serverDomain, this.shareDataService.token, null, null, true).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
-        this.doughnutChartData = [ converToMB(res.message.memFree), converToMB(res.message.memTotal  - res.message.memFree) ];
+        this.doughnutChartData = [ converToMB(res.message.memTotal  - res.message.memFree), converToMB(res.message.memFree) ];
 
         this.lookService.process(this.shareDataService.serverDomain, this.shareDataService.token, "m", 5).subscribe(res => {
           res.message.forEach((process, index) => {

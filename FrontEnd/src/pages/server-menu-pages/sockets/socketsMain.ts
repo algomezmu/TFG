@@ -12,6 +12,7 @@ import { SocketsActualPage } from './socketsTab1/socketsActual';
         <ion-title>
           <strong>Sockets Info</strong>
         </ion-title>
+        <!--
         <ion-buttons end>
           <button ion-button tappable (click)="presentNotifications($event)">
             <ion-icon name="notifications"></ion-icon>
@@ -20,6 +21,7 @@ import { SocketsActualPage } from './socketsTab1/socketsActual';
             <ion-icon name="cog"></ion-icon>
           </button>
         </ion-buttons>
+          -->
       </ion-navbar>
     </ion-header>
     <ion-tabs>

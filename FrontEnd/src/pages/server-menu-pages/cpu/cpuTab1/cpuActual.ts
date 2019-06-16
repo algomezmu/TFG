@@ -20,10 +20,26 @@ export class CpuActualPage {
   public doughnutChartLabels:string[] = ['Usage', 'IDE'];
   public doughnutChartData:number[] = [100, 0];
   public doughnutChartType:string = 'doughnut';
+  private autoreload;
+  private buttonColor;
   //
   constructor(public appCtrl: App, public shareDataService: ShareDataService,
      public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.reloadChart(null);
+  }
+  autoupdate(){
+    if(this.autoreload){
+      clearTimeout(this.autoreload);
+      this.autoreload = undefined;
+      
+      this.buttonColor = undefined;
+    }else{
+      
+      var self = this;
+      this.autoreload = setInterval(function(){ console.log("aqui");self.reloadChart(null); }, 60000);
+      
+      this.buttonColor = "#000";
+    } 
   }
 
   reloadChart(refresher) {

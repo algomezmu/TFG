@@ -35,22 +35,5 @@ export class BackendInstallerPage {
 
   // getting the nativeElement only possible after view init
   ngAfterViewInit() {
-      //SSH server detail to be connected
-        var sshconfig2 = {
-            host: '192.168.1.3',
-            username: 'ubuntu',
-            password: 'mysecret2'
-        }
-        //window.sshClient.sshVerifyHost(function(success){...},function(error){...},hostname,port,saveHostKey)
-/*
-      // this now finds the #terminal element
-      this.term.open( this.terminal.nativeElement);
-
-      // calling fit is not quite working
-      // uses the obscure ion-textbox, which does not really exist, but changes the font size
-      // the number of rows will determine the size of the terminal screen
-      fit(this.term);
-      this.term.writeln('Welcome to xterm.js');
-  */
     }
 }

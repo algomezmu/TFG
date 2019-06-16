@@ -14,6 +14,11 @@
       <ion-list>
         <ion-list-header>
           <h2>Interface {{data.interface}}</h2>
+          <span *ngIf="i == 0" item-end style="margin: 0px">
+            <button ion-button tappable [style.backgroundColor]="buttonColor" (click)="autoUpdate()">
+              <ion-icon name="refresh"></ion-icon>
+            </button>
+          </span>
         </ion-list-header>
         <ion-item *ngIf="data.data">
           <h2>Data receiving rate (Kbytes/second)</h2>

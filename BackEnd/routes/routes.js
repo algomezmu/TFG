@@ -10,15 +10,21 @@ var appRouter = function (app) {
 
     const logConfig = require('../config/log-conf');
     const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
+    var ExpressBrute = require('express-brute');
+
+    var store = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
+    var bruteforce = new ExpressBrute(store);
 
     //region Login
-    app.post('/api/login', function (request, response) {
+    app.post('/api/login',
+        bruteforce.prevent, function (request, response) {
         console.log("POST /login");
         loginServices.login(request, response);
     });
     //endregion
 
-    app.get('/api/ping', function (request, response) {
+    app.get('/api/ping',
+        bruteforce.prevent,  function (request, response) {
         console.log("GET /ping");
         response.statusCode = 200;
         response.set({

@@ -21,10 +21,27 @@ export class NetworkingActualPage {
   public doughnutChartLabels:string[] = ['Loading'];
   public doughnutChartData:number[] = [];
   public doughnutChartType:string = 'doughnut';
+  private autoreload;
+  private buttonColor;
   //
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
      public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.reloadChart(null);
+  }
+  
+  autoUpdate(){
+    if(this.autoreload){
+      clearTimeout(this.autoreload);
+      this.autoreload = undefined;
+      
+      this.buttonColor = undefined;
+    }else{
+      
+      var self = this;
+      this.autoreload = setInterval(function(){ console.log("aqui");self.reloadChart(null); }, 60000);
+      
+      this.buttonColor = "#000";
+    } 
   }
 
   reloadChart(refresher) {

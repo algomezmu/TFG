@@ -12,6 +12,7 @@ import { ProcessActualPage } from './processTab1/processActual';
         <ion-title>
           <strong>Process Info</strong>
         </ion-title>
+        <!--
         <ion-buttons end>
           <button ion-button tappable (click)="presentNotifications($event)">
             <ion-icon name="notifications"></ion-icon>
@@ -20,6 +21,7 @@ import { ProcessActualPage } from './processTab1/processActual';
             <ion-icon name="cog"></ion-icon>
           </button>
         </ion-buttons>
+          -->
       </ion-navbar>
     </ion-header>
     <ion-tabs>

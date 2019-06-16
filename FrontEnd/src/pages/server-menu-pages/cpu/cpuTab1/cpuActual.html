@@ -1,11 +1,12 @@
 <!-- -->
 <ion-header style="z-index: -100">
-    <ion-navbar color="primary">
-    </ion-navbar>
+  <ion-navbar color="primary">
+  </ion-navbar>
 </ion-header>
 <ion-content padding class="lists detail-bg">
   <ion-refresher (ionRefresh)="reloadChart($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-grid>
@@ -14,7 +15,15 @@
     </div>
 
     <ion-list>
-      <ion-list-header>Actual Use of CPU (=5)</ion-list-header>
+      <ion-list-header>
+          Actual Use of CPU (=5) 
+          <span item-end style="margin: 0px">
+            <button ion-button tappable [style.backgroundColor]="buttonColor" (click)="autoupdate()">
+              <ion-icon name="refresh"></ion-icon>
+            </button>
+          </span>
+
+      </ion-list-header>
       <ion-item *ngFor="let process of processList">
         <h2>Name: {{process.name}}</h2>
         PID: {{process.pid}}

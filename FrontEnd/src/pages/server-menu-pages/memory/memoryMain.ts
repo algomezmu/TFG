@@ -13,6 +13,7 @@ import { MemoryHistoryPage } from './memoryTab2/memoryHistory';
         <ion-title>
           <strong>Memory Info</strong>
         </ion-title>
+        <!--
         <ion-buttons end>
           <button ion-button tappable (click)="presentNotifications($event)">
             <ion-icon name="notifications"></ion-icon>
@@ -21,6 +22,7 @@ import { MemoryHistoryPage } from './memoryTab2/memoryHistory';
             <ion-icon name="cog"></ion-icon>
           </button>
         </ion-buttons>
+          -->
       </ion-navbar>
     </ion-header>
     <ion-tabs>

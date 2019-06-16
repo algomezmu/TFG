@@ -13,6 +13,7 @@ import { NetworkingHistoryPage } from './networkingTab2/networkingHistory';
         <ion-title>
           <strong>Networking Info</strong>
         </ion-title>
+        <!--
         <ion-buttons end>
           <button ion-button tappable (click)="presentNotifications($event)">
             <ion-icon name="notifications"></ion-icon>
@@ -21,6 +22,7 @@ import { NetworkingHistoryPage } from './networkingTab2/networkingHistory';
             <ion-icon name="cog"></ion-icon>
           </button>
         </ion-buttons>
+          -->
       </ion-navbar>
     </ion-header>
     <ion-tabs>

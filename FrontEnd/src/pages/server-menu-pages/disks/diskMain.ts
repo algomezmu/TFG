@@ -13,6 +13,7 @@ import { DiskHistoryPage } from './diskTab2/diskHistory';
         <ion-title>
           <strong>Disk Info</strong>
         </ion-title>
+        <!--
         <ion-buttons end>
           <button ion-button tappable (click)="presentNotifications($event)">
             <ion-icon name="notifications"></ion-icon>
@@ -21,6 +22,7 @@ import { DiskHistoryPage } from './diskTab2/diskHistory';
             <ion-icon name="cog"></ion-icon>
           </button>
         </ion-buttons>
+          -->
       </ion-navbar>
     </ion-header>
     <ion-tabs>
