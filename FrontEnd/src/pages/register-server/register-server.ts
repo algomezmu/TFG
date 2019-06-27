@@ -21,12 +21,21 @@ export class RegisterServerPage {
 
   constructor(public nav: NavController, private formBuilder: FormBuilder,
     private loginService: LoginService, public toastCtrl: ToastController, private storage: Storage, private shareDataService: ShareDataService) {
+      /*
     this.registerForm = this.formBuilder.group({
       serverName: ['Prueba', Validators.compose([Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       serverDomain: ['localhost', Validators.compose([Validators.maxLength(60), Validators.required])],
       username: ['admin', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       password: ['12345678', Validators.compose([Validators.minLength(6), Validators.maxLength(20), Validators.required])],
       port: ['3000', Validators.compose([Validators.pattern('[0-9 ]*')])]
+    });*/
+    
+    this.registerForm = this.formBuilder.group({
+      serverName: ['', Validators.compose([Validators.maxLength(20), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      serverDomain: ['', Validators.compose([Validators.maxLength(60), Validators.required])],
+      username: ['', Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(20), Validators.required])],
+      port: ['', Validators.compose([Validators.pattern('[0-9 ]*')])]
     });
   }
 

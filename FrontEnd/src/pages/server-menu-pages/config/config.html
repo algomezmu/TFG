@@ -4,14 +4,6 @@
     <ion-title>
       <strong>Config</strong>
     </ion-title>
-    <ion-buttons end>
-      <button ion-button tappable (click)="presentNotifications($event)">
-        <ion-icon name="notifications"></ion-icon>
-      </button>
-      <button ion-button tappable (click)="goToAccount()">
-        <ion-icon name="cog"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content padding class="lists detail-bg">
@@ -25,7 +17,7 @@
       <ion-list-header>CPU</ion-list-header>
       <ion-item>
         <ion-label>CPU History</ion-label>
-        <ion-toggle [(ngModel)]="config.lookCPU"></ion-toggle>
+        <ion-toggle [disabled]="rol == 'Monitor'" [(ngModel)]="config.lookCPU"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Every</ion-label>
@@ -35,7 +27,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Timer</ion-label>
-        <ion-select [(ngModel)]="config.lCPU">
+        <ion-select [disabled]="rol == 'Monitor'" [(ngModel)]="config.lCPU">
           <ion-option value="h">Hour</ion-option>
           <ion-option value="m">Minutes</ion-option>
           <ion-option value="s">Seconds</ion-option>
@@ -50,7 +42,7 @@
       <ion-list-header>Memory</ion-list-header>
       <ion-item>
         <ion-label>Memory History</ion-label>
-        <ion-toggle [(ngModel)]="config.lookMemory"></ion-toggle>
+        <ion-toggle [disabled]="rol == 'Monitor'" [(ngModel)]="config.lookMemory"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Every</ion-label>
@@ -60,7 +52,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Timer</ion-label>
-        <ion-select [(ngModel)]="config.lMem">
+        <ion-select [disabled]="rol == 'Monitor'" [(ngModel)]="config.lMem">
           <ion-option value="h">Hour</ion-option>
           <ion-option value="m">Minutes</ion-option>
           <ion-option value="s">Seconds</ion-option>
@@ -74,7 +66,7 @@
       <ion-list-header>Network</ion-list-header>
       <ion-item>
         <ion-label>Network History</ion-label>
-        <ion-toggle [(ngModel)]="config.lookNetwork"></ion-toggle>
+        <ion-toggle [disabled]="rol == 'Monitor'" [(ngModel)]="config.lookNetwork"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Every</ion-label>
@@ -84,7 +76,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Timer</ion-label>
-        <ion-select [(ngModel)]="config.lNetwork">
+        <ion-select [disabled]="rol == 'Monitor'" [(ngModel)]="config.lNetwork">
           <ion-option value="h">Hour</ion-option>
           <ion-option value="m">Minutes</ion-option>
           <ion-option value="s">Seconds</ion-option>
@@ -102,7 +94,7 @@
         </ion-item>
     </ion-list>
 
-    <ion-card>
+    <ion-card *ngIf="rol != 'Monitor'">
         <ion-card-header>
           Info
         </ion-card-header>
@@ -111,6 +103,6 @@
           This configuration is saved only temporaly, if you want to change this permanentlly, go to the config file in the server.
         </ion-card-content>
       </ion-card>
-    <button ion-button block (click)="save()">Save Config</button>
+    <button *ngIf="rol != 'Monitor'" ion-button block (click)="save()">Save Config</button>
   </ion-grid>
 </ion-content>

@@ -29,17 +29,29 @@ export class ServerMenuPage {
   }
 
   createMenuList() {
-    this.menuList = [
-      { first: "Separator", second: "Server Configuration" },
-      { first: "Config", second: "Users" },
-      { first: "Separator", second: "Server Information" },
-      { first: "Status", second: "Network" },
-      { first: "CPU", second: "Memory" },
-      { first: "Sockets", second: "Process" },
-      { first: "Disks", second: "" },
-      { first: "Separator", second: "Server Events & Scripts" },
-      { first: "Events", second: "Scritps" }
-    ]
+    if(this.shareDataService.rol == "Monitor"){
+      this.menuList = [
+        { first: "Separator", second: "Server Configuration" },
+        { first: "Config", second: "" },
+        { first: "Separator", second: "Server Information" },
+        { first: "Status", second: "Network" },
+        { first: "CPU", second: "Memory" },
+        { first: "Sockets", second: "Process" },
+        { first: "Disks", second: "" }
+      ]
+    }else{
+      this.menuList = [
+        { first: "Separator", second: "Server Configuration" },
+        { first: "Config", second: "Users" },
+        { first: "Separator", second: "Server Information" },
+        { first: "Status", second: "Network" },
+        { first: "CPU", second: "Memory" },
+        { first: "Sockets", second: "Process" },
+        { first: "Disks", second: "" },
+        { first: "Separator", second: "Server Events & Scripts" },
+        { first: "Events", second: "Scritps" }
+      ]
+    }
   }
 
   openOption(id) {

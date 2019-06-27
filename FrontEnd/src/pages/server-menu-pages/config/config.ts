@@ -12,9 +12,11 @@ import { presentLoading } from '../../../utils/lib';
 export class ConfigPage {
 
   config: any;
+  rol:any;
 
   constructor(public nav: NavController, public navParams: NavParams, public shareDataService: ShareDataService,
     public configService: ConfigService, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+    this.rol = this.shareDataService.rol;
     this.loadPage(null);
   }
 

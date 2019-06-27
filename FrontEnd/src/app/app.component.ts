@@ -50,7 +50,7 @@ export class MyApp {
       { title: 'Server List', component: ListServersPage, icon: 'home' },
     ];
     this.storage.forEach((value, key, index) => {
-      this.appMenuItems.push({ title: key, icon: 'partly-sunny' });
+      this.appMenuItems.push({ title: key, icon: 'laptop' });
     });      
 }
 

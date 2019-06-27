@@ -201,6 +201,7 @@ export class ListServersPage {
             this.shareData.token = data.token;
             this.shareData.serverName = id;
             this.shareData.serverDomain = server.serverDomain;
+            this.shareData.rol = data.rol;
             this.nav.push(ServerMenuPage);
           }
         },

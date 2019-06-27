@@ -46,7 +46,7 @@ function login(request, response) {
                     expiresIn: "24h"
                 });
 
-                loginMessages.loginCorrect(response, token);
+                loginMessages.loginCorrect(response, token, obj.rol);
             }else{
                 loginMessages.loginIncorrect(response);
             }

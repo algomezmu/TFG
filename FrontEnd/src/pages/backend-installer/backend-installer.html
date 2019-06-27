@@ -23,15 +23,16 @@
     <code class="box">
       cd TFG
     </code>
-    Install the Modules/dependencies for the server (If you don't have installed node & npm, go to the end of this page)
-    <code class="box">   
+    Install the Modules/dependencies for the server (If you don't have installed node & npm, go to the end of this
+    page)
+    <code class="box">
        <ul>
         <li>cd Backend</li>
         <li>npm install</li>
       </ul>
     </code>
-    Before initializing  the server, go to the folder "config" to the file "config" and edit all the parameter.
-    For instant, modify this two files with the <strong>SSL certification and Key</strong> 
+    Before initializing the server, go to the folder "config" to the file "config" and edit all the parameter.
+    For instant, modify this two files with the <strong>SSL certification and Key</strong>
     <ul>
       <li>private_key.key</li>
       <li>ssl_certificate.cer</li>
@@ -48,13 +49,23 @@
     <h1>
       Install Nodejs & npm
     </h1>
-    To install the needed programs for the server to execute, you should follow the next commands for Ubuntu/Debian distributions:
-    <code class="box">   
+    To install the needed programs for the server to execute, you should follow the next commands for Ubuntu/Debian
+    distributions:
+    <code class="box">
         <ul>
          <li>sudo apt update</li>
          <li>sudo apt install nodejs</li>
          <li>sudo apt install npm</li>
        </ul>
      </code>
+    <h1>
+      Install the sysstat package
+    </h1>
+    Sar command is a command to get the network bandwidth
+    <code class="box">
+         <ul>
+          <li>sudo apt-get install sysstat</li>
+        </ul>
+      </code>
   </ion-grid>
 </ion-content>
