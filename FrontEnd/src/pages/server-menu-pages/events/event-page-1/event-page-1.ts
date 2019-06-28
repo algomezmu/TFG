@@ -36,10 +36,11 @@ export class EventsListPage {
           this.appCtrl.getRootNav().setRoot(ListServersPage);
         }
         alertMessage(this.toastCtrl, res.message, "red");
-
-        if (refresher) {
-          refresher.complete();
-        }
+        this.eventList = [];
+      }
+      
+      if (refresher) {
+        refresher.complete();
       }
     },
       error => {
@@ -53,18 +54,18 @@ export class EventsListPage {
     this.nav.push(EventsCreatePage);
   }
 
-  editEvent(id, command, launchType, launchTime, description, fcm) {
-    this.nav.push(EventsCreatePage, {id, command, launchType, launchTime, description, fcm});
+  editEvent(id, command, launchType, launchTime, description, fcm, interfaceNet, interInOut) {
+    this.nav.push(EventsCreatePage, {id, command, launchType, launchTime, description, fcm, interfaceNet, interInOut});
   }
 
-  presentActionSheet(id, command, launchType, launchTime, description, fcm) {
+  presentActionSheet(id, command, launchType, launchTime, description, fcm, interfaceNet, interInOut) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Event Options',
       buttons: [
         {
           text: 'Edit ',
           handler: () => {
-            this.editEvent(id, command, launchType, launchTime, description, fcm);
+            this.editEvent(id, command, launchType, launchTime, description, fcm, interfaceNet, interInOut);
           }
         },
         {

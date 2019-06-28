@@ -27,6 +27,14 @@ var EventSchema = new Schema({
     fcm: {
         type: String,
         required: false
+    },
+    interfaceNet: {
+        type: String,
+        required: false
+    },
+    interInOut: {
+        type: String,
+        required: false
     }
 });
 

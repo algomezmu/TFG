@@ -29,9 +29,8 @@ function createEvent(request, response) {
     var description = request.body.description;
     var notify = request.body.notify;
     var fcm = request.body.fcm;
-
-    console.log( request.body);
-
+    var interfaceNet = request.body.interfaceNet;
+    var interInOut = request.body.interInOut;
 
     if ((notify || command) &&
         launchType &&
@@ -46,7 +45,9 @@ function createEvent(request, response) {
             launchType: launchType,
             launchTime: launchTime,
             description: description,
-            fcm: fcm
+            fcm: fcm,
+            interfaceNet: interfaceNet,
+            interInOut: interInOut
         };
         eventsModel.findOneAndUpdate({
             _id: id
@@ -58,7 +59,7 @@ function createEvent(request, response) {
             if (err) {
                 adminMessages.errorMessage(response, 0);
             } else {
-                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime, event.fcm);
+                eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime, event.fcm, event.interfaceNet, event.interInOut);
                 adminMessages.adminEventCorrectResponse(response, 0);
             }
         });

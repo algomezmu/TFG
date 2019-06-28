@@ -44,6 +44,7 @@ export class ScriptsListPage {
           this.appCtrl.getRootNav().setRoot(ListServersPage);
         }
         alertMessage(this.toastCtrl,res.message, "red");
+        this.scriptList = [];
 
         if (refresher) {
           refresher.complete();

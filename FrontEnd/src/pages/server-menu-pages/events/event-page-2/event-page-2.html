@@ -37,6 +37,7 @@
           <ion-option value="date">Exact date</ion-option>
           <ion-option value="cpu">CPU</ion-option>
           <ion-option value="mem">Memory</ion-option>
+          <ion-option value="net">Networking</ion-option>
         </ion-select>
       </ion-item>
       <div *ngIf="registerForm.get('launchType').value == 'EveryDay'">
@@ -51,7 +52,7 @@
           <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MMMM/YYYY HH:mm" formControlName="dateProgrammed"></ion-datetime>
         </ion-item>
       </div>
-      <div *ngIf="registerForm.get('launchType').value  == 'cpu' || registerForm.get('launchType').value == 'mem'">
+      <div *ngIf="registerForm.get('launchType').value  == 'cpu' || registerForm.get('launchType').value == 'mem'  || registerForm.get('launchType').value == 'net'">
         <ion-item>
           <ion-label>Options</ion-label>
           <ion-select formControlName="statusSymbol">
@@ -60,7 +61,19 @@
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-input placeholder="GHz/Mb" type="text" formControlName="dateProgrammed"></ion-input>
+          <ion-input placeholder="GHz/Mb/Kb" type="text" formControlName="dateProgrammed"></ion-input>
+        </ion-item>
+      </div>
+      <div *ngIf="registerForm.get('launchType').value == 'net'">
+        <ion-item>
+          <ion-label>Options</ion-label>
+          <ion-select formControlName="interInOut">
+            <ion-option value="in">Input</ion-option>
+            <ion-option value="out">Output</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Interface Name" type="text" formControlName="interfaceNet"></ion-input>
         </ion-item>
       </div>
       <ion-item>
@@ -79,9 +92,11 @@
         </ion-card-header>
 
         <ion-card-content>
-          CPU: Avg all Cps GHz
-          <br> 
+          CPU: Avg all Cps GHz 0 to 100
+          <br>
           Memory: In Mb
+          <br>
+          Networking: Kb 
         </ion-card-content>
       </ion-card>
 

@@ -35,8 +35,10 @@ export class EventsCreatePage {
       command: [navParams.get('command')],
       launchType: [lT, Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       dateProgrammed: [navParams.get('launchTime'), Validators.compose([Validators.required])],
+      interfaceNet: [navParams.get('interfaceNet')],
       description: [navParams.get('description'), Validators.compose([Validators.maxLength(100)])],
       statusSymbol: [statusSymbol, Validators.pattern('[><]')],
+      interInOut:  [navParams.get('interInOut')],
       notify: [notify]
     });
   }
@@ -68,11 +70,13 @@ export class EventsCreatePage {
     var statusSymbol = this.registerForm.controls['statusSymbol'].value;
     var notify = this.registerForm.controls['notify'].value;
     var fcmString = this.navParams.get('fcm');
+    var interfaceNet = this.registerForm.controls['interfaceNet'].value;
+    var interInOut =this.registerForm.controls['interInOut'].value;
 
     var message;
 
 
-    if (launchType == "cpu" || launchType == "mem") {
+    if (launchType == "cpu" || launchType == "mem" || (launchType == "net" && interfaceNet)) {
       if (!isNaN(Number(launchTime)) && (statusSymbol == ">" || statusSymbol == "<")) {
         launchType = launchType + statusSymbol;
       } else {
@@ -113,9 +117,11 @@ export class EventsCreatePage {
         launchType,
         launchTime,
         description,
-        fcm
+        fcm,
+        interfaceNet,
+        interInOut
       }
-
+      console.log(event);
       this.runService.saveEvents(this.shareDataService.serverDomain, this.shareDataService.token, event).subscribe(res => {
         loader.dismiss();
         if (res.status != "error") {

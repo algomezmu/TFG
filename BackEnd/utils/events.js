@@ -22,11 +22,11 @@ admin.initializeApp({
 var listEventsTimer = [];
 var listEventsStatus = [];
 
-function createEvent(id, command, lauchType, lauchTime, fcm) {
+function createEvent(id, command, lauchType, lauchTime, fcm, interfaceNet,interInOut) {
     var time = false;
     var oneTime = false;
     var cron;
-    var typesOfLaunch = ["cpu>","cpu<","mem>","mem<"];
+    var typesOfLaunch = ["cpu>","cpu<","mem>","mem<","net>","net<"];
 
     if (lauchType == "EveryDay") {
         time = true;
@@ -37,7 +37,6 @@ function createEvent(id, command, lauchType, lauchTime, fcm) {
     if (lauchType == "date" && new Date(lauchTime) > new Date()) {
         oneTime = true;
         time = true;
-        console.log(lauchTime);
         cron = new Date(lauchTime);
     }
 
@@ -50,7 +49,7 @@ function createEvent(id, command, lauchType, lauchTime, fcm) {
         eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, fcm)
     }else if(typesOfLaunch.find(function(element) { return element == lauchType;}) != undefined ){
         logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
-        listEventsStatus[id]= {command, lauchType, lauchTime, fcm};
+        listEventsStatus[id]= {command, lauchType, lauchTime, fcm, interfaceNet, interInOut};
     }
 }
 
@@ -85,8 +84,7 @@ function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, f
     }.bind(command, id,  oneTime, listEventsTimer, fcm));
 }
 
-function checkEventStatus(type, limit){
-    console.log(listEventsTimer);
+function checkEventStatus(type, limit, interfaceNet = null){
     /*
     for (const key in listEventsTimer) {
         console.log(listEventsTimer[key]);
@@ -95,10 +93,26 @@ function checkEventStatus(type, limit){
     */
     for(var k in listEventsStatus){
         var launch = false;
-        if(listEventsStatus[k].lauchType == type+">" && limit > listEventsStatus[k].lauchTime){
-            launch = true;
-        }else if(listEventsStatus[k].lauchType == type+"<" && limit < listEventsStatus[k].lauchTime){
-            launch = true;
+
+        if(type == 'net'){
+            if(listEventsStatus[k].interfaceNet == interfaceNet){
+                let dataInOut = 0;
+                if(listEventsStatus[k].interInOut == "out"){
+                    dataInOut = 1;
+                }
+
+                if(listEventsStatus[k].lauchType == type+">" && Number(limit[dataInOut].replace(/,/g, '')) > Number(listEventsStatus[k].lauchTime*100)){
+                    launch = true;
+                }else if(listEventsStatus[k].lauchType == type+"<" && Number(limit[dataInOut].replace(/,/g, '')) < Number(listEventsStatus[k].lauchTime*100)){
+                    launch = true;
+                }
+            }
+        }else{
+            if(listEventsStatus[k].lauchType == type+">" && limit > listEventsStatus[k].lauchTime){
+                launch = true;
+            }else if(listEventsStatus[k].lauchType == type+"<" && limit < listEventsStatus[k].lauchTime){
+                launch = true;
+            }
         }
 
         if(launch == true && listEventsStatus[k].command){
@@ -115,10 +129,11 @@ function checkEventStatus(type, limit){
                 }
             };
             FCM.sendToMultipleToken(message, Tokens, function (err, response) {
-                console.log(err);
                 if (err) {
+                    logger.info('FCM Error: ' + err);
                     console.log('err--', err);
                 } else {
+                    logger.info("FCM");
                     console.log('response-----', response);
                 }
             })

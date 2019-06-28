@@ -93,7 +93,7 @@ function memFunction(saveData, returnData, response) {
 }
 
 async function getNetwork(interfac) {
-    const {stdout, stderr} = await exec('sar -n DEV 1 3 | grep ' + interfac + ' | tail -n1 | awk \'{print $5, $6}\'');
+    const {stdout, stderr} = await exec('sudo sar -n DEV 1 3 | grep ' + interfac + ' | tail -n1 | awk \'{print $5, $6}\'');
 
     if (stderr) {
         console.error(stderr);
@@ -109,7 +109,7 @@ function networkFunction(saveData, returnData, response) {
             interfacesNames.push(element.iface);
         });
 
-        exec('sar -n DEV 1 3 | grep "Media" | tail -n +2 | awk \'{print $2, $5, $6}\'', (err, stdout, stderr) => {
+        exec('sudo sar -n DEV 1 3 | grep "Media" | tail -n +2 | awk \'{print $2, $5, $6}\'', (err, stdout, stderr) => {
             if(!stdout){
                 if (returnData) {
                     lookMessages.errorMessage(response, 0);
@@ -125,6 +125,7 @@ function networkFunction(saveData, returnData, response) {
                     if (aux.length > 0 && interfacesNames.includes(aux[0])) {
                         let auxInter = aux[0];
                         aux.shift();
+                        events.checkEventStatus("net", aux, auxInter);
                         lines.push({interface: auxInter, data: aux});
                     }
                 });
