@@ -6,7 +6,7 @@ var config = require('./../config/config.js');
 const logConfig = require('../config/log-conf');
 const logger = require('js-logging').dailyFile([logConfig.getLogSettings()]);
 
-var fcm = require('fcm-notification');
+var fcm = require('fcm-node');
 
 var  key = require('../config/key.json');
 var FCM = new fcm(key);
@@ -21,6 +21,15 @@ admin.initializeApp({
 */
 var listEventsTimer = [];
 var listEventsStatus = [];
+
+function returnFCM(id){
+    console.log(listEventsStatus[id]);
+    if(listEventsStatus[id] && listEventsStatus[id].fcm) {
+        return listEventsStatus[id].fcm;
+    }else{
+        return undefined;
+    }
+}
 
 function createEvent(id, command, lauchType, lauchTime, fcm, interfaceNet,interInOut) {
     var time = false;
@@ -119,24 +128,30 @@ function checkEventStatus(type, limit, interfaceNet = null){
             launchCommand(listEventsStatus[k].command);
         }
 
-        if(listEventsStatus[k].fcm && listEventsStatus[k].fcm.length > 0  && launch) {
+        if(listEventsStatus[k].fcm && listEventsStatus[k].fcm.split(",").length > 0  && launch) {
+            let tokens = listEventsStatus[k].fcm.split(",");
+            tokens.forEach(element => {
+                if(element){
+                    var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
+                        to: element,
 
-            var Tokens = listEventsStatus[k].fcm.split(",");;
-            var message = {
-                notification: {
-                    title: 'Navish',
-                    body: 'Test message by navish'
+                        notification: {
+                            title: "Programed Event: " + listEventsStatus[k].lauchType + " " + listEventsStatus[k].lauchTime
+                        }
+                    };
+
+                    FCM.send(message, function(err, response){
+                        console.log(response);
+                        if (err) {
+                            console.log("Something has gone wrong!");
+                            logger.info("Event: Something has gone wrong!:" + err )
+                        } else {
+                            console.log("All correct");
+                            logger.info("Event: sended");
+                        }
+                    });
                 }
-            };
-            FCM.sendToMultipleToken(message, Tokens, function (err, response) {
-                if (err) {
-                    logger.info('FCM Error: ' + err);
-                    console.log('err--', err);
-                } else {
-                    logger.info("FCM");
-                    console.log('response-----', response);
-                }
-            })
+            });
         }
     }
 }
@@ -153,6 +168,7 @@ function launchCommand(command){
     });
 }
 
+exports.returnFCM = returnFCM;
 exports.launchCommand = launchCommand;
 exports.createEvent = createEvent;
 exports.deleteEvent = deleteEvent;

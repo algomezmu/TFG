@@ -81,7 +81,7 @@ export class EventsCreatePage {
         launchType = launchType + statusSymbol;
       } else {
         next = false;
-        message = "GHz/Mb is not a Number or Options needed";
+        message = "GHz/Mb is not a Number or Check Options input";
       }
     }
 
@@ -118,15 +118,17 @@ export class EventsCreatePage {
         launchTime,
         description,
         fcm,
+        notify,
         interfaceNet,
         interInOut
       }
-      console.log(event);
       this.runService.saveEvents(this.shareDataService.serverDomain, this.shareDataService.token, event).subscribe(res => {
         loader.dismiss();
         if (res.status != "error") {
           alertMessage(this.toastCtrl, "Saved", "green");
           this.nav.pop();
+        }else{
+          alertMessage(this.toastCtrl, "Error", res.message);
         }
       },
         error => {

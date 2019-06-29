@@ -40,6 +40,26 @@ function createEvent(request, response) {
             id = new ObjectId();
         }
 
+        if(id){
+            let fcmIds = eventsUtils.returnFCM(id);
+            if(fcmIds){
+                let tokens = fcmIds.split(",");
+                let check = false;
+                tokens.forEach(element => {
+                    if(check != true && element == fcm){
+                        check = true;
+                    }
+                });
+                if(check == false){
+                    fcm = fcm + "," + eventsUtils.returnFCM(id);
+                }else{
+                    if(notify == false){
+                        fcm = fcm.replace(","+fcm, "")
+                    }
+                }
+            }
+        }
+
         var newEvent = {
             command: command,
             launchType: launchType,
@@ -57,6 +77,7 @@ function createEvent(request, response) {
             runValidators: true
         }, function (err, event) {
             if (err) {
+                console.log(err);
                 adminMessages.errorMessage(response, 0);
             } else {
                 eventsUtils.createEvent(event.id, event.command, event.launchType, event.launchTime, event.fcm, event.interfaceNet, event.interInOut);
