@@ -8,5 +8,6 @@ export class ShareDataService {
     public tokenFCM: any;
     public fcmListener: any;
     public rol: any;
+    public user: any;
     constructor() { }
 }

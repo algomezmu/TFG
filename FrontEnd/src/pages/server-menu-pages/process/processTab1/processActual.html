@@ -25,15 +25,30 @@
       </ion-item>
     </ion-list>
     <ion-list>
-      <ion-list-header>Process</ion-list-header>
+      <ion-list-header style="padding-top: 10px">
+        Process
+      </ion-list-header>
+
+      <span item-end style="padding-top: 14px">
+        <ion-item>
+          <ion-label>User</ion-label>
+          <ion-select (ionChange)="ownProcess($event)">
+            <ion-option value="emp">Empty</ion-option>
+            <ion-option *ngFor="let user of userList" [value]="user">{{user}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </span>
+
       <ion-item *ngFor="let process of processList.list">
         <h2>Name: {{process.name}}</h2>
         <h3>PID: {{process.pid}}​​​</h3>
         <h3>State: {{process.state}}​​​</h3>
-        <h3>CpuUsage: {{(process.pcpu.toString().length>4)? (process.pcpu.toString() | slice:0:4)+'..':(process.pcpu) }} %​​​</h3>
-        <h3>MemUsage: {{(process.pmem.toString().length>4)? (process.pmem.toString() | slice:0:4)+'..':(process.pmem) }}​​​ %</h3>
+        <h3>CpuUsage: {{(process.pcpu.toString().length>4)? (process.pcpu.toString() | slice:0:4)+'..':(process.pcpu)
+          }} %​​​</h3>
+        <h3>MemUsage: {{(process.pmem.toString().length>4)? (process.pmem.toString() | slice:0:4)+'..':(process.pmem)
+          }}​​​ %</h3>
         <h3>Command: {{process.command}}​​​</h3>
-        <span item-end style="min-width: 100px;">      
+        <span item-end style="min-width: 100px;">
           <button ion-button block color="red" tappable (click)="processKiller(process.pid)">
             Kill Process
           </button></span>

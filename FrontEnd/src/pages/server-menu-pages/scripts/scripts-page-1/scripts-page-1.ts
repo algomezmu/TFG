@@ -19,7 +19,7 @@ export class ScriptsListPage {
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
      public runService: RunService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, 
      public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
-    this.reloadScript(null);
+    //this.reloadScript(null);
   }
 
   ionViewWillEnter() {

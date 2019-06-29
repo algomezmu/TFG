@@ -18,7 +18,7 @@ export class EventsListPage {
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
     public runService: RunService, public toastCtrl: ToastController, public loadingCtrl: LoadingController,
     public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
-    this.reloadEvents(null);
+    //this.reloadEvents(null);
   }
 
   ionViewWillEnter() {

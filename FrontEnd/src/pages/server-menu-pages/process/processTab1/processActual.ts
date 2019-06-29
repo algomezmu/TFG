@@ -22,6 +22,9 @@ export class ProcessActualPage {
   public doughnutChartData: number[] = [100, 0];
   public doughnutChartType: string = 'doughnut';
   //
+  processListBK: any;
+  userList: any;
+
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
     public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, private alertCtrl: AlertController) {
     this.reloadChart(null);
@@ -34,6 +37,14 @@ export class ProcessActualPage {
       loader.dismiss();
       if (res.status != "error") {
         this.processList = res.message;
+        if (this.processList && this.processList.list.length != 0) {
+          this.userList = [];
+          this.processList.list.forEach(element => {
+            if(!this.userList.includes(element.user)){
+              this.userList.push(element.user);
+            }
+          });
+        }
       } else {
         if (res.code == "401") {
           this.appCtrl.getRootNav().setRoot(ListServersPage);
@@ -52,7 +63,18 @@ export class ProcessActualPage {
       });
   }
 
-  processKiller(pid){
+  ownProcess(user) {
+    if (user == "emp") {
+      this.processList = this.processListBK;
+    } else {
+      this.processListBK =  JSON.parse(JSON.stringify(this.processList));
+      this.processList.list = this.processList.list.filter((el) => {
+        return user == el.user
+      });
+    }
+  }
+
+  processKiller(pid) {
     let alert = this.alertCtrl.create({
       title: 'Confirm Kill',
       message: 'Do you want kill the process?',
@@ -65,7 +87,7 @@ export class ProcessActualPage {
           text: 'Kill',
           handler: () => {
             var loader = presentLoading(this.loadingCtrl);
-            this.lookService.processKiller(this.shareDataService.serverDomain, this.shareDataService.token,pid).subscribe(res => {
+            this.lookService.processKiller(this.shareDataService.serverDomain, this.shareDataService.token, pid).subscribe(res => {
               loader.dismiss();
               if (res.status != "error") {
                 alertMessage(this.toastCtrl, "Conexion Error", "red");
