@@ -2,7 +2,7 @@
   "name": "TFG",
   "version": "1.0.0",
   "description": "Servidor Node.js con un API de servicios",
-  "author": "Alvaro Gomez",
+  "author": "AGM",
   "license": "",
   "dependencies": {
     "cluster": "^0.7.7",

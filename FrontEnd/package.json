@@ -1,8 +1,7 @@
 {
-  "name": "ionic3-start-theme",
+  "name": "ServCM-Front",
   "version": "0.0.3",
-  "author": "João Firmino <firminoata@gmail.com>",
-  "homepage": "https://market.ionicframework.com/themes/ionic3-start-theme",
+  "author": "AGM",
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
@@ -57,7 +56,7 @@
     "@ionic/app-scripts": "3.0.1",
     "typescript": "^3.2.4"
   },
-  "description": "Ionic 3 Start Theme",
+  "description": "ServCM",
   "cordovaPlugins": [],
   "cordovaPlatforms": [],
   "cordova": {
