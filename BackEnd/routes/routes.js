@@ -140,10 +140,10 @@ var appRouter = function (app) {
     //endregion
 
     //region Events
-    app.get("/api/run/events", authService.verifytokenAll,  function (request, response) {
+    app.post("/api/run/eventsFcm", authService.verifytokenAll,  function (request, response) {
         console.log("GET /api/run/events");
         logger.info("GET /api/run/events");
-        adminServices.getEvents(response);
+        adminServices.getEvents(request, response);
     });
 
     app.post("/api/run/events", authService.verifytokenAdmin,  function (request, response) {

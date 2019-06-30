@@ -11,7 +11,8 @@ export class RunService {
   constructor(private http: HttpClient) {
   }
 
-  getEvents(serverURL, token) {
+  getEvents(serverURL, token, event) {
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*',
@@ -22,7 +23,9 @@ export class RunService {
       })
     };
 
-    return this.http.get(serverURL + "/api/run/events", httpOptions)
+    return this.http.post(serverURL + "/api/run/eventsFcm", event,
+      httpOptions
+    )
       .map(res => {
         return JSON.parse(JSON.stringify(res));
       })

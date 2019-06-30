@@ -8,11 +8,21 @@ const exec = require('child_process').exec;
 const ObjectId = require('mongodb').ObjectID;
 
 //region Events
-function getEvents(response) {
+function getEvents(request, response) {
     eventsModel.find({}, function (err, obj) {
         if (err) {
             adminMessages.errorMessage(response, 0)
         } else if (obj && obj.length != 0) {
+            var fcm = request.body.fcm;
+            let aux = false;
+            for (let i = 0; i < obj.length; i++){
+                if(obj[i].fcm && fcm && obj[i].fcm.indexOf(fcm)){
+                    obj[i].notify = true;
+                    aux = true;
+                }else if(aux != true){
+                    obj[i].notify = false;
+                }
+            }
             adminMessages.adminCorrectResponseInfo(response, obj);
         } else {
             adminMessages.errorMessage(response, 2);

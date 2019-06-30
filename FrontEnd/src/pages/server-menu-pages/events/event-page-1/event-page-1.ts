@@ -27,7 +27,11 @@ export class EventsListPage {
 
   reloadEvents(refresher) {
     var loader = presentLoading(this.loadingCtrl);
-    this.runService.getEvents(this.shareDataService.serverDomain, this.shareDataService.token).subscribe(res => {
+    let fcm = this.shareDataService.tokenFCM;
+    let event = {
+      fcm
+    }
+    this.runService.getEvents(this.shareDataService.serverDomain, this.shareDataService.token, event).subscribe(res => {
       loader.dismiss();
       if (res.status != "error") {
         this.eventList = res.message;

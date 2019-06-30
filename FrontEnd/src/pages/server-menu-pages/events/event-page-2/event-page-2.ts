@@ -91,25 +91,7 @@ export class EventsCreatePage {
     }
 
     if (next) {
-      let fcm;
-
-      if (notify == true) {
-        if(this.checkFCM(this.navParams.get('fcm'))){
-          fcm = fcmString;
-        }else{
-          fcm = fcmString + "," + this.shareDataService.tokenFCM;
-        }
-      }
-      else{
-        if(this.checkFCM(this.navParams.get('fcm'))){
-          let aux = fcmString.split(",");
-          let res = aux.indexOf(this.shareDataService.tokenFCM);
-          aux.splice(res, 1);
-          fcm = aux.toString();
-        }else{
-          fcm = fcmString;
-        }
-      }
+      let fcm = fcmString;
 
       let event = {
         id: this.id,
