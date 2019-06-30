@@ -42,7 +42,6 @@ function createEvent(request, response) {
     var interfaceNet = request.body.interfaceNet;
     var interInOut = request.body.interInOut;
 
-    console.log(fcm);
     if ((notify || command) &&
         launchType &&
         launchTime && checkLaunchTime(launchType, launchTime)) {

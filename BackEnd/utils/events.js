@@ -72,6 +72,9 @@ function deleteEvent(id){
 
 function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, fcm){
     logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
+    if(listEventsTimer[id]){
+        listEventsTimer[id].cancel();
+    }
     listEventsTimer[id] = schedule.scheduleJob(cron, function () {
         logger.info('Launch ' + command + ' ' + id);
         if(command) {
