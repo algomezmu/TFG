@@ -47,7 +47,7 @@ export class RegisterServerPage {
     var password = this.registerForm.controls['password'].value;
     var port = this.registerForm.controls['port'].value;
 
-    if (!serverDomain.includes("https") || !serverDomain.includes("http")) {
+    if (!serverDomain.includes("https") && !serverDomain.includes("http")) {
       serverDomain = "https://" + serverDomain
     }
 
@@ -56,6 +56,7 @@ export class RegisterServerPage {
     } else {
       serverDomain = serverDomain + ":" + port;
     }
+    console.log(serverDomain);
     this.storage.get(serverName).then((val) => {
       if(val){
         alertMessage(this.toastCtrl, "The server name already exist", "red")

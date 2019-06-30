@@ -24,10 +24,12 @@ export class ProcessActualPage {
   //
   processListBK: any;
   userList: any;
+  processListCheck:any;
 
   constructor(public appCtrl: App, public nav: NavController, public shareDataService: ShareDataService,
     public lookService: LookService, public toastCtrl: ToastController, public loadingCtrl: LoadingController, private alertCtrl: AlertController) {
-    this.reloadChart(null);
+      this.processListCheck = false;
+      this.reloadChart(null);
   }
 
   reloadChart(refresher) {
@@ -50,10 +52,10 @@ export class ProcessActualPage {
           this.appCtrl.getRootNav().setRoot(ListServersPage);
         }
         alertMessage(this.toastCtrl, res.message, "red");
+      }
 
-        if (refresher) {
-          refresher.complete();
-        }
+      if (refresher) {
+        refresher.complete();
       }
     },
       error => {
@@ -65,10 +67,14 @@ export class ProcessActualPage {
 
   ownProcess(user) {
     if (user == "emp") {
+      this.processListCheck = false;
       this.processList = this.processListBK;
     } else {
-      this.processListBK =  JSON.parse(JSON.stringify(this.processList));
-      this.processList.list = this.processList.list.filter((el) => {
+      if( this.processListCheck == false){
+        this.processListCheck = true;
+        this.processListBK =  JSON.parse(JSON.stringify(this.processList));
+      }
+      this.processList.list = this.processListBK.list.filter((el) => {
         return user == el.user
       });
     }
@@ -93,15 +99,15 @@ export class ProcessActualPage {
                 alertMessage(this.toastCtrl, "Conexion Error", "red");
               } else {
                 if (res.code == "401") {
-                  this.appCtrl.getRootNav().setRoot(ListServersPage);
+                  //this.appCtrl.getRootNav().setRoot(ListServersPage);
                 }
                 alertMessage(this.toastCtrl, res.message, "red");
               }
             },
               error => {
                 loader.dismiss();
-                alertMessage(this.toastCtrl, "Conexion Error", "red");
-                this.appCtrl.getRootNav().setRoot(ListServersPage);
+                alertMessage(this.toastCtrl, "Can't kill", "red");
+                //this.appCtrl.getRootNav().setRoot(ListServersPage);
               });
           }
         }

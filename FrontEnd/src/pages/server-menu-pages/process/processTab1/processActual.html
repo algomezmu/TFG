@@ -33,7 +33,7 @@
         <ion-item>
           <ion-label>User</ion-label>
           <ion-select (ionChange)="ownProcess($event)">
-            <ion-option value="emp">Empty</ion-option>
+            <ion-option value="emp"></ion-option>
             <ion-option *ngFor="let user of userList" [value]="user">{{user}}</ion-option>
           </ion-select>
         </ion-item>
