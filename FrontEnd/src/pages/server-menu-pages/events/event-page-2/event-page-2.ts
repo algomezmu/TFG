@@ -91,7 +91,10 @@ export class EventsCreatePage {
     }
 
     if (next) {
-      let fcm = fcmString;
+      let fcm;
+      if(notify){
+        fcm = this.shareDataService.tokenFCM;
+      }
 
       let event = {
         id: this.id,

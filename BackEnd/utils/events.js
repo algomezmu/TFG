@@ -23,7 +23,6 @@ var listEventsTimer = [];
 var listEventsStatus = [];
 
 function returnFCM(id){
-    console.log(listEventsStatus[id]);
     if(listEventsStatus[id] && listEventsStatus[id].fcm) {
         return listEventsStatus[id].fcm;
     }else{
@@ -75,7 +74,9 @@ function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, f
     logger.info('Create command: ' + command + ' // lauchType:' + lauchType + ' // lauchTime:' + lauchTime);
     listEventsTimer[id] = schedule.scheduleJob(cron, function () {
         logger.info('Launch ' + command + ' ' + id);
-        launchCommand(command);
+        if(command) {
+            launchCommand(command);
+        }
         if(oneTime == true) {
             listEventsTimer[id].cancel();
             delete listEventsTimer[id];
@@ -89,6 +90,31 @@ function eventTimerProgramed(id, command, lauchType, lauchTime, cron, oneTime, f
                 }
             });
 
+            //Check Notify
+            if(fcm && fcm.length != 0){
+                let tokens = fcm.split(",");
+                tokens.forEach(element => {
+                    if(element){
+                        var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
+                            to: element,
+
+                            notification: {
+                                title: "ServCM: " + lauchType + " " + lauchTime
+                            }
+                        };
+
+                        FCM.send(message, function(err, response){
+                            if (err) {
+                                console.log("Something has gone wrong!");
+                                logger.info("Event: Something has gone wrong!:" + err )
+                            } else {
+                                console.log("All correct");
+                                logger.info("Event: sended");
+                            }
+                        });
+                    }
+                });
+            }
         }
     }.bind(command, id,  oneTime, listEventsTimer, fcm));
 }
@@ -136,12 +162,11 @@ function checkEventStatus(type, limit, interfaceNet = null){
                         to: element,
 
                         notification: {
-                            title: "Programed Event: " + listEventsStatus[k].lauchType + " " + listEventsStatus[k].lauchTime
+                            title: "ServCM: " + listEventsStatus[k].lauchType + " " + listEventsStatus[k].lauchTime
                         }
                     };
 
                     FCM.send(message, function(err, response){
-                        console.log(response);
                         if (err) {
                             console.log("Something has gone wrong!");
                             logger.info("Event: Something has gone wrong!:" + err )
