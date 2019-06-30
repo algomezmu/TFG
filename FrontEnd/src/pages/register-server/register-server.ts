@@ -47,7 +47,7 @@ export class RegisterServerPage {
     var password = this.registerForm.controls['password'].value;
     var port = this.registerForm.controls['port'].value;
 
-    if (!serverDomain.includes("https") || !serverDomain.includes("http")) {
+    if (!serverDomain.includes("https") && !serverDomain.includes("http")) {
       serverDomain = "https://" + serverDomain
     }
 
